@@ -9,6 +9,7 @@ options =
     scope: 'library'
     response_type: 'code'
     display: 'page'
+    oauth_proxy: redirectUri
 
 hello.subscribe 'auth.login', ->
     console.log 'login success'

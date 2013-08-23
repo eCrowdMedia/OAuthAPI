@@ -1840,7 +1840,8 @@ var hello = (function(){
     redirect_uri: redirectUri,
     scope: 'library',
     response_type: 'code',
-    display: 'page'
+    display: 'page',
+    oauth_proxy: redirectUri
   };
 
   hello.subscribe('auth.login', function() {
