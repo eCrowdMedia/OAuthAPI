@@ -9,7 +9,7 @@ hello.init
             base: 'https://api.readmoo.com/'
         oauth:
             version: 2
-            token: 'https://readmoo.com/member/oauth/access_token'
+            grant: 'https://readmoo.com/member/oauth/access_token'
         scope:
             reading: 'reading'
             highlight: 'highlight'
