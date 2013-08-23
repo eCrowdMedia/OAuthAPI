@@ -1838,7 +1838,6 @@ var hello = (function(){
 
   options = {
     redirect_uri: redirectUri,
-    client_secret: clientSecret,
     scope: 'library',
     response_type: 'code',
     display: 'page'
@@ -1853,7 +1852,9 @@ var hello = (function(){
   window.readmoo = readmoo = {};
 
   readmoo.login = function() {
-    return hello.login('readmoo');
+    return hello.login('readmoo', {
+      client_secret: clientSecret
+    });
   };
 
 }).call(this);

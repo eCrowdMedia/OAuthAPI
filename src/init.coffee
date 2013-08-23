@@ -6,7 +6,6 @@ clientId =
 
 options =
     redirect_uri: redirectUri
-    client_secret: clientSecret
     scope: 'library'
     response_type: 'code'
     display: 'page'
@@ -18,4 +17,4 @@ hello.init clientId, options
 
 window.readmoo = readmoo = {}
 readmoo.login = ->
-    hello.login 'readmoo'
+    hello.login 'readmoo', {client_secret: clientSecret}
