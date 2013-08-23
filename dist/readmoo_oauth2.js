@@ -1838,7 +1838,8 @@ var hello = (function(){
 
   options = {
     redirect_uri: redirectUri,
-    scope: 'me',
+    client_secret: clientSecret,
+    scope: 'library',
     response_type: 'code'
   };
 
