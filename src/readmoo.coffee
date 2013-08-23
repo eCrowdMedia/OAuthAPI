@@ -11,8 +11,8 @@ hello.init
             version: '2'
             token: 'https://readmoo.com/member/oauth/access_token'
         scope:
-            reading: 'readings'
-            highlight: 'highlights'
-            like: 'likes'
-            comment: 'comments'
+            reading: 'reading'
+            highlight: 'highlight'
+            like: 'like'
+            comment: 'comment'
             library: 'library'
