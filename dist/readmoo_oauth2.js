@@ -1840,7 +1840,8 @@ var hello = (function(){
     redirect_uri: redirectUri,
     client_secret: clientSecret,
     scope: 'library',
-    response_type: 'code'
+    response_type: 'code',
+    display: 'page'
   };
 
   hello.subscribe('auth.login', function() {

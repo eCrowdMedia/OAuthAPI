@@ -9,6 +9,7 @@ options =
     client_secret: clientSecret
     scope: 'library'
     response_type: 'code'
+    display: 'page'
 
 hello.subscribe 'auth.login', ->
     console.log 'login success'
