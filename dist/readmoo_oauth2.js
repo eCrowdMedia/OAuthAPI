@@ -1846,6 +1846,10 @@ var hello = (function(){
     return console.log('login success');
   });
 
+  hello.subscribe('auth.failed', function() {
+    return console.log(arguments);
+  });
+
   hello.init(clientId, options);
 
   window.readmoo = readmoo = {};

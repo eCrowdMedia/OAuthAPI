@@ -13,6 +13,9 @@ options =
 hello.subscribe 'auth.login', ->
     console.log 'login success'
 
+hello.subscribe 'auth.failed', ->
+    console.log arguments
+
 hello.init clientId, options
 
 window.readmoo = readmoo = {}
