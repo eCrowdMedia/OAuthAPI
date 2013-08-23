@@ -1812,10 +1812,9 @@ var hello = (function(){
         token: 'https://readmoo.com/member/oauth/access_token'
       },
       scope: {
-        books: 'books',
-        readings: 'readings',
-        highlights: 'highlights',
-        likes: 'likes',
+        reading: 'readings',
+        highlight: 'highlights',
+        like: 'likes',
         comment: 'comments',
         library: 'library'
       }
