@@ -6,7 +6,7 @@ clientId =
 
 options =
     redirect_uri: redirectUri
-    client_secret: clientSecret
+    # client_secret: clientSecret
     scope: scope.join()
     response_type: 'code'
 
