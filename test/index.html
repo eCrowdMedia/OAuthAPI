@@ -4,24 +4,8 @@
         <title>Readmoo OAuth2 Test</title>
     </head>
     <body>
-        <button type="button" onclick="hello.login('readmoo', get_token);">Login</button>
+        <button type="button" onclick="readmoo.login();">Login</button>
         <script src="../dist/readmoo_oauth2.min.js"></script>
-        <script>
-            hello.init({
-                'readmoo': 'f87508dda121439e8d555eed9c77c3ae'
-            }, {
-                'redirect_uri': 'https://api.readmoo.com/',
-                'response_type': 'code',
-                'scope': 'library'
-            });
-        
-            var get_token = function () {
-                hello.login('readmoo', {
-                    'redirect_uri': 'https://api.readmoo.com/',
-                    'response_type': 'token',
-                    'client_secret': '38187ea92444497dc1822e6a2bbadf84'
-                });
-            };
-        </script>
+        <script src="fixtures/.tmp/init.js"></script>
     </body>
 </html>

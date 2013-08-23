@@ -27,6 +27,14 @@ module.exports = function(grunt) {
                 src: ['*.coffee'],
                 dest: '<%= config.src %>/.tmp/',
                 ext: '.js'
+            },
+            test: {
+                expand: true,
+                flatten: true,
+                cwd: 'test/fixtures/',
+                src: ['*.coffee'],
+                dest: 'test/fixtures/.tmp',
+                ext: '.js'
             }
         },
         concat: {
@@ -61,13 +69,20 @@ module.exports = function(grunt) {
                 unused: true,
                 boss: true,
                 eqnull: true,
-                globals: {}
+                devel: true,
+                browser: true,
+                globals: {
+                    hello: true
+                }
             },
             gruntfile: {
                 src: 'Gruntfile.js'
             },
             src_test: {
                 src: '<%= config.src %>/.tmp/*.js'
+            },
+            test_test: {
+                src: 'test/fixtures/.tmp/*.js'
             }
         },
         watch: {

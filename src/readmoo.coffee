@@ -15,5 +15,5 @@ hello.init
             readings: 'readings'
             highlights: 'highlights'
             likes: 'likes'
-            comments: 'comments'
+            comment: 'comments'
             library: 'library'
