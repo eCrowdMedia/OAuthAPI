@@ -1839,7 +1839,7 @@ var hello = (function(){
       },
       oauth: {
         version: 2,
-        grant: 'https://readmoo.com/member/oauth/access_token'
+        token: 'https://readmoo.com/member/oauth/access_token'
       },
       scope: {
         reading: 'reading',
