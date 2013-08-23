@@ -1815,8 +1815,7 @@ var hello = (function(){
     redirect_uri: redirectUri,
     client_secret: clientSecret,
     scope: scope.join(),
-    response_type: 'code',
-    display: 'page'
+    response_type: 'code'
   };
 
   hello.init(clientId, options);

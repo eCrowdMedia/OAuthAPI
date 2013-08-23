@@ -9,7 +9,6 @@ options =
     client_secret: clientSecret
     scope: scope.join()
     response_type: 'code'
-    display: 'page'
 
 hello.init clientId, options
 
