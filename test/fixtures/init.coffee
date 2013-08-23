@@ -5,10 +5,10 @@ clientId =
     readmoo: 'efe60b2afc3447dded5e6df6fd2bd920'
 
 options =
-    redirect_uri: 'http://korprulu.ohread.com/test/oauth2/test/'
+    redirect_uri: redirectUri
     scope: scope.join()
 
-hello.init clientId, scope
+hello.init clientId, options
 
 getToken = ->
     console.log 'login success'
