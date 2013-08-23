@@ -7,14 +7,11 @@ clientId =
 options =
     redirect_uri: redirectUri
     # client_secret: clientSecret
-    scope: scope.join()
+    scope: 'me'
     response_type: 'code'
 
 hello.subscribe 'auth.login', ->
     console.log 'login success'
-
-hello.subscribe 'auth.failed', ->
-    console.log arguments
 
 hello.init clientId, options
 

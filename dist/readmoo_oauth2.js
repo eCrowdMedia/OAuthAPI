@@ -1838,16 +1838,12 @@ var hello = (function(){
 
   options = {
     redirect_uri: redirectUri,
-    scope: scope.join(),
+    scope: 'me',
     response_type: 'code'
   };
 
   hello.subscribe('auth.login', function() {
     return console.log('login success');
-  });
-
-  hello.subscribe('auth.failed', function() {
-    return console.log(arguments);
   });
 
   hello.init(clientId, options);
