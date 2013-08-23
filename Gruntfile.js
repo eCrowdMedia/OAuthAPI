@@ -27,14 +27,6 @@ module.exports = function(grunt) {
                 src: ['*.coffee'],
                 dest: '<%= config.src %>/.tmp/',
                 ext: '.js'
-            },
-            test: {
-                expand: true,
-                flatten: true,
-                cwd: 'test/fixtures/',
-                src: ['*.coffee'],
-                dest: 'test/fixtures',
-                ext: '.js'
             }
         },
         concat: {
@@ -80,9 +72,6 @@ module.exports = function(grunt) {
             },
             src_test: {
                 src: '<%= config.src %>/.tmp/*.js'
-            },
-            test_test: {
-                src: 'test/fixtures/*.js'
             }
         },
         watch: {
