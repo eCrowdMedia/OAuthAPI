@@ -1799,6 +1799,31 @@ var hello = (function(){
 
 })();
 (function() {
+  hello.init({
+    readmoo: {
+      name: 'Readmoo',
+      uri: {
+        auth: 'https://readmoo.com/member/oauth',
+        me: 'https://api.readmoo.com/me',
+        base: 'https://api.readmoo.com/'
+      },
+      oauth: {
+        version: 2,
+        grant: 'https://readmoo.com/member/oauth/access_token'
+      },
+      scope: {
+        reading: 'reading',
+        highlight: 'highlight',
+        like: 'like',
+        comment: 'comment',
+        library: 'library'
+      }
+    }
+  });
+
+}).call(this);
+
+(function() {
   var clientId, clientSecret, options, readmoo, redirectUri, scope;
 
   scope = ['reading', 'highlight', 'like', 'comment', 'me', 'library'];
@@ -1828,30 +1853,5 @@ var hello = (function(){
   readmoo.login = function() {
     return hello.login('readmoo');
   };
-
-}).call(this);
-
-(function() {
-  hello.init({
-    readmoo: {
-      name: 'Readmoo',
-      uri: {
-        auth: 'https://readmoo.com/member/oauth',
-        me: 'https://api.readmoo.com/me',
-        base: 'https://api.readmoo.com/'
-      },
-      oauth: {
-        version: 2,
-        grant: 'https://readmoo.com/member/oauth/access_token'
-      },
-      scope: {
-        reading: 'reading',
-        highlight: 'highlight',
-        like: 'like',
-        comment: 'comment',
-        library: 'library'
-      }
-    }
-  });
 
 }).call(this);

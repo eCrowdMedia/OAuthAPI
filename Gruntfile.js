@@ -43,7 +43,7 @@ module.exports = function(grunt) {
                 stripBanners: true
             },
             dist: {
-                src: ['<%= config.lib %>/hello.js', '<%= config.src %>/.tmp/*.js'],
+                src: ['<%= config.lib %>/hello.js', '<%= config.src %>/.tmp/readmoo.js', '<%= config.src %>/.tmp/init.js'],
                 dest: '<%= config.dist %>/<%= pkg.name %>.js'
             }
         },
