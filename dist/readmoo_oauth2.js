@@ -1818,6 +1818,10 @@ var hello = (function(){
     response_type: 'code'
   };
 
+  hello.subscribe('auth.login', function() {
+    return console.log('login success');
+  });
+
   hello.init(clientId, options);
 
   window.readmoo = readmoo = {};

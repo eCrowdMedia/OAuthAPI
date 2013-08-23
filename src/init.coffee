@@ -10,6 +10,9 @@ options =
     scope: scope.join()
     response_type: 'code'
 
+hello.subscribe 'auth.login', ->
+    console.log 'login success'
+
 hello.init clientId, options
 
 window.readmoo = readmoo = {}
