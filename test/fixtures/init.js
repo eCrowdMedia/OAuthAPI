@@ -1,5 +1,5 @@
 (function() {
-  var clientId, clientSecret, getToken, options, readmoo, redirectUri, scope;
+  var clientId, clientSecret, options, readmoo, redirectUri, scope;
 
   scope = ['reading', 'highlight', 'like', 'comment', 'me', 'library'];
 
@@ -13,27 +13,16 @@
 
   options = {
     redirect_uri: redirectUri,
+    client_secret: clientSecret,
     scope: scope.join()
   };
 
   hello.init(clientId, options);
 
-  getToken = function() {
-    console.log('login success');
-    console.log(arguments);
-    return hello.login('readmoo', {
-      'redirect_uri': redirectUri,
-      'response_type': 'token',
-      'client_secret': clientSecret
-    });
-  };
-
   window.readmoo = readmoo = {};
 
   readmoo.login = function() {
-    return hello.login('readmoo', {
-      'response_type': 'code'
-    }, getToken);
+    return hello.login('readmoo');
   };
 
 }).call(this);

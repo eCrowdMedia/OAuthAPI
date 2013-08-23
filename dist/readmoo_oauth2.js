@@ -1808,7 +1808,7 @@ var hello = (function(){
         base: 'https://api.readmoo.com/'
       },
       oauth: {
-        version: '2',
+        version: 2,
         token: 'https://readmoo.com/member/oauth/access_token'
       },
       scope: {
