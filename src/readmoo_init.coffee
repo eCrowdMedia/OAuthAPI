@@ -1,13 +1,15 @@
+readmoo = {}
 
 initConfig =
   readmoo:
     name: 'Readmoo OAuth API'
-    uri:
-      auth: 'https://readmoo.com/member/oauth'
-      me: 'https://api.readmoo.com/me'
-      base: 'https://api.readmoo.com/'
+    # uri:
+    #   auth: 'https://readmoo.com/member/oauth'
+    #   me: 'https://api.readmoo.com/me'
+    #   base: 'https://api.readmoo.com/'
     oauth:
       version: 2
+      auth: 'https://readmoo.com/member/oauth'
       token: 'https://readmoo.com/member/oauth/access_token'
     scope:
       reading: 'reading'

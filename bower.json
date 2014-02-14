@@ -1,0 +1,20 @@
+{
+  "name": "readmoo_oauth2",
+  "version": "1.0.0",
+  "authors": [
+    "Kevin Chiu <kevin@readmoo.com>"
+  ],
+  "description": "Readmoo OAuth 2 API",
+  "license": "''",
+  "homepage": "https://readmoo.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "hello": "~0.1.3"
+  }
+}

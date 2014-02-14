@@ -1,5 +1,4 @@
 /*jshint node:true*/
-/*global module:false*/
 
 var path = require('path');
 var LIVERELOAD_PORT = 35729,
@@ -10,7 +9,7 @@ var LIVERELOAD_PORT = 35729,
 var mountFolder;
 
 mountFolder = function (connect, dir) {
-  connect.static(path.resolve(dir));
+  return connect.static(path.resolve(dir));
 };
 
 module.exports = function(grunt) {
@@ -34,6 +33,9 @@ module.exports = function(grunt) {
             dist: ['<%= config.dist %>/']
         },
         coffee: {
+            options: {
+                bare: true
+            },
             compile: {
                 expand: true,
                 flatten: true,
@@ -107,6 +109,14 @@ module.exports = function(grunt) {
             }
         },
         watch: {
+            livereload: {
+                options: {
+                    livereload: LIVERELOAD_PORT
+                },
+                files: [
+                    ".tmp"
+                ]
+            },
             gruntfile: {
                 files: '<%= jshint.gruntfile.src %>',
                 tasks: ['jshint:gruntfile']
@@ -118,7 +128,7 @@ module.exports = function(grunt) {
         },
         connect: {
             options: {
-                port: 9000
+                port: 8080
             },
             server: {
                 options: {
@@ -148,7 +158,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('server', function () {
-        grunt.task.run(['dev', 'connect:server']);
+        grunt.task.run(['dev', 'connect:server', "watch"]);
     });
 
     // Default task.
