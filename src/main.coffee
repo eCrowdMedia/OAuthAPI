@@ -45,3 +45,6 @@ readmoo =
     api: ->
         return hello('readmoo').api
 
+window.addEventListener 'load', ->
+    hello.on 'auth.login', ->
+        console.log arguments
