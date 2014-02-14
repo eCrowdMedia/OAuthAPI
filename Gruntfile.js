@@ -59,9 +59,9 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     'start.frag',
+                    '.tmp/main.js',
                     '<%= config.hellojs %>',
                     '.tmp/readmoo_init.js',
-                    '.tmp/main.js',
                     'end.frag'
                 ],
                 dest: '<%= config.dist %>/<%= pkg.name %>-<%= pkg.version %>.js'

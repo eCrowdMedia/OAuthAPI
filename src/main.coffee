@@ -1,5 +1,9 @@
 ### global readmoo: true ###
 
+if location.hash
+    location.hash = location.hash.replace /(^token|&token)=/, (match) ->
+        return "#{ if /^&/.test match then '&' : '' }access_token="
+
 scope = ['reading', 'highlight', 'like', 'comment', 'me', 'library']
 # clientId = 'efe60b2afc3447dded5e6df6fd2bd920'
 # redirectUri = 'http://korprulu.ohread.com/test/oauth2/test/'
