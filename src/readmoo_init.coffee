@@ -1,4 +1,3 @@
-readmoo = {}
 
 initConfig =
   readmoo:
