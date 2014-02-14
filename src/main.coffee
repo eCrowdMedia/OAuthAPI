@@ -1,7 +1,7 @@
 ### global readmoo: true ###
 
 if location.hash
-    location.hash = location.hash.replace /(^token|&token)=/, (match) ->
+    location.hash = location.hash.replace /(^token|&token)=/g, (match) ->
         return "#{ if /^&/.test match then '&' : '' }access_token="
 
 SCOPE = ['reading', 'highlight', 'like', 'comment', 'me', 'library']
