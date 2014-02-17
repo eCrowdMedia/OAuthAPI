@@ -67,6 +67,10 @@ module.exports = function(grunt) {
                     'end.frag'
                 ],
                 dest: '<%= config.dist %>/<%= pkg.name %>-<%= pkg.version %>.js'
+            },
+            server: {
+                src: '<%= concat.dist.src %>',
+                dest: '.tmp/<%= pkg.name %>.js'
             }
         },
         uglify: {
@@ -158,7 +162,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('server', function () {
-        grunt.task.run(['dev', 'connect:server', "watch"]);
+        grunt.task.run(['dev', 'connect:server', "concat:server", "watch"]);
     });
 
     // Default task.
