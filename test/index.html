@@ -4,7 +4,13 @@
         <title>Readmoo OAuth2 Test</title>
     </head>
     <body>
-        <button type="button" onclick="readmoo.login('efe60b2afc3447dded5e6df6fd2bd920', 'http://korprulu.ohread.com/test/oauth2/test/');">Login</button>
-        <script src="readmoo_oauth2_api.js"></script>
+        <button type="button" onclick="readmoo.login();">Login</button>
+        <button type="button" onclick="readmoo.logout(function(){alert(arguments[0]);});">Logout</button>
+        <script src="../.tmp/readmoo_oauth2_api.js"></script>
+        <script>
+            readmoo.config.setClientId('efe60b2afc3447dded5e6df6fd2bd920');
+            readmoo.config.setRedirectUri('http://korprulu.ohread.com/test/oauth2/test/');
+            readmoo.init();
+        </script>
     </body>
 </html>

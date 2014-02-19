@@ -1,50 +1,52 @@
 ### global readmoo: true ###
 
-if location.hash
-  location.hash = location.hash.substr(1).replace /(^token|&token)=/g, (match) ->
-    return "#{ if /^&/.test match then '&' else '' }access_token="
-
 SCOPE = ['reading', 'highlight', 'like', 'comment', 'me', 'library']
 # clientId = 'efe60b2afc3447dded5e6df6fd2bd920'
 # redirectUri = 'http://korprulu.ohread.com/test/oauth2/test/'
 
-window._lc_ = ->
+hello.on 'auth.login', ->
   console.log arguments
 
-readmoo
-  scope: SCOPE
-  login: (clientId, redirectUrl, scope = SCOPE.join(','), callback) ->
+hello.utils.extend readmoo, {
+  login: (clientId, redirectUri, options) ->
 
-    _clientId = clientId
-    _redirectUrl = redirectUrl
+    if clientId
+      @config.setClientId clientId
 
-    if not _clientId
-      throw new Error 'Need "Client ID"'
+    if redirectUri
+      @config.setRedirectUri redirectUri
 
-    if not _redirectUrl
-      throw new Error 'Need "Redirect URL"'
+    if options
+      for k, v of options
+        if options.hasOwnProperty k
+          switch k
+            when 'scope'
+              @config.setScope v
+            when 'responseType'
+              @config.setResponseType v
+            when 'display'
+              @config.setDisplay v
 
-    hello.init {readmoo: _clientId}, {redirect_uri: _redirectUrl}
-
-    if callback
-      hello.on 'auth.login', (auth) ->
-        callback hello(auth.network).api
-        return
+    if clientId or redirectUri
+      @config.init()
 
     hello.login 'readmoo', {
-      scope: scope,
-      response_type: 'token',
-      display: 'page'
-    }, '_lc_'
+      scope: @config.getScope(),
+      response_type: @config.getResponseType(),
+      display: @config.getDisplay()
+    }
+
     return
 
   logout: (callback) ->
+    hello.logout 'readmoo', callback
 
-    if callback
-      hello.on('auth.logout', callback)
-
-    hello('readmoo').logout()
+  init: ->
+    @config.init()
+    return
 
   # custome api
   api: ->
-    return hello('readmoo').api
+    return hello.api
+}
+

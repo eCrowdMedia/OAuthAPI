@@ -63,6 +63,7 @@ module.exports = function(grunt) {
                     'start.frag',
                     '<%= config.hellojs %>',
                     '.tmp/readmoo_init.js',
+                    '.tmp/config.js',
                     '.tmp/main.js',
                     'end.frag'
                 ],

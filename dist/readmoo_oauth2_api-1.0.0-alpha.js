@@ -1,4 +1,4 @@
-/*! readmoo_oauth2_api - v1.0.0-alpha - 2014-02-17
+/*! readmoo_oauth2_api - v1.0.0-alpha - 2014-02-19
 * Copyright (c) 2014 Kevin Chiu <kevin@readmoo.com>; Licensed  */
 (function() {
     var readmoo = {},
@@ -8,10 +8,10 @@
         if (hash[0] === '#') {
             hash = hash.substr(1);
         }
-
-        location.hash.replace(/(^token|&token)=/, function (match) {
+        hash = hash.replace(/(^token|&token)=/, function (match) {
             return (match[0] === '&' ? '&' : '') + 'access_token=';
         });
+        location.hash = hash;
     }
 
 // Can't use strict with arguments.callee
@@ -2390,7 +2390,7 @@ initConfig = {
     oauth: {
       version: 2,
       auth: 'https://readmoo.com/member/oauth',
-      token: 'https://readmoo.com/member/oauth/access_token'
+      logout: 'https://readmoo.com/member/oauth/sign_out'
     },
     scope: {
       reading: 'reading',
@@ -2398,65 +2398,129 @@ initConfig = {
       like: 'like',
       comment: 'comment',
       library: 'library'
+    },
+    logout: function(opt) {
+      var callback, xhr;
+      callback = opt.callback;
+      xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === xhr.DOME) {
+          switch (xhr.status) {
+            case 200:
+              window.location.hash = '';
+              callback(true);
+              break;
+            default:
+              callback(false);
+          }
+        }
+      };
+      xhr.open('GET', this.oauth.logout, true);
+      return xhr.send();
     }
   }
 };
 
 hello.init(initConfig);
 
-var SCOPE;
+hello.utils.extend(readmoo, {
+  config: {
+    _clientId: null,
+    _redirectUri: null,
+    _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library'],
+    _response_type: 'token',
+    _display: 'page',
+    setClientId: function(id) {
+      return this._clientId = id;
+    },
+    getClientId: function() {
+      return this._clientId;
+    },
+    setRedirectUri: function(uri) {
+      return this._redirectUri = uri;
+    },
+    getRedirectUri: function() {
+      return this._redirectUri;
+    },
+    setScope: function(scope) {
+      return this._scope = scope;
+    },
+    getScope: function() {
+      return this._scope;
+    },
+    setResponseType: function(type) {
+      return this._response_type = type;
+    },
+    getResponseType: function() {
+      return this._response_type;
+    },
+    setDisplay: function(display) {
+      return this._display = display;
+    },
+    getDisplay: function() {
+      return this._display;
+    },
+    init: function() {
+      hello.init({
+        readmoo: this.getClientId()
+      }, {
+        redirect_uri: this.getRedirectUri()
+      });
+    }
+  }
+});
 
-if (location.hash) {
-  location.hash = location.hash.substr(1).replace(/(^token|&token)=/g, function(match) {
-    return "" + (/^&/.test(match) ? '&' : '') + "access_token=";
-  });
-}
+var SCOPE;
 
 SCOPE = ['reading', 'highlight', 'like', 'comment', 'me', 'library'];
 
-window._lc_ = function() {
+hello.on('auth.login', function() {
   return console.log(arguments);
-};
+});
 
-readmoo({
-  scope: SCOPE,
-  login: function(clientId, redirectUrl, scope, callback) {
-    var _clientId, _redirectUrl;
-    if (scope == null) {
-      scope = SCOPE.join(',');
+hello.utils.extend(readmoo, {
+  login: function(clientId, redirectUri, options) {
+    var k, v;
+    if (clientId) {
+      this.config.setClientId(clientId);
     }
-    _clientId = clientId;
-    _redirectUrl = redirectUrl;
-    if (!_clientId) {
-      throw new Error('Need "Client ID"');
+    if (redirectUri) {
+      this.config.setRedirectUri(redirectUri);
     }
-    if (!_redirectUrl) {
-      throw new Error('Need "Redirect URL"');
+    if (options) {
+      for (k in options) {
+        v = options[k];
+        if (options.hasOwnProperty(k)) {
+          switch (k) {
+            case 'scope':
+              this.config.setScope(v);
+              break;
+            case 'responseType':
+              this.config.setResponseType(v);
+              break;
+            case 'display':
+              this.config.setDisplay(v);
+          }
+        }
+      }
     }
-    hello.init({
-      readmoo: _clientId
-    }, {
-      redirect_uri: _redirectUrl
-    });
-    if (callback) {
-      hello.on('auth.login', function(auth) {
-        callback(hello(auth.network).api);
-      });
+    if (clientId || redirectUri) {
+      this.config.init();
     }
     hello.login('readmoo', {
-      scope: scope,
-      response_type: 'token',
-      display: 'page'
-    }, '_lc_');
+      scope: this.config.getScope(),
+      response_type: this.config.getResponseType(),
+      display: this.config.getDisplay()
+    });
   },
   logout: function(callback) {
-    if (callback) {
-      hello.on('auth.logout', callback);
-    }
-    return hello('readmoo').logout();
+    return hello.logout('readmoo', callback);
+  },
+  init: function() {
+    this.config.init();
   },
   api: function() {
-    return hello('readmoo').api;
+    return hello.api;
   }
 });
 

@@ -2,20 +2,34 @@
 initConfig =
   readmoo:
     name: 'Readmoo OAuth API'
-    # uri:
-    #   auth: 'https://readmoo.com/member/oauth'
-    #   me: 'https://api.readmoo.com/me'
-    #   base: 'https://api.readmoo.com/'
     oauth:
       version: 2
       auth: 'https://readmoo.com/member/oauth'
-      token: 'https://readmoo.com/member/oauth/access_token'
+      logout: 'https://readmoo.com/member/oauth/sign_out'
     scope:
       reading: 'reading'
       highlight: 'highlight'
       like: 'like'
       comment: 'comment'
       library: 'library'
+    logout: (opt) ->
+      callback = opt.callback
+
+      xhr = new XMLHttpRequest()
+
+      xhr.onreadystatechange = ->
+
+        if xhr.readyState is xhr.DOME
+          switch xhr.status
+            when 200
+              callback(true)
+            else
+              callback(false)
+
+        return
+
+      xhr.open 'GET', @oauth.logout, true
+      xhr.send()
 
 hello.init initConfig
 
