@@ -18,7 +18,7 @@ module.exports = function(grunt) {
         root: '.',
         src: 'src',
         dist: 'dist',
-        hellojs: 'bower_components/hello/dist/hello.js'
+        hellojs: 'src/hello.js'
     };
 
     // Project configuration.
@@ -60,12 +60,12 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: [
-                    'start.frag',
+                    'src/start.frag',
                     '<%= config.hellojs %>',
                     '.tmp/readmoo_init.js',
                     '.tmp/config.js',
                     '.tmp/main.js',
-                    'end.frag'
+                    'src/end.frag'
                 ],
                 dest: '<%= config.dist %>/<%= pkg.name %>-<%= pkg.version %>.js'
             },
@@ -110,7 +110,7 @@ module.exports = function(grunt) {
                 src: '.tmp/*.js'
             },
             test_test: {
-                src: 'test/fixtures/*.js'
+                src: ['test/fixtures/*.js']
             }
         },
         watch: {
@@ -141,9 +141,21 @@ module.exports = function(grunt) {
                         return [
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'test')
+                            mountFolder(connect, 'test'),
+                            mountFolder(connect, 'bower_components')
                         ];
                     }
+                }
+            }
+        },
+        jasmine: {
+            test: {
+                src: ['.tmp/readmoo_oauth2_api.js'],
+                options: {
+                    outfile: 'test/index.html',
+                    specs: 'test/specs/*Spec.js',
+                    helpers: 'test/helpers/*Helper.js',
+                    keepRunner: true
                 }
             }
         }
@@ -157,6 +169,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     grunt.registerTask('dev', function () {
         grunt.task.run(['clean', 'coffee', 'jshint']);
@@ -164,6 +177,10 @@ module.exports = function(grunt) {
 
     grunt.registerTask('server', function () {
         grunt.task.run(['dev', 'connect:server', "concat:server", "watch"]);
+    });
+
+    grunt.registerTask('test', function () {
+        grunt.task.run(['dev', 'concat', "jasmine"]);
     });
 
     // Default task.

@@ -5,7 +5,7 @@ hello.utils.extend readmoo, {
     _redirectUri: null
     _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library']
     _response_type: 'token'
-    _display: 'page'
+    _display: 'popup'
 
     setClientId: (id) ->
       @_clientId = id
@@ -37,7 +37,18 @@ hello.utils.extend readmoo, {
     getDisplay: ->
       return @_display
 
-    init: ->
-      hello.init {readmoo: @getClientId()}, {redirect_uri: @getRedirectUri()}
-      return
+    init: (client_id, redirect_uri) ->
+
+      if client_id
+        @setClientId client_id
+      if redirect_uri
+        @setRedirectUri redirect_uri
+
+      hello.init(
+        {readmoo: client_id or @getClientId()}
+        {redirect_uri: redirect_uri or @getRedirectUri()}
+      )
+
+      return hello('readmoo')
 }
+

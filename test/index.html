@@ -1,16 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <head>
-        <title>Readmoo OAuth2 Test</title>
-    </head>
-    <body>
-        <button type="button" onclick="readmoo.login();">Login</button>
-        <button type="button" onclick="readmoo.logout(function(){alert(arguments[0]);});">Logout</button>
-        <script src="../.tmp/readmoo_oauth2_api.js"></script>
-        <script>
-            readmoo.config.setClientId('efe60b2afc3447dded5e6df6fd2bd920');
-            readmoo.config.setRedirectUri('http://korprulu.ohread.com/test/oauth2/test/');
-            readmoo.init();
-        </script>
-    </body>
+<head>
+  <meta charset="utf-8">
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="stylesheet" type="text/css" href="../.grunt/grunt-contrib-jasmine/jasmine.css">
+
+
+  
+  <script src="../.grunt/grunt-contrib-jasmine/phantom-polyfill.js"></script>
+  
+  <script src="../.grunt/grunt-contrib-jasmine/jasmine.js"></script>
+  
+  <script src="../.grunt/grunt-contrib-jasmine/jasmine-html.js"></script>
+  
+  <script src="../.grunt/grunt-contrib-jasmine/boot.js"></script>
+  
+  <script src="helpers/oAuthHelper.js"></script>
+  
+  <script src="../.tmp/readmoo_oauth2_api.js"></script>
+  
+  <script src="specs/apiMeSpec.js"></script>
+  
+  <script src="specs/loadSpec.js"></script>
+  
+  <script src="../.grunt/grunt-contrib-jasmine/reporter.js"></script>
+  
+
+</head>
+<body>
+</body>
 </html>

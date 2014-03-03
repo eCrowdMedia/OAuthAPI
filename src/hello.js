@@ -1,18 +1,14 @@
-/*! readmoo_oauth2_api - v1.0.0-alpha - 2014-02-19
-* Copyright (c) 2014 Kevin Chiu <kevin@readmoo.com>; Licensed  */
-(function() {
-    var readmoo = {},
-        hash = location.hash;
-
-    if (hash) {
-        if (hash[0] === '#') {
-            hash = hash.substr(1);
-        }
-        hash = hash.replace(/(^token|&token)=/, function (match) {
-            return (match[0] === '&' ? '&' : '') + 'access_token=';
-        });
-        location.hash = hash;
-    }
+/**
+ * @hello.js
+ *
+ * HelloJS is a client side Javascript SDK for making OAuth2 logins and subsequent REST calls.
+ *
+ * @author Andrew Dodson
+ * @company Knarly
+ *
+ * @copyright Andrew Dodson, 2012 - 2013
+ * @license MIT: You are free to use and modify this code for any use, on the condition that this copyright notice remains.
+ */
 
 // Can't use strict with arguments.callee
 //"use strict";
@@ -2381,154 +2377,3 @@ utils.extend(utils, {
 	};
 
 })(hello);
-
-var initConfig;
-
-initConfig = {
-  readmoo: {
-    name: 'Readmoo OAuth API',
-    oauth: {
-      version: 2,
-      auth: 'https://readmoo.com/member/oauth',
-      logout: 'https://readmoo.com/member/oauth/sign_out'
-    },
-    scope: {
-      reading: 'reading',
-      highlight: 'highlight',
-      like: 'like',
-      comment: 'comment',
-      library: 'library'
-    },
-    logout: function(opt) {
-      var callback, xhr;
-      callback = opt.callback;
-      xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === xhr.DOME) {
-          switch (xhr.status) {
-            case 200:
-              window.location.hash = '';
-              callback(true);
-              break;
-            default:
-              callback(false);
-          }
-        }
-      };
-      xhr.open('GET', this.oauth.logout, true);
-      return xhr.send();
-    }
-  }
-};
-
-hello.init(initConfig);
-
-hello.utils.extend(readmoo, {
-  config: {
-    _clientId: null,
-    _redirectUri: null,
-    _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library'],
-    _response_type: 'token',
-    _display: 'page',
-    setClientId: function(id) {
-      return this._clientId = id;
-    },
-    getClientId: function() {
-      return this._clientId;
-    },
-    setRedirectUri: function(uri) {
-      return this._redirectUri = uri;
-    },
-    getRedirectUri: function() {
-      return this._redirectUri;
-    },
-    setScope: function(scope) {
-      return this._scope = scope;
-    },
-    getScope: function() {
-      return this._scope;
-    },
-    setResponseType: function(type) {
-      return this._response_type = type;
-    },
-    getResponseType: function() {
-      return this._response_type;
-    },
-    setDisplay: function(display) {
-      return this._display = display;
-    },
-    getDisplay: function() {
-      return this._display;
-    },
-    init: function() {
-      hello.init({
-        readmoo: this.getClientId()
-      }, {
-        redirect_uri: this.getRedirectUri()
-      });
-    }
-  }
-});
-
-var SCOPE;
-
-SCOPE = ['reading', 'highlight', 'like', 'comment', 'me', 'library'];
-
-hello.on('auth.login', function() {
-  return console.log(arguments);
-});
-
-hello.utils.extend(readmoo, {
-  login: function(clientId, redirectUri, options) {
-    var k, v;
-    if (clientId) {
-      this.config.setClientId(clientId);
-    }
-    if (redirectUri) {
-      this.config.setRedirectUri(redirectUri);
-    }
-    if (options) {
-      for (k in options) {
-        v = options[k];
-        if (options.hasOwnProperty(k)) {
-          switch (k) {
-            case 'scope':
-              this.config.setScope(v);
-              break;
-            case 'responseType':
-              this.config.setResponseType(v);
-              break;
-            case 'display':
-              this.config.setDisplay(v);
-          }
-        }
-      }
-    }
-    if (clientId || redirectUri) {
-      this.config.init();
-    }
-    hello.login('readmoo', {
-      scope: this.config.getScope(),
-      response_type: this.config.getResponseType(),
-      display: this.config.getDisplay()
-    });
-  },
-  logout: function(callback) {
-    return hello.logout('readmoo', callback);
-  },
-  init: function() {
-    this.config.init();
-  },
-  api: function() {
-    return hello.api;
-  }
-});
-
-    if (typeof define === 'function' && define.amd) {
-        define('readmoo_oauth', [], function() {
-            return readmoo;
-        });
-    } else {
-        window.readmoo = readmoo;
-    }
-})();

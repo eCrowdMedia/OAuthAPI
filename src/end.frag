@@ -1,8 +1,8 @@
     if (typeof define === 'function' && define.amd) {
         define('readmoo_oauth', [], function() {
-            return readmoo;
+            return ReadmooAPI;
         });
     } else {
-        window.readmoo = readmoo;
+        window.ReadmooAPI = ReadmooAPI;
     }
 })();

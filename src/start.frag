@@ -1,5 +1,5 @@
 (function() {
-    var readmoo = {},
+    var ReadmooAPI = readmoo = {},
         hash = location.hash;
 
     if (hash) {
