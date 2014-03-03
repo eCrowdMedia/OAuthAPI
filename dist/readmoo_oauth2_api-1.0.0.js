@@ -1,4 +1,4 @@
-/*! readmoo_oauth2_api - v1.0.0 - 2014-02-27
+/*! readmoo_oauth2_api - v1.0.0 - 2014-03-03
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var ReadmooAPI = readmoo = {},
