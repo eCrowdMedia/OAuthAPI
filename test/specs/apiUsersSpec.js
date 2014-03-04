@@ -1,9 +1,13 @@
-/* global Readmoo: true */
+/* global readmoo: true */
 
-describe('Get user profile', function () {
+describe('Users API test', function () {
+
+    var ReadmooAPI = readmoo.ReadmooAPI;
 
     ReadmooAPI.init('efe60b2afc3447dded5e6df6fd2bd920', 'http://korprulu.ohread.com/test/oauth2/test/');
-    var callback = function () {};
+    var callback = function () {
+        console.log('already login');
+    };
     ReadmooAPI.on('auth.login', callback);
     // ReadmooAPI.login();
 
@@ -20,7 +24,7 @@ describe('Get user profile', function () {
 
     it('me', function (done) {
 
-        ReadmooAPI.api('me').success(function (data) {
+        ReadmooAPI.api.me().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
             expect(!!(data.user && data.user.id)).toBe(true);
@@ -35,7 +39,7 @@ describe('Get user profile', function () {
 
     it('get user data by id', function (done) {
 
-        ReadmooAPI.api('users/' + userId).success(function (data) {
+        ReadmooAPI.api.users(userId).success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
             expect(data.user.id).toEqual(userId);
@@ -45,4 +49,5 @@ describe('Get user profile', function () {
             done();
         });
     });
+
 });

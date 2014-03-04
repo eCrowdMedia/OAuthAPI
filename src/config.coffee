@@ -1,11 +1,13 @@
+### global ReadmooAPI: true ###
 
-hello.utils.extend readmoo, {
+hello.utils.extend ReadmooAPI, {
   config:
     _clientId: null
     _redirectUri: null
     _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library']
     _response_type: 'token'
     _display: 'popup'
+    _others: null
 
     setClientId: (id) ->
       @_clientId = id

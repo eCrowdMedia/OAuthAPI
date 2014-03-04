@@ -3,6 +3,13 @@
             return ReadmooAPI;
         });
     } else {
-        window.ReadmooAPI = ReadmooAPI;
+        var readmoo = window.readmoo;
+
+        if (!readmoo) {
+            readmoo = {};
+        }
+
+        readmoo.ReadmooAPI = ReadmooAPI;
+        window.readmoo = readmoo;
     }
 })();

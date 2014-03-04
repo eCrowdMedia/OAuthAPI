@@ -38,9 +38,8 @@ module.exports = function(grunt) {
             },
             compile: {
                 expand: true,
-                flatten: true,
                 cwd: '<%= config.src %>',
-                src: ['*.coffee'],
+                src: ['{,*/}*.coffee'],
                 dest: '.tmp',
                 ext: '.js'
             },
@@ -62,9 +61,10 @@ module.exports = function(grunt) {
                 src: [
                     'src/start.frag',
                     '<%= config.hellojs %>',
-                    '.tmp/readmoo_init.js',
+                    '.tmp/modules/*.js',
                     '.tmp/config.js',
                     '.tmp/main.js',
+                    '.tmp/api/*.js',
                     'src/end.frag'
                 ],
                 dest: '<%= config.dist %>/<%= pkg.name %>-<%= pkg.version %>.js'
