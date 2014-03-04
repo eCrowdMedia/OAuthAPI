@@ -1,7 +1,7 @@
 
 describe('Library API test', function () {
 
-    var ReadmooAPI = readmoo.ReadmooAPI;
+    var ReadmooAPI = readmoo.OAuthAPI;
 
     ReadmooAPI.init('efe60b2afc3447dded5e6df6fd2bd920', 'http://korprulu.ohread.com/test/oauth2/test/');
     var callback = function () {};

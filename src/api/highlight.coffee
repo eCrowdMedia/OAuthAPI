@@ -2,22 +2,23 @@
 
 do ->
 
-  library = (libraryId) ->
-    return ReadmooAPI.__a__ "me/library/#{ libraryId }"
+  highlights = (count, from, to, order) ->
 
-  library.compare = (local_ids) ->
+    data = {}
 
-    if local_ids and not local_ids instanceof Array
-      local_ids = [local_ids]
+    if count
+      data.count = count
+    if from
+      data.from = from
+    if to
+      data.to = to
+    if order
+      datta.order = order
 
-    return ReadmooAPI.__a__(
-      "me/library/compare"
-      "GET"
-      {local_ids: if local_ids then local_ids.join(',') else ""}
-    )
+    return ReadmooAPI.__a__ "highlights", "GET", data
 
   hello.utils.extend ReadmooAPI.api, {
-    library: library
+    highlights: highlights
   }
 
   return

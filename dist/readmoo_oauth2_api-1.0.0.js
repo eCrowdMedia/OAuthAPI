@@ -1,4 +1,4 @@
-/*! readmoo_oauth2_api - v1.0.0 - 2014-03-03
+/*! readmoo_oauth2_api - v1.0.0 - 2014-03-04
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var ReadmooAPI = {},
@@ -2560,6 +2560,30 @@ hello.utils.extend(ReadmooAPI, {
 })();
 
 (function() {
+  var highlights;
+  highlights = function(count, from, to, order) {
+    var data;
+    data = {};
+    if (count) {
+      data.count = count;
+    }
+    if (from) {
+      data.from = from;
+    }
+    if (to) {
+      data.to = to;
+    }
+    if (order) {
+      datta.order = order;
+    }
+    return ReadmooAPI.__a__("highlights", "GET", data);
+  };
+  hello.utils.extend(ReadmooAPI.api, {
+    highlights: highlights
+  });
+})();
+
+(function() {
   var library;
   library = function(libraryId) {
     return ReadmooAPI.__a__("me/library/" + libraryId);
@@ -2594,18 +2618,12 @@ hello.utils.extend(ReadmooAPI, {
   });
 })();
 
-    if (typeof define === 'function' && define.amd) {
-        define('readmoo_oauth', [], function() {
-            return ReadmooAPI;
-        });
-    } else {
-        var readmoo = window.readmoo;
+    var readmoo = window.readmoo;
 
-        if (!readmoo) {
-            readmoo = {};
-        }
-
-        readmoo.ReadmooAPI = ReadmooAPI;
-        window.readmoo = readmoo;
+    if (!readmoo) {
+        readmoo = {};
     }
+
+    readmoo.OAuthAPI = ReadmooAPI;
+    window.readmoo = readmoo;
 })();
