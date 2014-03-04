@@ -1,7 +1,7 @@
-/*! readmoo_oauth2_api - v1.0.0 - 2014-03-03
+/*! readmoo_oauth2_api - v1.0.2 - 2014-03-04
 * Copyright (c) 2014 ; Licensed  */
 (function() {
-    var ReadmooAPI = readmoo = {},
+    var ReadmooAPI = {},
         hash = location.hash;
 
     if (hash) {
@@ -2433,13 +2433,14 @@ utils.extend(utils, {
   return hello.init(readmooInit);
 })(hello);
 
-hello.utils.extend(readmoo, {
+hello.utils.extend(ReadmooAPI, {
   config: {
     _clientId: null,
     _redirectUri: null,
     _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library'],
     _response_type: 'token',
     _display: 'popup',
+    _others: null,
     setClientId: function(id) {
       return this._clientId = id;
     },
@@ -2488,7 +2489,17 @@ hello.utils.extend(readmoo, {
 });
 
 (function() {
-  return hello.utils.extend(readmoo, {
+  var originalHref;
+  originalHref = "_raoh_";
+  hello.on('auth.login', function() {
+    var href;
+    href = localStorage.getItem(originalHref);
+    if (href) {
+      localStorage.removeItem(originalHref);
+      window.location.href = href;
+    }
+  });
+  hello.utils.extend(ReadmooAPI, {
     _inst_: null,
     login: function(clientId, redirectUri, options) {
       var k, v;
@@ -2510,6 +2521,9 @@ hello.utils.extend(readmoo, {
         }
       }
       this.config.init(clientId, redirectUri);
+      if (redirectUri !== location.href) {
+        localStorage.setItem(originalHref, location.href);
+      }
       this._inst_.login('readmoo', {
         scope: this.config.getScope(),
         response_type: this.config.getResponseType(),
@@ -2536,19 +2550,80 @@ hello.utils.extend(readmoo, {
       this._inst_.off.apply(this._inst_, arguments);
       return this;
     },
-    api: function() {
+    __a__: function() {
       var args;
       args = Array.prototype.slice.call(arguments);
       return this._inst_.api.apply(this._inst_, args);
-    }
+    },
+    api: {}
   });
 })();
 
-    if (typeof define === 'function' && define.amd) {
-        define('readmoo_oauth', [], function() {
-            return ReadmooAPI;
-        });
-    } else {
-        window.ReadmooAPI = ReadmooAPI;
+(function() {
+  var highlights;
+  highlights = function(count, from, to, order) {
+    var data;
+    data = {};
+    if (count) {
+      data.count = count;
     }
+    if (from) {
+      data.from = from;
+    }
+    if (to) {
+      data.to = to;
+    }
+    if (order) {
+      datta.order = order;
+    }
+    return ReadmooAPI.__a__("highlights", "GET", data);
+  };
+  hello.utils.extend(ReadmooAPI.api, {
+    highlights: highlights
+  });
+})();
+
+(function() {
+  var library;
+  library = function(libraryId) {
+    return ReadmooAPI.__a__("me/library/" + libraryId);
+  };
+  library.compare = function(local_ids) {
+    if (local_ids && !local_ids instanceof Array) {
+      local_ids = [local_ids];
+    }
+    return ReadmooAPI.__a__("me/library/compare", "GET", {
+      local_ids: local_ids ? local_ids.join(',') : ""
+    });
+  };
+  hello.utils.extend(ReadmooAPI.api, {
+    library: library
+  });
+})();
+
+(function() {
+  var me, users;
+  me = function() {
+    return ReadmooAPI.__a__('me');
+  };
+  me.library = function() {
+    return ReadmooAPI.api.library.compare();
+  };
+  users = function(id) {
+    return ReadmooAPI.__a__("users/" + id);
+  };
+  return hello.utils.extend(ReadmooAPI.api, {
+    me: me,
+    users: users
+  });
+})();
+
+    var readmoo = window.readmoo;
+
+    if (!readmoo) {
+        readmoo = {};
+    }
+
+    readmoo.OAuthAPI = ReadmooAPI;
+    window.readmoo = readmoo;
 })();

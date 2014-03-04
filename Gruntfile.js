@@ -38,9 +38,8 @@ module.exports = function(grunt) {
             },
             compile: {
                 expand: true,
-                flatten: true,
                 cwd: '<%= config.src %>',
-                src: ['*.coffee'],
+                src: ['{,*/}*.coffee'],
                 dest: '.tmp',
                 ext: '.js'
             },
@@ -62,9 +61,10 @@ module.exports = function(grunt) {
                 src: [
                     'src/start.frag',
                     '<%= config.hellojs %>',
-                    '.tmp/readmoo_init.js',
+                    '.tmp/modules/*.js',
                     '.tmp/config.js',
                     '.tmp/main.js',
+                    '.tmp/api/*.js',
                     'src/end.frag'
                 ],
                 dest: '<%= config.dist %>/<%= pkg.name %>-<%= pkg.version %>.js'
@@ -172,7 +172,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     grunt.registerTask('dev', function () {
-        grunt.task.run(['clean', 'coffee', 'jshint']);
+        grunt.task.run(['clean', 'coffee', 'jshint', 'concat']);
     });
 
     grunt.registerTask('server', function () {
@@ -180,10 +180,12 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('test', function () {
-        grunt.task.run(['dev', 'concat', "jasmine"]);
+        grunt.task.run(['dev', "jasmine"]);
     });
 
+    grunt.registerTask('build', ['dev', 'uglify']);
+
     // Default task.
-    grunt.registerTask('default', ['dev', 'concat', 'uglify']);
+    grunt.registerTask('default', ['test', 'uglify']);
 
 };
