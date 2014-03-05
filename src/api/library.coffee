@@ -3,20 +3,30 @@
 do ->
 
   library = (libraryId) ->
-    return ReadmooAPI.__a__ "me/library/#{ libraryId }"
 
-  library.compare = (local_ids) ->
+    data = {}
 
-    if local_ids and not local_ids instanceof Array
-      local_ids = [local_ids]
+    return {
+      get: =>
+        if not libraryId
+          throw new TypeError('A library id need provided')
 
-    return ReadmooAPI.__a__(
-      "me/library/compare"
-      "GET"
-      {local_ids: if local_ids then local_ids.join(',') else ""}
-    )
+        return @_sp.__a__ "me/library/#{ libraryId }"
 
-  hello.utils.extend ReadmooAPI.api, {
+      compare: (local_ids) =>
+
+        if not local_ids
+          local_ids = []
+
+        if not local_ids instanceof Array
+          local_ids = [local_ids]
+
+        data.local_ids = if local_ids then local_ids.join(',') else ''
+
+        return @_sp.__a__ "me/library/compare", "GET", data
+    }
+
+  hello.utils.extend ReadmooAPI::api, {
     library: library
   }
 

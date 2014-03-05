@@ -13,12 +13,23 @@ do ->
     if to
       data.to = to
     if order
-      datta.order = order
+      data.order = order
 
-    return ReadmooAPI.__a__ "highlights", "GET", data
+    return {
+      get: =>
+        return @_sp.__a__ "highlights", "GET", data
 
-  hello.utils.extend ReadmooAPI.api, {
+      users: (userId) =>
+
+        if not userId
+          throw new TypeError('An user id must be provided')
+
+        return @_sp.__a__ "users/#{ userId }/highlights", "GET", data
+    }
+
+  hello.utils.extend ReadmooAPI::api, {
     highlights: highlights
   }
 
   return
+

@@ -2,15 +2,21 @@
 do ->
 
   me = ->
-    return ReadmooAPI.__a__ 'me'
+    return {
+      get: =>
+        return @_sp.__a__ 'me'
+    }
 
-  me.library = ->
-    return ReadmooAPI.api.library.compare()
+  users = (userId) ->
+    return {
+      get: =>
+        if not userId
+          throw new TypeError "An user id need provided"
 
-  users = (id) ->
-    return ReadmooAPI.__a__ "users/#{ id }"
+        return @_sp.__a__ "users/#{ userId }"
+    }
 
-  hello.utils.extend ReadmooAPI.api, {
+  hello.utils.extend ReadmooAPI.prototype.api, {
     me: me
     users: users
   }
