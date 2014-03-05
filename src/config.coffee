@@ -1,56 +1,63 @@
-### global ReadmooAPI: true ###
+### jshint -W004: true ###
 
-hello.utils.extend ReadmooAPI, {
-  config:
-    _clientId: null
-    _redirectUri: null
-    _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library']
-    _response_type: 'token'
-    _display: 'popup'
-    _others: null
+class Configuration
+  _inst_: null
+  _clientId: null
+  _redirectUri: null
+  _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library']
+  _response_type: 'token'
+  _display: 'popup'
+  _others: null
 
-    setClientId: (id) ->
-      @_clientId = id
+  setClientId: (id) ->
+    @_clientId = id
 
-    getClientId: ->
-      return @_clientId
+  getClientId: ->
+    return @_clientId
 
-    setRedirectUri: (uri) ->
-      @_redirectUri = uri
+  setRedirectUri: (uri) ->
+    @_redirectUri = uri
 
-    getRedirectUri: ->
-      return @_redirectUri
+  getRedirectUri: ->
+    return @_redirectUri
 
-    setScope: (scope) ->
-      @_scope = scope
+  setScope: (scope) ->
+    if scope instanceof Array
+      _scope = scope.join(',')
+    else
+      _scope = scope
 
-    getScope: ->
-      return @_scope
+    @_scope = _scope
 
-    setResponseType: (type) ->
-      @_response_type = type
+  getScope: ->
+    return @_scope.split(',')
 
-    getResponseType: ->
-      return @_response_type
+  setResponseType: (type) ->
+    @_response_type = type
 
-    setDisplay: (display) ->
-      @_display = display
+  getResponseType: ->
+    return @_response_type
 
-    getDisplay: ->
-      return @_display
+  setDisplay: (display) ->
+    @_display = display
 
-    init: (client_id, redirect_uri) ->
+  getDisplay: ->
+    return @_display
 
-      if client_id
-        @setClientId client_id
-      if redirect_uri
-        @setRedirectUri redirect_uri
+  constructor: (@_clientId, @_redirectUri, options) ->
 
-      hello.init(
-        {readmoo: client_id or @getClientId()}
-        {redirect_uri: redirect_uri or @getRedirectUri()}
-      )
+    if options
+      if options.scope
+        @setScope options.scope
+      if options.display
+        @setDisplay options.display
+      if options.responseType
+        @setResponseType options.responseType
 
-      return hello('readmoo')
-}
+    hello.init(
+      {readmoo: @_clientId}
+      {redirect_uri: @_redirectUri}
+    )
+
+    @_inst_ = hello('readmoo')
 

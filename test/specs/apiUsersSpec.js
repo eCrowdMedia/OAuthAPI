@@ -2,21 +2,13 @@
 
 describe('Users API test', function () {
 
-    var ReadmooAPI = readmoo.OAuthAPI;
-
-    ReadmooAPI.init('efe60b2afc3447dded5e6df6fd2bd920', 'http://korprulu.ohread.com/test/oauth2/test/');
-    var callback = function () {
-        console.log('already login');
-    };
-    ReadmooAPI.on('auth.login', callback);
-    // ReadmooAPI.login();
+    var ReadmooAPI = new readmoo.OAuthAPI('efe60b2afc3447dded5e6df6fd2bd920', 'http://korprulu.ohread.com/test/oauth2/test/');
 
     var userId;
 
     beforeEach(function (done) {
         if (!ReadmooAPI.online()) {
-            callback = done;
-            ReadmooAPI.login();
+            ReadmooAPI.login(done);
         } else {
             done();
         }
@@ -24,7 +16,7 @@ describe('Users API test', function () {
 
     it('me', function (done) {
 
-        ReadmooAPI.api.me().success(function (data) {
+        ReadmooAPI.api.me().get().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
             expect(!!(data.user && data.user.id)).toBe(true);
@@ -39,7 +31,7 @@ describe('Users API test', function () {
 
     it('get user data by id', function (done) {
 
-        ReadmooAPI.api.users(userId).success(function (data) {
+        ReadmooAPI.api.users(userId).get().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
             expect(data.user.id).toEqual(userId);

@@ -1,8 +1,7 @@
-/*! readmoo_oauth2_api - v1.0.2 - 2014-03-04
+/*! readmoo_oauth2_api - v1.0.2 - 2014-03-05
 * Copyright (c) 2014 ; Licensed  */
 (function() {
-    var ReadmooAPI = {},
-        hash = location.hash;
+    var hash = location.hash;
 
     if (hash) {
         if (hash[0] === '#') {
@@ -2405,8 +2404,15 @@ utils.extend(utils, {
         'me': 'me'
       },
       xhr: function(p) {
+        if (!localStorage.hello) {
+          return false;
+        }
+        hello = JSON.parse(localStorage.hello);
+        if (!hello.readmoo || !hello.readmoo.client_id) {
+          return false;
+        }
         p.headers = {
-          'Authorization': 'Client ' + this.id
+          'Authorization': 'Client ' + hello.readmoo.client_id
         };
         return true;
       },
@@ -2433,136 +2439,168 @@ utils.extend(utils, {
   return hello.init(readmooInit);
 })(hello);
 
-hello.utils.extend(ReadmooAPI, {
-  config: {
-    _clientId: null,
-    _redirectUri: null,
-    _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library'],
-    _response_type: 'token',
-    _display: 'popup',
-    _others: null,
-    setClientId: function(id) {
-      return this._clientId = id;
-    },
-    getClientId: function() {
-      return this._clientId;
-    },
-    setRedirectUri: function(uri) {
-      return this._redirectUri = uri;
-    },
-    getRedirectUri: function() {
-      return this._redirectUri;
-    },
-    setScope: function(scope) {
-      return this._scope = scope;
-    },
-    getScope: function() {
-      return this._scope;
-    },
-    setResponseType: function(type) {
-      return this._response_type = type;
-    },
-    getResponseType: function() {
-      return this._response_type;
-    },
-    setDisplay: function(display) {
-      return this._display = display;
-    },
-    getDisplay: function() {
-      return this._display;
-    },
-    init: function(client_id, redirect_uri) {
-      if (client_id) {
-        this.setClientId(client_id);
-      }
-      if (redirect_uri) {
-        this.setRedirectUri(redirect_uri);
-      }
-      hello.init({
-        readmoo: client_id || this.getClientId()
-      }, {
-        redirect_uri: redirect_uri || this.getRedirectUri()
-      });
-      return hello('readmoo');
+var Configuration;
+
+Configuration = (function() {
+  Configuration.prototype._inst_ = null;
+
+  Configuration.prototype._clientId = null;
+
+  Configuration.prototype._redirectUri = null;
+
+  Configuration.prototype._scope = ['reading', 'highlight', 'like', 'comment', 'me', 'library'];
+
+  Configuration.prototype._response_type = 'token';
+
+  Configuration.prototype._display = 'popup';
+
+  Configuration.prototype._others = null;
+
+  Configuration.prototype.setClientId = function(id) {
+    return this._clientId = id;
+  };
+
+  Configuration.prototype.getClientId = function() {
+    return this._clientId;
+  };
+
+  Configuration.prototype.setRedirectUri = function(uri) {
+    return this._redirectUri = uri;
+  };
+
+  Configuration.prototype.getRedirectUri = function() {
+    return this._redirectUri;
+  };
+
+  Configuration.prototype.setScope = function(scope) {
+    var _scope;
+    if (scope instanceof Array) {
+      _scope = scope.join(',');
+    } else {
+      _scope = scope;
     }
+    return this._scope = _scope;
+  };
+
+  Configuration.prototype.getScope = function() {
+    return this._scope.split(',');
+  };
+
+  Configuration.prototype.setResponseType = function(type) {
+    return this._response_type = type;
+  };
+
+  Configuration.prototype.getResponseType = function() {
+    return this._response_type;
+  };
+
+  Configuration.prototype.setDisplay = function(display) {
+    return this._display = display;
+  };
+
+  Configuration.prototype.getDisplay = function() {
+    return this._display;
+  };
+
+  function Configuration(_clientId, _redirectUri, options) {
+    this._clientId = _clientId;
+    this._redirectUri = _redirectUri;
+    if (options) {
+      if (options.scope) {
+        this.setScope(options.scope);
+      }
+      if (options.display) {
+        this.setDisplay(options.display);
+      }
+      if (options.responseType) {
+        this.setResponseType(options.responseType);
+      }
+    }
+    hello.init({
+      readmoo: this._clientId
+    }, {
+      redirect_uri: this._redirectUri
+    });
+    this._inst_ = hello('readmoo');
   }
-});
+
+  return Configuration;
+
+})();
+
+/* jshint -W004: true*/
+
+var ReadmooAPI, _ORIGINAL_HREF;
+
+_ORIGINAL_HREF = "_raoh_";
 
 (function() {
-  var originalHref;
-  originalHref = "_raoh_";
-  hello.on('auth.login', function() {
-    var href;
-    href = localStorage.getItem(originalHref);
-    if (href) {
-      localStorage.removeItem(originalHref);
-      window.location.href = href;
+  var href;
+  href = localStorage.getItem(_ORIGINAL_HREF);
+  if (href) {
+    localStorage.removeItem(_ORIGINAL_HREF);
+    window.location.href = href;
+  }
+})();
+
+ReadmooAPI = (function() {
+  ReadmooAPI.prototype._inst_ = null;
+
+  function ReadmooAPI(clientId, redirectUri, options) {
+    this.config = new Configuration(clientId, redirectUri, options);
+    this._inst_ = this.config._inst_;
+    this.api._sp = this;
+  }
+
+  ReadmooAPI.prototype.login = function(callback) {
+    if (this.config.getRedirectUri() !== location.href) {
+      localStorage.setItem(_ORIGINAL_HREF, location.href);
     }
-  });
-  hello.utils.extend(ReadmooAPI, {
-    _inst_: null,
-    login: function(clientId, redirectUri, options) {
-      var k, v;
-      if (options) {
-        for (k in options) {
-          v = options[k];
-          if (options.hasOwnProperty(k)) {
-            switch (k) {
-              case 'scope':
-                this.config.setScope(v);
-                break;
-              case 'responseType':
-                this.config.setResponseType(v);
-                break;
-              case 'display':
-                this.config.setDisplay(v);
-            }
-          }
-        }
-      }
-      this.config.init(clientId, redirectUri);
-      if (redirectUri !== location.href) {
-        localStorage.setItem(originalHref, location.href);
-      }
-      this._inst_.login('readmoo', {
-        scope: this.config.getScope(),
-        response_type: this.config.getResponseType(),
-        display: this.config.getDisplay()
-      });
-    },
-    logout: function(callback) {
-      this._inst_.logout('readmoo', callback);
-    },
-    online: function() {
-      var current_time, session;
-      session = this._inst_.getAuthResponse();
-      current_time = (new Date()).getTime() / 1000;
-      return session && session.access_token && session.expires > current_time;
-    },
-    init: function() {
-      this._inst_ = this.config.init.apply(this.config, arguments);
-    },
-    on: function() {
-      this._inst_.on.apply(this._inst_, arguments);
-      return this;
-    },
-    off: function() {
-      this._inst_.off.apply(this._inst_, arguments);
-      return this;
-    },
-    __a__: function() {
-      var args;
-      args = Array.prototype.slice.call(arguments);
-      return this._inst_.api.apply(this._inst_, args);
-    },
-    api: {}
-  });
+    this._inst_.login('readmoo', {
+      scope: this.config.getScope(),
+      response_type: this.config.getResponseType(),
+      display: this.config.getDisplay()
+    }, callback);
+  };
+
+  ReadmooAPI.prototype.logout = function(callback) {
+    this._inst_.logout('readmoo', callback);
+  };
+
+  ReadmooAPI.prototype.online = function() {
+    var current_time, session;
+    session = this._inst_.getAuthResponse();
+    current_time = (new Date()).getTime() / 1000;
+    return session && session.access_token && session.expires > current_time;
+  };
+
+  ReadmooAPI.prototype.on = function() {
+    this._inst_.on.apply(this._inst_, arguments);
+    return this;
+  };
+
+  ReadmooAPI.prototype.off = function() {
+    this._inst_.off.apply(this._inst_, arguments);
+    return this;
+  };
+
+  ReadmooAPI.prototype.__a__ = function() {
+    var args;
+    args = Array.prototype.slice.call(arguments);
+    return this._inst_.api.apply(this._inst_, args);
+  };
+
+  ReadmooAPI.prototype.api = {};
+
+  return ReadmooAPI;
+
 })();
 
 (function() {
   var highlights;
   highlights = function(count, from, to, order) {
-    var data;
+    var data,
+      _this = this;
     data = {};
     if (count) {
       data.count = count;
@@ -2574,11 +2612,21 @@ hello.utils.extend(ReadmooAPI, {
       data.to = to;
     }
     if (order) {
-      datta.order = order;
+      data.order = order;
     }
-    return ReadmooAPI.__a__("highlights", "GET", data);
+    return {
+      get: function() {
+        return _this._sp.__a__("highlights", "GET", data);
+      },
+      users: function(userId) {
+        if (!userId) {
+          throw new TypeError('An user id must be provided');
+        }
+        return _this._sp.__a__("users/" + userId + "/highlights", "GET", data);
+      }
+    };
   };
-  hello.utils.extend(ReadmooAPI.api, {
+  hello.utils.extend(ReadmooAPI.prototype.api, {
     highlights: highlights
   });
 })();
@@ -2586,17 +2634,29 @@ hello.utils.extend(ReadmooAPI, {
 (function() {
   var library;
   library = function(libraryId) {
-    return ReadmooAPI.__a__("me/library/" + libraryId);
+    var data,
+      _this = this;
+    data = {};
+    return {
+      get: function() {
+        if (!libraryId) {
+          throw new TypeError('A library id need provided');
+        }
+        return _this._sp.__a__("me/library/" + libraryId);
+      },
+      compare: function(local_ids) {
+        if (!local_ids) {
+          local_ids = [];
+        }
+        if (!local_ids instanceof Array) {
+          local_ids = [local_ids];
+        }
+        data.local_ids = local_ids ? local_ids.join(',') : '';
+        return _this._sp.__a__("me/library/compare", "GET", data);
+      }
+    };
   };
-  library.compare = function(local_ids) {
-    if (local_ids && !local_ids instanceof Array) {
-      local_ids = [local_ids];
-    }
-    return ReadmooAPI.__a__("me/library/compare", "GET", {
-      local_ids: local_ids ? local_ids.join(',') : ""
-    });
-  };
-  hello.utils.extend(ReadmooAPI.api, {
+  hello.utils.extend(ReadmooAPI.prototype.api, {
     library: library
   });
 })();
@@ -2604,15 +2664,25 @@ hello.utils.extend(ReadmooAPI, {
 (function() {
   var me, users;
   me = function() {
-    return ReadmooAPI.__a__('me');
+    var _this = this;
+    return {
+      get: function() {
+        return _this._sp.__a__('me');
+      }
+    };
   };
-  me.library = function() {
-    return ReadmooAPI.api.library.compare();
+  users = function(userId) {
+    var _this = this;
+    return {
+      get: function() {
+        if (!userId) {
+          throw new TypeError("An user id need provided");
+        }
+        return _this._sp.__a__("users/" + userId);
+      }
+    };
   };
-  users = function(id) {
-    return ReadmooAPI.__a__("users/" + id);
-  };
-  return hello.utils.extend(ReadmooAPI.api, {
+  return hello.utils.extend(ReadmooAPI.prototype.api, {
     me: me,
     users: users
   });

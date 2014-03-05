@@ -1,6 +1,5 @@
 (function() {
-    var ReadmooAPI = {},
-        hash = location.hash;
+    var hash = location.hash;
 
     if (hash) {
         if (hash[0] === '#') {

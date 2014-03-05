@@ -14,33 +14,43 @@ do (hello) ->
         like: 'like'
         comment: 'comment'
         library: 'library'
-  
+
       get:
         'me': 'me'
-  
+
       xhr: (p) ->
+
+        if not localStorage.hello
+          return false
+
+        hello = JSON.parse localStorage.hello
+
+        if not hello.readmoo or not hello.readmoo.client_id
+          return false
+
         p.headers = {
-          'Authorization': 'Client ' + @id
+          'Authorization': 'Client ' + hello.readmoo.client_id
         }
+
         return true
-  
+
       logout: (opt) ->
         callback = opt.callback
-  
+
         xhr = new XMLHttpRequest()
-  
+
         xhr.onreadystatechange = ->
-  
+
           if xhr.readyState is xhr.DOME
             switch xhr.status
               when 200
                 callback(true)
               else
                 callback(false)
-  
+
           return
-  
+
         xhr.open 'GET', @oauth.logout, true
         xhr.send()
-  
+
   hello.init readmooInit
