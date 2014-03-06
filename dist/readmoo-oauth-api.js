@@ -2448,7 +2448,7 @@ Configuration = (function() {
 
   Configuration.prototype._redirectUri = null;
 
-  Configuration.prototype._scope = ['reading', 'highlight', 'like', 'comment', 'me', 'library'];
+  Configuration.prototype._scope = ['reading', 'highlight', 'like', 'comment', 'me', 'library'].join(',');
 
   Configuration.prototype._response_type = 'token';
 
