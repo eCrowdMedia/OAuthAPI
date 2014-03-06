@@ -1,11 +1,11 @@
 {
-  "name": "readmoo_oauth2",
-  "version": "1.0.0",
+  "name": "readmoo-oauth-api",
+  "version": "1.0.4",
   "authors": [
     "Kevin Chiu <kevin@readmoo.com>"
   ],
-  "description": "Readmoo OAuth 2 API",
-  "license": "''",
+  "description": "Readmoo OAuth API",
+  "license": "LGPLv3",
   "homepage": "https://readmoo.com",
   "ignore": [
     "**/.*",
