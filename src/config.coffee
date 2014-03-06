@@ -4,7 +4,7 @@ class Configuration
   _inst_: null
   _clientId: null
   _redirectUri: null
-  _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library']
+  _scope: ['reading', 'highlight', 'like', 'comment', 'me', 'library'].join(',')
   _response_type: 'token'
   _display: 'popup'
   _others: null
