@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.0.4 - 2014-03-06
+/*! readmoo-oauth-api - v1.1.1 - 2014-03-06
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
