@@ -67,7 +67,7 @@ module.exports = function(grunt) {
                     '.tmp/api/*.js',
                     'src/end.frag'
                 ],
-                dest: '<%= config.dist %>/<%= pkg.name %>-<%= pkg.version %>.js'
+                dest: '<%= config.dist %>/<%= pkg.name %>.js'
             },
             server: {
                 src: '<%= concat.dist.src %>',
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: '<%= concat.dist.dest %>',
-                dest: '<%= config.dist %>/<%= pkg.name %>-<%= pkg.version %>.min.js'
+                dest: '<%= config.dist %>/<%= pkg.name %>.min.js'
             }
         },
         jshint: {
@@ -150,7 +150,7 @@ module.exports = function(grunt) {
         },
         jasmine: {
             test: {
-                src: ['.tmp/readmoo_oauth2_api.js'],
+                src: ['.tmp/<%= pkg.name %>.js'],
                 options: {
                     outfile: 'test/index.html',
                     specs: 'test/specs/*Spec.js',
