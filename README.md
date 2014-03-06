@@ -8,6 +8,5 @@ This is oauth module for readmoo api.
 How to use
 ==========
 
-Please refer to test/index.html.
-=======
+Please refer specs in test/specs folder.
 
