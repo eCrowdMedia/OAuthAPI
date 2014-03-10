@@ -43,7 +43,7 @@ describe('Readings API test', function () {
     });
 
     it("retrieve readings by userId", function (done) {
-        ReadmooAPI.api.readings({userId: userId, book_id: '210000012000101'}).getReadingsByUserId().success(function (data) {
+        ReadmooAPI.api.readings({userId: userId, book_id: '210000012000101'}).getReadingsByUserIdWithMatch().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
             expect(data.items).toBeDefined();
@@ -51,6 +51,35 @@ describe('Readings API test', function () {
             done();
         }).error(function () {
             expect(false).toBe(true);
+            done();
+        });
+    });
+
+    it('create reading', function (done) {
+        var defer,
+            options = {
+                book_id: bookId
+            };
+
+        options['reading[state]'] = ReadmooAPI.api.readings.STATE_READING;
+
+        defer = ReadmooAPI.api.readings(options).createReadingByBookId();
+        defer.success(function (data) {
+
+            var reading;
+
+            expect(data).toBeDefined();
+            // created
+            expect(data.status).toEqual(201);
+
+            reading = data.reading;
+
+            expect(reading.state).toEqual(ReadmooAPI.api.readings.STATE_READING);
+            expect(reading.book.id).toEqual(bookId);
+            done();
+
+        }).error(function () {
+            expect(false).toBeTruthy();
             done();
         });
     });
