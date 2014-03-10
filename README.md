@@ -1,8 +1,24 @@
+Readmoo OAuth API
+=================
 
-Readmoo OAuth Module
-=====================
+This is an oauth api library for readmoo api.
 
-This is oauth module for readmoo api.
+
+Install
+=======
+
+Install from bower,
+
+```bash
+bower install readmoo-oauth-api --save
+```
+
+
+and add srcipt into html.
+
+```html
+<script src="bower_components/readmoo-oauth-api/dist/readmoo-oauth-api.min.js"></script>
+```
 
 
 How to use
