@@ -2414,6 +2414,10 @@ utils.extend(utils, {
         p.headers = {
           'Authorization': 'Client ' + hello.readmoo.client_id
         };
+        if (/^post$/i.test(p.method)) {
+          p.data = p.data || {};
+          p.data['access_token'] = hello.readmoo.access_token;
+        }
         return true;
       },
       logout: function(opt) {
@@ -2596,6 +2600,22 @@ ReadmooAPI = (function() {
 
 })();
 
+var _util;
+
+_util = {
+  paramFilter: function(options, includes) {
+    var data, n, _i, _len;
+    data = {};
+    for (_i = 0, _len = includes.length; _i < _len; _i++) {
+      n = includes[_i];
+      if (options.hasOwnProperty(n)) {
+        data[n] = options[n];
+      }
+    }
+    return data;
+  }
+};
+
 (function() {
   var highlights;
   highlights = function(options) {
@@ -2687,10 +2707,10 @@ ReadmooAPI = (function() {
     ORDER_POPULAR: 'popular',
     ORDER_FRIENDS_FIRST: 'friends_first',
     FILTER_FOLLOWINGS: 'followings',
-    STATES_INTERESTING: 'interesting',
-    STATES_READING: 'reading',
-    STATES_FINISHED: 'finished',
-    STATES_ABANDONED: 'abandoned'
+    STATE_INTERESTING: 'interesting',
+    STATE_READING: 'reading',
+    STATE_FINISHED: 'finished',
+    STATE_ABANDONED: 'abandoned'
   };
   /*
   #
@@ -2698,29 +2718,11 @@ ReadmooAPI = (function() {
   */
 
   readings = function(options) {
-    var data, k, v,
-      _this = this;
-    data = {};
-    for (k in options) {
-      v = options[k];
-      switch (k) {
-        case 'highlights_count_from':
-          data['highlights_count[from]'] = v;
-          break;
-        case 'highlights_count_to':
-          data['highlights_count[to]'] = v;
-          break;
-        case 'userId':
-          break;
-        default:
-          data[k] = v;
-      }
-    }
+    var _this = this;
     return {
       /*
       # @method get
       # @param {Object} [options] Options
-      #   @param {String} [options.userId] user id
       #   @param {Number} [options.count] count
       #     The number of results to return. Default is 20, max 100.
       #   @param {Date} [options.from] from
@@ -2735,9 +2737,9 @@ ReadmooAPI = (function() {
       #     and in ascending order when from is given.
       #   @param {String} [options.filter] filter
       #     Filter a set of readings in different ways.
-      #   @param {Number} [options.highlights_count_from] highlights_count[from]
+      #   @param {Number} [options.highlights_count[from]] highlights_count[from]
       #     Only include readings which have equal or more highlights.
-      #   @param {Number} [options.highlights_count_to] highlights_count[to]
+      #   @param {Number} [options.highlights_count[to]] highlights_count[to]
       #     Only include readings which have less or equal highlights.
       #   @param {String} [options.states] states
       #     Only return readings that are in certain states. Accepts a
@@ -2745,6 +2747,8 @@ ReadmooAPI = (function() {
       */
 
       get: function() {
+        var data;
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order', 'filter', 'highlights_count[from]', 'highlights_count[to]', 'states']);
         return _this._sp.__a__("readings", "GET", data);
       },
       /*
@@ -2756,13 +2760,30 @@ ReadmooAPI = (function() {
       #   @param {String} [options.title] Title
       #   @param {String} [options.identifier] Identifier
       #   @param {String} [options.book_id] Book ID
+      # @param {Object} options2 Options 2
+      #   @param {String} options.bookId Book ID
       */
 
-      getReadingsByUserId: function() {
+      getReadingsByUserIdWithMatch: function() {
+        var data;
         if (!options.userId) {
           throw new TypeError("An user id need provided");
         }
+        data = _util.paramFilter(options, ['author', 'title', 'identifier', 'book_id']);
         return _this._sp.__a__("users/" + options.userId + "/readings/match", "GET", data);
+      },
+      createReadingByBookId: function() {
+        var bookId, data, state;
+        state = options['reading[state]'];
+        bookId = options.book_id;
+        if (!bookId) {
+          throw new TypeError("A book id need to provided");
+        }
+        if (!state || !(state === CONST.STATE_INTERESTING || state === CONST.STATE_READING)) {
+          throw new TypeError("State value must be `interesting` or `reading`");
+        }
+        data = _util.paramFilter(options, ['reading[state]', 'reading[private]', 'reading[started_at]', 'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]', 'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]']);
+        return _this._sp.__a__("books/" + bookId + "/readings", "POST", data);
       }
     };
   };
