@@ -2,29 +2,61 @@
 
 do ->
 
-  highlights = (count, from, to, order) ->
+  highlights = (options) ->
 
     data = {}
 
-    if count
-      data.count = count
-    if from
-      data.from = from
-    if to
-      data.to = to
-    if order
-      data.order = order
+    for k, v of options
+      switch k
+        when 'count'
+          data.count = count
+        when 'from'
+          data.from = from
+        when 'to'
+          data.to = to
+        when 'order'
+          data.order = order
+        when 'userId'
+          break
+        else
+          data[k] = v
 
     return {
+      ###
+      # @param {Object} [options]
+      #   @param {Number} [options.count] The number of results to return
+      #   @param {String} [options.from] Return results whose order field is larger or equal to this parameter
+      #   @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
+      #   @param {String} [options.order] Return results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
+      ###
       get: =>
         return @_sp.__a__ "highlights", "GET", data
+      
+      ###
+      #  @param {Object} [options]
+      #    @param {Number} options.id The numerical id of the desired resource
+      #    @param {Number} [options.count] The number of results to return. Default is 20, max 100
+      #    @param {String} [options.from] Return results whose order field is larger or equal to this parameter
+      #    @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
+      #    @param {String} [options.order] Return results sorted on this field
+      ###
+      getHighlightsByUserId: =>
 
-      users: (userId) =>
-
-        if not userId
+        if not options.userId
           throw new TypeError('An user id must be provided')
 
-        return @_sp.__a__ "users/#{ userId }/highlights", "GET", data
+        return @_sp.__a__ "users/#{ options.userId }/highlights", "GET", data
+
+      ###
+      #  @param {Object} [options]
+      #    @param {Number} options.id The numerical id of the desired resource
+      #    @param {Number} [options.count] The number of results to return. Default is 20, max 100
+      #    @param {String} [options.from] Return results whose order field is larger or equal to this parameter
+      #    @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
+      #    @param {String} [options.order] Return results sorted on this field
+      ###
+      getHighlightsByReadingId: =>
+        #
     }
 
   hello.utils.extend ReadmooAPI::api, {

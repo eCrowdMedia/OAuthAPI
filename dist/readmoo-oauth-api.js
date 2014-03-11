@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.1.1 - 2014-03-06
+/*! readmoo-oauth-api - v1.1.1 - 2014-03-10
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2598,32 +2598,50 @@ ReadmooAPI = (function() {
 
 (function() {
   var highlights;
-  highlights = function(count, from, to, order) {
-    var data,
+  highlights = function(options) {
+    var data, k, v,
       _this = this;
     data = {};
-    if (count) {
-      data.count = count;
-    }
-    if (from) {
-      data.from = from;
-    }
-    if (to) {
-      data.to = to;
-    }
-    if (order) {
-      data.order = order;
+    for (k in options) {
+      v = options[k];
+      switch (k) {
+        case 'count':
+          data.count = count;
+          break;
+        case 'from':
+          data.from = from;
+          break;
+        case 'to':
+          data.to = to;
+          break;
+        case 'order':
+          data.order = order;
+          break;
+        case 'userId':
+          break;
+        default:
+          data[k] = v;
+      }
     }
     return {
+      /*
+      # @param {Object} [options]
+      #   @param {Number} [options.count]
+      #   @param {String} [options.from]
+      #   @param {String} [options.to]
+      #   @param {String} [options.order]
+      */
+
       get: function() {
         return _this._sp.__a__("highlights", "GET", data);
       },
-      users: function(userId) {
-        if (!userId) {
+      getHighlightsByUserId: function() {
+        if (!options.userId) {
           throw new TypeError('An user id must be provided');
         }
-        return _this._sp.__a__("users/" + userId + "/highlights", "GET", data);
-      }
+        return _this._sp.__a__("users/" + options.userId + "/highlights", "GET", data);
+      },
+      getHighlightsByReadingId: function() {}
     };
   };
   hello.utils.extend(ReadmooAPI.prototype.api, {
@@ -2658,6 +2676,99 @@ ReadmooAPI = (function() {
   };
   hello.utils.extend(ReadmooAPI.prototype.api, {
     library: library
+  });
+})();
+
+(function() {
+  var CONST, readings;
+  CONST = {
+    ORDER_TOUCHED_AT: 'touched_at',
+    ORDER_CREATED_AT: 'created_at',
+    ORDER_POPULAR: 'popular',
+    ORDER_FRIENDS_FIRST: 'friends_first',
+    FILTER_FOLLOWINGS: 'followings',
+    STATES_INTERESTING: 'interesting',
+    STATES_READING: 'reading',
+    STATES_FINISHED: 'finished',
+    STATES_ABANDONED: 'abandoned'
+  };
+  /*
+  #
+  # @class Readings
+  */
+
+  readings = function(options) {
+    var data, k, v,
+      _this = this;
+    data = {};
+    for (k in options) {
+      v = options[k];
+      switch (k) {
+        case 'highlights_count_from':
+          data['highlights_count[from]'] = v;
+          break;
+        case 'highlights_count_to':
+          data['highlights_count[to]'] = v;
+          break;
+        case 'userId':
+          break;
+        default:
+          data[k] = v;
+      }
+    }
+    return {
+      /*
+      # @method get
+      # @param {Object} [options] Options
+      #   @param {String} [options.userId] user id
+      #   @param {Number} [options.count] count
+      #     The number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] from
+      #     Return results whose order field is larger or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] to
+      #     Return results whose order field is smaller or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] order
+      #     Return results sorted on this field. Defaults to created_at.
+      #     Results are returned in descending order when to is given,
+      #     and in ascending order when from is given.
+      #   @param {String} [options.filter] filter
+      #     Filter a set of readings in different ways.
+      #   @param {Number} [options.highlights_count_from] highlights_count[from]
+      #     Only include readings which have equal or more highlights.
+      #   @param {Number} [options.highlights_count_to] highlights_count[to]
+      #     Only include readings which have less or equal highlights.
+      #   @param {String} [options.states] states
+      #     Only return readings that are in certain states. Accepts a
+      #     comma separated list.
+      */
+
+      get: function() {
+        return _this._sp.__a__("readings", "GET", data);
+      },
+      /*
+      #
+      # @method getReadingsByUserId
+      # @param {Object} options Options
+      #   @param {String} options.userId User ID
+      #   @param {String} [options.author] Author
+      #   @param {String} [options.title] Title
+      #   @param {String} [options.identifier] Identifier
+      #   @param {String} [options.book_id] Book ID
+      */
+
+      getReadingsByUserId: function() {
+        if (!options.userId) {
+          throw new TypeError("An user id need provided");
+        }
+        return _this._sp.__a__("users/" + options.userId + "/readings/match", "GET", data);
+      }
+    };
+  };
+  hello.utils.extend(readings, CONST);
+  hello.utils.extend(ReadmooAPI.prototype.api, {
+    readings: readings
   });
 })();
 
