@@ -66,12 +66,29 @@ do ->
       ###
       #
       # @method getReadingsByUserId
-      # @param {Object} options Options
-      #   @param {String} options.userId User ID
-      #   @param {String} [options.author] Author
-      #   @param {String} [options.title] Title
-      #   @param {String} [options.identifier] Identifier
-      #   @param {String} [options.book_id] Book ID
+      # @param {Object} [options] Options
+      #   @param {String} [options.userId] user id
+      #   @param {Number} [options.count] count
+      #     The number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] from
+      #     Return results whose order field is larger or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] to
+      #     Return results whose order field is smaller or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] order
+      #     Return results sorted on this field. Defaults to created_at.
+      #     Results are returned in descending order when to is given,
+      #     and in ascending order when from is given.
+      #   @param {String} [options.filter] filter
+      #     Filter a set of readings in different ways.
+      #   @param {Number} [options.highlights_count_from] highlights_count[from]
+      #     Only include readings which have equal or more highlights.
+      #   @param {Number} [options.highlights_count_to] highlights_count[to]
+      #     Only include readings which have less or equal highlights.
+      #   @param {String} [options.states] states
+      #     Only return readings that are in certain states. Accepts a
+      #     comma separated list.
       ###
       getReadingsByUserId: =>
 
