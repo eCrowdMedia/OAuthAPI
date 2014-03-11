@@ -2,29 +2,45 @@
 
 do ->
 
-  highlights = (count, from, to, order) ->
+  highlights = (options) ->
 
     data = {}
 
-    if count
-      data.count = count
-    if from
-      data.from = from
-    if to
-      data.to = to
-    if order
-      data.order = order
+    for k, v of options
+      switch k
+        when 'count'
+          data.count = count
+        when 'from'
+          data.from = from
+        when 'to'
+          data.to = to
+        when 'order'
+          data.order = order
+        when 'userId'
+          break
+        else
+          data[k] = v
 
     return {
+      ###
+      # @param {Object} [options]
+      #   @param {Number} [options.count]
+      #   @param {String} [options.from]
+      #   @param {String} [options.to]
+      #   @param {String} [options.order]
+      ###
       get: =>
         return @_sp.__a__ "highlights", "GET", data
 
-      users: (userId) =>
+      getHighlightsByUserId: =>
 
-        if not userId
+        if not options.userId
           throw new TypeError('An user id must be provided')
 
-        return @_sp.__a__ "users/#{ userId }/highlights", "GET", data
+        return @_sp.__a__ "users/#{ options.userId }/highlights", "GET", data
+
+      getHighlightsByReadingId: =>
+        #
     }
 
   hello.utils.extend ReadmooAPI::api, {
