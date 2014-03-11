@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.1.1 - 2014-03-10
+/*! readmoo-oauth-api - v1.1.1 - 2014-03-11
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2615,6 +2615,34 @@ _util = {
     return data;
   }
 };
+
+(function() {
+  /*
+  #
+  # @class Books
+  */
+
+  var books;
+  books = function(options) {
+    var _this = this;
+    return {
+      /*
+      # @method getBookById
+      # @param {String} book_id Book ID
+      */
+
+      getBookByBookId: function() {
+        if (!options.book_id) {
+          throw new TypeError("A book id need provided");
+        }
+        return _this._sp.__a__("books/" + options.book_id);
+      }
+    };
+  };
+  hello.utils.extend(ReadmooAPI.prototype.api, {
+    books: books
+  });
+})();
 
 (function() {
   var highlights;
