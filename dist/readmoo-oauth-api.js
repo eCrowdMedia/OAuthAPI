@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.1.1 - 2014-03-06
+/*! readmoo-oauth-api - v1.1.1 - 2014-03-11
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2414,6 +2414,10 @@ utils.extend(utils, {
         p.headers = {
           'Authorization': 'Client ' + hello.readmoo.client_id
         };
+        if (/^post$/i.test(p.method)) {
+          p.data = p.data || {};
+          p.data['access_token'] = hello.readmoo.access_token;
+        }
         return true;
       },
       logout: function(opt) {
@@ -2596,34 +2600,96 @@ ReadmooAPI = (function() {
 
 })();
 
+var _util;
+
+_util = {
+  paramFilter: function(options, includes) {
+    var data, n, _i, _len;
+    data = {};
+    for (_i = 0, _len = includes.length; _i < _len; _i++) {
+      n = includes[_i];
+      if (options.hasOwnProperty(n)) {
+        data[n] = options[n];
+      }
+    }
+    return data;
+  }
+};
+
+(function() {
+  /*
+  #
+  # @class Books
+  */
+
+  var books;
+  books = function(options) {
+    var _this = this;
+    return {
+      /*
+      # @method getBookById
+      # @param {String} book_id Book ID
+      */
+
+      getBookByBookId: function() {
+        if (!options.book_id) {
+          throw new TypeError("A book id need provided");
+        }
+        return _this._sp.__a__("books/" + options.book_id);
+      }
+    };
+  };
+  hello.utils.extend(ReadmooAPI.prototype.api, {
+    books: books
+  });
+})();
+
 (function() {
   var highlights;
-  highlights = function(count, from, to, order) {
-    var data,
+  highlights = function(options) {
+    var data, k, v,
       _this = this;
     data = {};
-    if (count) {
-      data.count = count;
-    }
-    if (from) {
-      data.from = from;
-    }
-    if (to) {
-      data.to = to;
-    }
-    if (order) {
-      data.order = order;
+    for (k in options) {
+      v = options[k];
+      switch (k) {
+        case 'count':
+          data.count = count;
+          break;
+        case 'from':
+          data.from = from;
+          break;
+        case 'to':
+          data.to = to;
+          break;
+        case 'order':
+          data.order = order;
+          break;
+        case 'userId':
+          break;
+        default:
+          data[k] = v;
+      }
     }
     return {
+      /*
+      # @param {Object} [options]
+      #   @param {Number} [options.count]
+      #   @param {String} [options.from]
+      #   @param {String} [options.to]
+      #   @param {String} [options.order]
+      */
+
       get: function() {
         return _this._sp.__a__("highlights", "GET", data);
       },
-      users: function(userId) {
-        if (!userId) {
+      getHighlightsByUserId: function() {
+        if (!options.userId) {
           throw new TypeError('An user id must be provided');
         }
-        return _this._sp.__a__("users/" + userId + "/highlights", "GET", data);
-      }
+        return _this._sp.__a__("users/" + options.userId + "/highlights", "GET", data);
+      },
+      getHighlightsByReadingId: function() {}
     };
   };
   hello.utils.extend(ReadmooAPI.prototype.api, {
@@ -2658,6 +2724,100 @@ ReadmooAPI = (function() {
   };
   hello.utils.extend(ReadmooAPI.prototype.api, {
     library: library
+  });
+})();
+
+(function() {
+  var CONST, readings;
+  CONST = {
+    ORDER_TOUCHED_AT: 'touched_at',
+    ORDER_CREATED_AT: 'created_at',
+    ORDER_POPULAR: 'popular',
+    ORDER_FRIENDS_FIRST: 'friends_first',
+    FILTER_FOLLOWINGS: 'followings',
+    STATE_INTERESTING: 'interesting',
+    STATE_READING: 'reading',
+    STATE_FINISHED: 'finished',
+    STATE_ABANDONED: 'abandoned'
+  };
+  /*
+  #
+  # @class Readings
+  */
+
+  readings = function(options) {
+    var _this = this;
+    return {
+      /*
+      # @method get
+      # @param {Object} [options] Options
+      #   @param {Number} [options.count] count
+      #     The number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] from
+      #     Return results whose order field is larger or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] to
+      #     Return results whose order field is smaller or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] order
+      #     Return results sorted on this field. Defaults to created_at.
+      #     Results are returned in descending order when to is given,
+      #     and in ascending order when from is given.
+      #   @param {String} [options.filter] filter
+      #     Filter a set of readings in different ways.
+      #   @param {Number} [options.highlights_count[from]] highlights_count[from]
+      #     Only include readings which have equal or more highlights.
+      #   @param {Number} [options.highlights_count[to]] highlights_count[to]
+      #     Only include readings which have less or equal highlights.
+      #   @param {String} [options.states] states
+      #     Only return readings that are in certain states. Accepts a
+      #     comma separated list.
+      */
+
+      get: function() {
+        var data;
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order', 'filter', 'highlights_count[from]', 'highlights_count[to]', 'states']);
+        return _this._sp.__a__("readings", "GET", data);
+      },
+      /*
+      #
+      # @method getReadingsByUserId
+      # @param {Object} options Options
+      #   @param {String} options.userId User ID
+      #   @param {String} [options.author] Author
+      #   @param {String} [options.title] Title
+      #   @param {String} [options.identifier] Identifier
+      #   @param {String} [options.book_id] Book ID
+      # @param {Object} options2 Options 2
+      #   @param {String} options.bookId Book ID
+      */
+
+      getReadingsByUserIdWithMatch: function() {
+        var data;
+        if (!options.userId) {
+          throw new TypeError("An user id need provided");
+        }
+        data = _util.paramFilter(options, ['author', 'title', 'identifier', 'book_id']);
+        return _this._sp.__a__("users/" + options.userId + "/readings/match", "GET", data);
+      },
+      createReadingByBookId: function() {
+        var bookId, data, state;
+        state = options['reading[state]'];
+        bookId = options.book_id;
+        if (!bookId) {
+          throw new TypeError("A book id need to provided");
+        }
+        if (!state || !(state === CONST.STATE_INTERESTING || state === CONST.STATE_READING)) {
+          throw new TypeError("State value must be `interesting` or `reading`");
+        }
+        data = _util.paramFilter(options, ['reading[state]', 'reading[private]', 'reading[started_at]', 'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]', 'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]']);
+        return _this._sp.__a__("books/" + bookId + "/readings", "POST", data);
+      }
+    };
+  };
+  hello.utils.extend(readings, CONST);
+  hello.utils.extend(ReadmooAPI.prototype.api, {
+    readings: readings
   });
 })();
 
