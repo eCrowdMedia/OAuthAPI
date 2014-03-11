@@ -67,7 +67,7 @@ do ->
       #
       # @method getReadingsByUserId
       # @param {Object} [options] Options
-      #   @param {String} [options.userId] user id
+      #   @param {String} options.userId user id
       #   @param {Number} [options.count] count
       #     The number of results to return. Default is 20, max 100.
       #   @param {Date} [options.from] from
