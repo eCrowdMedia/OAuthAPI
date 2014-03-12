@@ -64,6 +64,7 @@ module.exports = function(grunt) {
                     '.tmp/modules/*.js',
                     '.tmp/config.js',
                     '.tmp/main.js',
+                    '.tmp/util.js',
                     '.tmp/api/*.js',
                     'src/end.frag'
                 ],
