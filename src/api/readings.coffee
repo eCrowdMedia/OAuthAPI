@@ -7,11 +7,13 @@ do ->
     ORDER_CREATED_AT: 'created_at'
     ORDER_POPULAR: 'popular'
     ORDER_FRIENDS_FIRST: 'friends_first'
+
     FILTER_FOLLOWINGS: 'followings'
-    STATES_INTERESTING: 'interesting'
-    STATES_READING: 'reading'
-    STATES_FINISHED: 'finished'
-    STATES_ABANDONED: 'abandoned'
+
+    STATE_INTERESTING: 'interesting'
+    STATE_READING: 'reading'
+    STATE_FINISHED: 'finished'
+    STATE_ABANDONED: 'abandoned'
   }
 
   ###
@@ -20,24 +22,10 @@ do ->
   ###
   readings = (options) ->
 
-    data = {}
-
-    for k, v of options
-      switch k
-        when 'highlights_count_from'
-          data['highlights_count[from]'] = v
-        when 'highlights_count_to'
-          data['highlights_count[to]'] = v
-        when 'userId'
-          break
-        else
-          data[k] = v
-
     return {
       ###
       # @method get
       # @param {Object} [options] Options
-      #   @param {String} [options.userId] user id
       #   @param {Number} [options.count] count
       #     The number of results to return. Default is 20, max 100.
       #   @param {Date} [options.from] from
@@ -52,15 +40,20 @@ do ->
       #     and in ascending order when from is given.
       #   @param {String} [options.filter] filter
       #     Filter a set of readings in different ways.
-      #   @param {Number} [options.highlights_count_from] highlights_count[from]
+      #   @param {Number} [options.highlights_count[from]] highlights_count[from]
       #     Only include readings which have equal or more highlights.
-      #   @param {Number} [options.highlights_count_to] highlights_count[to]
+      #   @param {Number} [options.highlights_count[to]] highlights_count[to]
       #     Only include readings which have less or equal highlights.
       #   @param {String} [options.states] states
       #     Only return readings that are in certain states. Accepts a
       #     comma separated list.
       ###
       get: =>
+        data = _util.paramFilter options, [
+          'count', 'from', 'to', 'order', 'filter', 'highlights_count[from]',
+          'highlights_count[to]', 'states'
+        ]
+
         return @_sp.__a__ "readings", "GET", data
 
       ###
@@ -90,13 +83,38 @@ do ->
       #     Only return readings that are in certain states. Accepts a
       #     comma separated list.
       ###
-      getReadingsByUserId: =>
+      getReadingsByUserIdWithMatch: =>
 
         if not options.userId
           throw new TypeError "An user id need provided"
 
+        data = _util.paramFilter options, [
+          'author', 'title', 'identifier', 'book_id'
+        ]
+
         return @_sp.__a__ "users/#{ options.userId }/readings/match", "GET", data
 
+      createReadingByBookId: =>
+
+        state = options['reading[state]']
+        bookId = options.book_id
+
+        if not bookId
+          throw new TypeError "A book id need to provided"
+
+        if not state or \
+          not (state is CONST.STATE_INTERESTING or \
+            state is CONST.STATE_READING)
+
+          throw new TypeError "State value must be `interesting` or `reading`"
+
+        data = _util.paramFilter options, [
+          'reading[state]', 'reading[private]', 'reading[started_at]',
+          'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]',
+          'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]'
+        ]
+
+        return @_sp.__a__ "books/#{ bookId }/readings", "POST", data
     }
 
   # constant variables
