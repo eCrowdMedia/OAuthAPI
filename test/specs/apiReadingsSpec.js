@@ -2,7 +2,7 @@
 describe('Readings API test', function () {
 
     var ReadmooAPI = new readmoo.OAuthAPI('efe60b2afc3447dded5e6df6fd2bd920', 'http://korprulu.ohread.com/test/oauth2/test/'),
-        getUserId, userId, bookId;
+        getUserId, userId, bookId, readingId;
 
     bookId = '210000012000101';
 
@@ -76,6 +76,7 @@ describe('Readings API test', function () {
 
             expect(reading.state).toEqual(ReadmooAPI.api.readings.STATE_READING);
             expect(reading.book.id).toEqual(bookId);
+            readingId = reading.id;
             done();
 
         }).error(function () {
@@ -83,4 +84,28 @@ describe('Readings API test', function () {
             done();
         });
     });
+
+    it('finish reading', function (done) {
+        var defer,
+            options = {
+                reading_id: readingId
+            };
+
+        defer = ReadmooAPI.api.readings(options).finishReadingByReadingId();
+        defer.success(function (data) {
+
+            expect(data).toBeDefined();
+            // created
+            expect(data.status).toEqual(201);
+            console.log(JSON.stringify(data));
+            
+            done();
+
+        }).error(function () {
+            console.log(arguments);
+            expect(false).toBeTruthy();
+            done();
+        });
+    });
+
 });
