@@ -32,7 +32,7 @@ do (hello) ->
           'Authorization': 'Client ' + hello.readmoo.client_id
         }
 
-        if /^post$/i.test p.method
+        if /^(?:post|put)$/i.test p.method
           p.data = p.data or {}
           p.data['access_token'] = hello.readmoo.access_token
 

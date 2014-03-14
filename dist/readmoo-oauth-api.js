@@ -2414,7 +2414,7 @@ utils.extend(utils, {
         p.headers = {
           'Authorization': 'Client ' + hello.readmoo.client_id
         };
-        if (/^post$/i.test(p.method)) {
+        if (/^(?:post|put)$/i.test(p.method)) {
           p.data = p.data || {};
           p.data['access_token'] = hello.readmoo.access_token;
         }
@@ -2867,22 +2867,24 @@ _util = {
         state = options['reading[state]'];
         readingId = options.reading_id;
         if (!readingId) {
-          throw new TypeError("A book id need to provided");
+          throw new TypeError("A reading id need to provided");
         }
         if (!state) {
           throw new TypeError("A state need to be provided");
         }
         data = _util.paramFilter(options, ['reading[state]', 'reading[private]', 'reading[started_at]', 'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]', 'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]']);
-        return _this._sp.__a__("readings/" + readingId, "POST", data);
+        return _this._sp.__a__("readings/" + readingId, "PUT", data);
       },
       finishReadingByReadingId: function() {
         options['reading[state]'] = CONST.STATE_FINISHED;
         options['reading[finished_at]'] = (new Date()).toISOString();
+        options['reading[private]'] = 'true';
         return this.updateReadingByReadingId();
       },
       abandonedReadingByReadingId: function() {
         options['reading[state]'] = CONST.STATE_ABANDONED;
         options['reading[abandoned_at]'] = (new Date()).toISOString();
+        options['reading[private]'] = 'true';
         return this.updateReadingByReadingId();
       }
     };
