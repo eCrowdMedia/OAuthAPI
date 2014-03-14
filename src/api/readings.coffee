@@ -121,7 +121,7 @@ do ->
         readingId = options.reading_id
 
         if not readingId
-          throw new TypeError "A book id need to provided"
+          throw new TypeError "A reading id need to provided"
 
         if not state
           throw new TypeError "A state need to be provided"
@@ -132,16 +132,18 @@ do ->
           'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]'
         ]
 
-        return @_sp.__a__ "readings/#{ readingId }", "POST", data
+        return @_sp.__a__ "readings/#{ readingId }", "PUT", data
 
       finishReadingByReadingId: ->
         options['reading[state]'] = CONST.STATE_FINISHED
         options['reading[finished_at]'] = (new Date()).toISOString()
+        options['reading[private]'] = 'true'
         return @updateReadingByReadingId()
 
       abandonedReadingByReadingId: ->
         options['reading[state]'] = CONST.STATE_ABANDONED
         options['reading[abandoned_at]'] = (new Date()).toISOString()
+        options['reading[private]'] = 'true'
         return @updateReadingByReadingId()
 
     }
