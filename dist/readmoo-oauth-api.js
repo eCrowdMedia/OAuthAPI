@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.1.1 - 2014-03-11
+/*! readmoo-oauth-api - v1.2.0 - 2014-03-17
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2404,6 +2404,7 @@ utils.extend(utils, {
         'me': 'me'
       },
       xhr: function(p) {
+        var k, v, _d, _s;
         if (!localStorage.hello) {
           return false;
         }
@@ -2414,9 +2415,21 @@ utils.extend(utils, {
         p.headers = {
           'Authorization': 'Client ' + hello.readmoo.client_id
         };
-        if (/^post$/i.test(p.method)) {
+        if (/^(?:post|put)$/i.test(p.method)) {
           p.data = p.data || {};
           p.data['access_token'] = hello.readmoo.access_token;
+        }
+        if (/^put$/i.test(p.method)) {
+          p.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+          _d = p.data;
+          _s = [];
+          for (k in _d) {
+            v = _d[k];
+            if (_d.hasOwnProperty(k)) {
+              _s.push("" + (encodeURIComponent(k)) + "=" + (encodeURIComponent(v)));
+            }
+          }
+          p.data = _s.join('&');
         }
         return true;
       },
@@ -2674,21 +2687,39 @@ _util = {
     return {
       /*
       # @param {Object} [options]
-      #   @param {Number} [options.count]
-      #   @param {String} [options.from]
-      #   @param {String} [options.to]
-      #   @param {String} [options.order]
+      #   @param {Number} [options.count] The number of results to return
+      #   @param {String} [options.from] Return results whose order field is larger or equal to this parameter
+      #   @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
+      #   @param {String} [options.order] Return results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
       */
 
       get: function() {
         return _this._sp.__a__("highlights", "GET", data);
       },
+      /*
+      #  @param {Object} [options]
+      #    @param {Number} options.id The numerical id of the desired resource
+      #    @param {Number} [options.count] The number of results to return. Default is 20, max 100
+      #    @param {String} [options.from] Return results whose order field is larger or equal to this parameter
+      #    @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
+      #    @param {String} [options.order] Return results sorted on this field
+      */
+
       getHighlightsByUserId: function() {
         if (!options.userId) {
           throw new TypeError('An user id must be provided');
         }
         return _this._sp.__a__("users/" + options.userId + "/highlights", "GET", data);
       },
+      /*
+      #  @param {Object} [options]
+      #    @param {Number} options.id The numerical id of the desired resource
+      #    @param {Number} [options.count] The number of results to return. Default is 20, max 100
+      #    @param {String} [options.from] Return results whose order field is larger or equal to this parameter
+      #    @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
+      #    @param {String} [options.order] Return results sorted on this field
+      */
+
       getHighlightsByReadingId: function() {}
     };
   };
@@ -2704,12 +2735,28 @@ _util = {
       _this = this;
     data = {};
     return {
+      /*
+      # @param {Object} [options] Options
+      #   @param {Number} [options.count] The number of result to return Default is 20, max 100
+      #   @param {Number} [options.from] Return results whose order field is larger or equal to this parameter 
+      #   @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
+      #   @param {String} [options.order] Return results sorted on this field
+      #   @param {String} [option.price_segments] Filter books by price segments
+      */
+
       get: function() {
         if (!libraryId) {
           throw new TypeError('A library id need provided');
         }
         return _this._sp.__a__("me/library/" + libraryId);
       },
+      /*
+      # @param {Object} [options] Options
+      #   @param {String} [options.author] The name of the author
+      #   @param {String} [options.title] The title of the book
+      #   @param {String} [options.identifier] A unique identifier of the book
+      */
+
       compare: function(local_ids) {
         if (!local_ids) {
           local_ids = [];
@@ -2782,14 +2829,29 @@ _util = {
       /*
       #
       # @method getReadingsByUserId
-      # @param {Object} options Options
-      #   @param {String} options.userId User ID
-      #   @param {String} [options.author] Author
-      #   @param {String} [options.title] Title
-      #   @param {String} [options.identifier] Identifier
-      #   @param {String} [options.book_id] Book ID
-      # @param {Object} options2 Options 2
-      #   @param {String} options.bookId Book ID
+      # @param {Object} [options] Options
+      #   @param {String} options.userId user id
+      #   @param {Number} [options.count] count
+      #     The number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] from
+      #     Return results whose order field is larger or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] to
+      #     Return results whose order field is smaller or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] order
+      #     Return results sorted on this field. Defaults to created_at.
+      #     Results are returned in descending order when to is given,
+      #     and in ascending order when from is given.
+      #   @param {String} [options.filter] filter
+      #     Filter a set of readings in different ways.
+      #   @param {Number} [options.highlights_count_from] highlights_count[from]
+      #     Only include readings which have equal or more highlights.
+      #   @param {Number} [options.highlights_count_to] highlights_count[to]
+      #     Only include readings which have less or equal highlights.
+      #   @param {String} [options.states] states
+      #     Only return readings that are in certain states. Accepts a
+      #     comma separated list.
       */
 
       getReadingsByUserIdWithMatch: function() {
@@ -2812,6 +2874,31 @@ _util = {
         }
         data = _util.paramFilter(options, ['reading[state]', 'reading[private]', 'reading[started_at]', 'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]', 'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]']);
         return _this._sp.__a__("books/" + bookId + "/readings", "POST", data);
+      },
+      updateReadingByReadingId: function() {
+        var data, readingId, state;
+        state = options['reading[state]'];
+        readingId = options.reading_id;
+        if (!readingId) {
+          throw new TypeError("A reading id need to provided");
+        }
+        if (!state) {
+          throw new TypeError("A state need to be provided");
+        }
+        data = _util.paramFilter(options, ['reading[state]', 'reading[private]', 'reading[started_at]', 'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]', 'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]']);
+        return _this._sp.__a__("readings/" + readingId, "PUT", data);
+      },
+      finishReadingByReadingId: function() {
+        options['reading[state]'] = CONST.STATE_FINISHED;
+        options['reading[finished_at]'] = (new Date()).toISOString();
+        options['reading[private]'] = 'true';
+        return this.updateReadingByReadingId();
+      },
+      abandonedReadingByReadingId: function() {
+        options['reading[state]'] = CONST.STATE_ABANDONED;
+        options['reading[abandoned_at]'] = (new Date()).toISOString();
+        options['reading[private]'] = 'true';
+        return this.updateReadingByReadingId();
       }
     };
   };
