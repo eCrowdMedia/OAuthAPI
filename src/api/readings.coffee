@@ -115,6 +115,37 @@ do ->
         ]
 
         return @_sp.__a__ "books/#{ bookId }/readings", "POST", data
+
+      updateReadingByReadingId: =>
+        state = options['reading[state]']
+        readingId = options.reading_id
+
+        if not readingId
+          throw new TypeError "A reading id need to provided"
+
+        if not state
+          throw new TypeError "A state need to be provided"
+
+        data = _util.paramFilter options, [
+          'reading[state]', 'reading[private]', 'reading[started_at]',
+          'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]',
+          'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]'
+        ]
+
+        return @_sp.__a__ "readings/#{ readingId }", "PUT", data
+
+      finishReadingByReadingId: ->
+        options['reading[state]'] = CONST.STATE_FINISHED
+        options['reading[finished_at]'] = (new Date()).toISOString()
+        options['reading[private]'] = 'true'
+        return @updateReadingByReadingId()
+
+      abandonedReadingByReadingId: ->
+        options['reading[state]'] = CONST.STATE_ABANDONED
+        options['reading[abandoned_at]'] = (new Date()).toISOString()
+        options['reading[private]'] = 'true'
+        return @updateReadingByReadingId()
+
     }
 
   # constant variables
