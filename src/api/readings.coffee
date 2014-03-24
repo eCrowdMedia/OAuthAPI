@@ -146,6 +146,18 @@ do ->
         options['reading[private]'] = 'true'
         return @updateReadingByReadingId()
 
+      getReadingsByBookId: =>
+
+        if not options.bookId
+          throw new TypeError "A book id need provided"
+
+        data = _util.paramFilter options, [
+          'count', 'from', 'to', 'order', 'filter',
+          'highlights_count[from]', 'highlights_count[to]',
+          'states'
+        ]
+
+        return @_sp.__a__ "books/#{ options.bookId }/readings", "GET", data
     }
 
   # constant variables
