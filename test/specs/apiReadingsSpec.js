@@ -106,4 +106,18 @@ describe('Readings API test', function () {
         });
     });
 
+    it("get readings by book id", function (done) {
+        ReadmooAPI.api.readings({bookId: bookId, count: 2}).getReadingsByBookId()
+        .success(function (data) {
+            expect(data).toBeDefined();
+            expect(data.status).toEqual(200);
+            expect(data.items).toBeDefined();
+            expect(data.items.length).toEqual(2);
+            done();
+        })
+        .error(function () {
+            expect(false).toBe(true);
+            done();
+        });
+    });
 });

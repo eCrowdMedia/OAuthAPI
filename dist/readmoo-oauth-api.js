@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.3.0 - 2014-03-24
+/*! readmoo-oauth-api - v1.3.1 - 2014-03-24
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2912,6 +2912,14 @@ _util = {
         options['reading[abandoned_at]'] = (new Date()).toISOString();
         options['reading[private]'] = 'true';
         return this.updateReadingByReadingId();
+      },
+      getReadingsByBookId: function() {
+        var data;
+        if (!options.bookId) {
+          throw new TypeError("A book id need provided");
+        }
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order', 'filter', 'highlights_count[from]', 'highlights_count[to]', 'states']);
+        return _this._sp.__a__("books/" + options.bookId + "/readings", "GET", data);
       }
     };
   };
