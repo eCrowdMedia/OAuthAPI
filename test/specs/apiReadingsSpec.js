@@ -42,7 +42,20 @@ describe('Readings API test', function () {
         });
     });
 
-    it("retrieve readings by userId", function (done) {
+    it("retrieve readings by user id", function (done) {
+        ReadmooAPI.api.readings({userId: userId, count: 5}).getReadingsByUserId().success(function (data) {
+            expect(data).toBeDefined();
+            expect(data.status).toEqual(200);
+            expect(data.items).toBeDefined();
+            expect(data.items.length).toEqual(5);
+            done();
+        }).error(function () {
+            expect(false).toBe(true);
+            done();
+        });
+    });
+
+    it("retrieve readings by user id and book id", function (done) {
         ReadmooAPI.api.readings({userId: userId, book_id: '210000012000101'}).getReadingsByUserIdWithMatch().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
