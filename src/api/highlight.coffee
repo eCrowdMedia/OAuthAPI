@@ -31,7 +31,7 @@ do ->
       ###
       get: =>
         return @_sp.__a__ "highlights", "GET", data
-      
+
       ###
       #  @param {Object} [options]
       #    @param {Number} options.id The numerical id of the desired resource
@@ -56,7 +56,15 @@ do ->
       #    @param {String} [options.order] Return results sorted on this field
       ###
       getHighlightsByReadingId: =>
-        #
+
+        if not options.readingId
+          throw new TypeError "A reading id must be provided"
+
+        data = _util.paramFilter options, [
+          'count', 'from', 'to', 'order'
+        ]
+
+        return @_sp.__a__ "readings/#{ options.readingId }/highlights", "GET", data
     }
 
   hello.utils.extend ReadmooAPI::api, {
