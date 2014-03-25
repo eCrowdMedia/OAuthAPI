@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.3.1 - 2014-03-24
+/*! readmoo-oauth-api - v1.5.0 - 2014-03-25
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2733,7 +2733,13 @@ _util = {
       #    @param {String} [options.order] Return results sorted on this field
       */
 
-      getHighlightsByReadingId: function() {}
+      getHighlightsByReadingId: function() {
+        if (!options.readingId) {
+          throw new TypeError("A reading id must be provided");
+        }
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
+        return _this._sp.__a__("readings/" + options.readingId + "/highlights", "GET", data);
+      }
     };
   };
   hello.utils.extend(ReadmooAPI.prototype.api, {
@@ -2874,6 +2880,14 @@ _util = {
         }
         data = _util.paramFilter(options, ['author', 'title', 'identifier', 'book_id']);
         return _this._sp.__a__("users/" + options.userId + "/readings/match", "GET", data);
+      },
+      getReadingsByUserId: function() {
+        var data;
+        if (!options.userId) {
+          throw new TypeError("A book id must be provided");
+        }
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order', 'filter', 'highlights_count[from]', 'highlights_count[to]', 'states']);
+        return _this._sp.__a__("users/" + options.userId + "/readings", "GET", data);
       },
       createReadingByBookId: function() {
         var bookId, data, state;
