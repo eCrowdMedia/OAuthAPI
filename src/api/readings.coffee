@@ -94,6 +94,13 @@ do ->
 
         return @_sp.__a__ "users/#{ options.userId }/readings/match", "GET", data
 
+      getReadingByReadingId: =>
+
+        if not options.readingId
+          throw new TypeError "An user id must be provided"
+
+        return @_sp.__a__ "readings/#{ options.readingId }"
+
       getReadingsByUserId: =>
 
         if not options.userId
