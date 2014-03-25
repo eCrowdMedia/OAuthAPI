@@ -68,6 +68,7 @@ describe('Readings API test', function () {
         });
     });
 
+
     it('create reading', function (done) {
         var defer,
             options = {
@@ -129,6 +130,19 @@ describe('Readings API test', function () {
             done();
         })
         .error(function () {
+            expect(false).toBe(true);
+            done();
+        });
+    });
+
+    it("get reading by reading id", function (done) {
+        ReadmooAPI.api.readings({readingId: readingId}).getReadingByReadingId().success(function (data) {
+            expect(data).toBeDefined();
+            expect(data.status).toEqual(200);
+            expect(typeof data.reading).toEqual('object');
+            expect(data.reading.id).toEqual(readingId);
+            done();
+        }).error(function () {
             expect(false).toBe(true);
             done();
         });
