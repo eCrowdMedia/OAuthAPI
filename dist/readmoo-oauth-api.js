@@ -2881,6 +2881,12 @@ _util = {
         data = _util.paramFilter(options, ['author', 'title', 'identifier', 'book_id']);
         return _this._sp.__a__("users/" + options.userId + "/readings/match", "GET", data);
       },
+      getReadingByReadingId: function() {
+        if (!options.readingId) {
+          throw new TypeError("An user id must be provided");
+        }
+        return _this._sp.__a__("readings/" + options.readingId);
+      },
       getReadingsByUserId: function() {
         var data;
         if (!options.userId) {
