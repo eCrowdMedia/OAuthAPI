@@ -94,6 +94,18 @@ do ->
 
         return @_sp.__a__ "users/#{ options.userId }/readings/match", "GET", data
 
+      getReadingsByUserId: =>
+
+        if not options.userId
+          throw new TypeError "A book id must be provided"
+
+        data = _util.paramFilter options, [
+          'count', 'from', 'to', 'order', 'filter', 'highlights_count[from]',
+          'highlights_count[to]', 'states'
+        ]
+
+        return @_sp.__a__ "users/#{ options.userId }/readings", "GET", data
+
       createReadingByBookId: =>
 
         state = options['reading[state]']
@@ -158,6 +170,7 @@ do ->
         ]
 
         return @_sp.__a__ "books/#{ options.bookId }/readings", "GET", data
+
     }
 
   # constant variables
