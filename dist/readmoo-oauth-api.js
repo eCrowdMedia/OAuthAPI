@@ -2413,7 +2413,7 @@ utils.extend(utils, {
         }
         p.data = p.data || {};
         p.data.client_id = hello.readmoo.client_id;
-        if (/^(?:post|put)$/i.test(p.method)) {
+        if (/^(?:post|put|delete)$/i.test(p.method)) {
           p.data = p.data || {};
           p.data['access_token'] = hello.readmoo.access_token;
         }
@@ -2603,12 +2603,19 @@ var _util;
 
 _util = {
   paramFilter: function(options, includes) {
-    var data, n, _i, _len;
+    var data, n, v, _i, _len;
+    if (options == null) {
+      options = {};
+    }
     data = {};
     for (_i = 0, _len = includes.length; _i < _len; _i++) {
       n = includes[_i];
       if (options.hasOwnProperty(n)) {
-        data[n] = encodeURIComponent(options[n]);
+        v = options[n];
+        if (v instanceof Object || v instanceof Array) {
+          v = JSON.stringify(v);
+        }
+        data[n] = v;
       }
     }
     return data;
@@ -2720,30 +2727,7 @@ _util = {
 (function() {
   var highlights;
   highlights = function(options) {
-    var data, k, v,
-      _this = this;
-    data = {};
-    for (k in options) {
-      v = options[k];
-      switch (k) {
-        case 'count':
-          data.count = count;
-          break;
-        case 'from':
-          data.from = from;
-          break;
-        case 'to':
-          data.to = to;
-          break;
-        case 'order':
-          data.order = order;
-          break;
-        case 'userId':
-          break;
-        default:
-          data[k] = v;
-      }
-    }
+    var _this = this;
     return {
       /*
       # @param {Object} [options]
@@ -2754,6 +2738,8 @@ _util = {
       */
 
       get: function() {
+        var data;
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
         return _this._sp.__a__("highlights", "GET", data);
       },
       /*
@@ -2766,9 +2752,11 @@ _util = {
       */
 
       getHighlightsByUserId: function() {
+        var data;
         if (!options.userId) {
           throw new TypeError('An user id must be provided');
         }
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
         return _this._sp.__a__("users/" + options.userId + "/highlights", "GET", data);
       },
       /*
@@ -2781,11 +2769,26 @@ _util = {
       */
 
       getHighlightsByReadingId: function() {
+        var data;
         if (!options.readingId) {
           throw new TypeError("A reading id must be provided");
         }
         data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
         return _this._sp.__a__("readings/" + options.readingId + "/highlights", "GET", data);
+      },
+      createHighlightByReadingId: function() {
+        var data;
+        if (!options.readingId) {
+          throw new TypeError("A reading id must be provided");
+        }
+        data = _util.paramFilter(options, ['highlight[content]', 'highlight[locators]', 'highlight[position]', 'highlight[highlight_at]', 'highlight[post_to[][id]]', 'comment[content]']);
+        return _this._sp.__a__("readings/" + options.readingId + "/highlights", "POST", data);
+      },
+      deleteHighlightByHighlightId: function() {
+        if (!options.highlightId) {
+          throw new TypeError("A highlight id must be provided");
+        }
+        return _this._sp.__a__("highlights/" + options.highlightId, "DELETE");
       }
     };
   };

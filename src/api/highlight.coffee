@@ -4,23 +4,6 @@ do ->
 
   highlights = (options) ->
 
-    data = {}
-
-    for k, v of options
-      switch k
-        when 'count'
-          data.count = count
-        when 'from'
-          data.from = from
-        when 'to'
-          data.to = to
-        when 'order'
-          data.order = order
-        when 'userId'
-          break
-        else
-          data[k] = v
-
     return {
       ###
       # @param {Object} [options]
@@ -30,6 +13,11 @@ do ->
       #   @param {String} [options.order] Return results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
       ###
       get: =>
+
+        data = _util.paramFilter options, [
+          'count', 'from', 'to', 'order'
+        ]
+
         return @_sp.__a__ "highlights", "GET", data
 
       ###
@@ -44,6 +32,10 @@ do ->
 
         if not options.userId
           throw new TypeError('An user id must be provided')
+
+        data = _util.paramFilter options, [
+          'count', 'from', 'to', 'order'
+        ]
 
         return @_sp.__a__ "users/#{ options.userId }/highlights", "GET", data
 
@@ -65,6 +57,26 @@ do ->
         ]
 
         return @_sp.__a__ "readings/#{ options.readingId }/highlights", "GET", data
+
+      createHighlightByReadingId: =>
+
+        if not options.readingId
+          throw new TypeError "A reading id must be provided"
+
+        data = _util.paramFilter options, [
+          'highlight[content]', 'highlight[locators]', 'highlight[position]',
+          'highlight[highlight_at]', 'highlight[post_to[][id]]', 'comment[content]'
+        ]
+
+        return @_sp.__a__ "readings/#{ options.readingId }/highlights", "POST", data
+        
+
+      deleteHighlightByHighlightId: =>
+
+        if not options.highlightId
+          throw new TypeError "A highlight id must be provided"
+
+        return @_sp.__a__ "highlights/#{ options.highlightId }", "DELETE"
     }
 
   hello.utils.extend ReadmooAPI::api, {
