@@ -1,6 +1,6 @@
 {
   "name": "readmoo-oauth-api",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "author": "Kevin Chiu <kevin@readmoo.com>",
   "description": "Readmoo oauth2 API library",
   "license": "LGPLv3",
