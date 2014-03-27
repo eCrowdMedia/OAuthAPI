@@ -64,7 +64,7 @@ describe('Comments API test', function () {
         });
     });
 
-    xit("create comments by highlight id", function (done) {
+    it("create comments by highlight id", function (done) {
         var option = {
             highlightId: highlightId
             },
@@ -75,9 +75,8 @@ describe('Comments API test', function () {
         ReadmooAPI.api.comments(option)
         .createCommentByHighlightId().success(function (data) {
 
-            expect(data.status).toEqual(200);
+            expect(data.status).toBe(201);
             expect(data.comment.content).toEqual(content);
-            expect(data.comment.highlight.id).toEqual(highlightId);
             templateCommentId = data.comment.id;
             done();
         }).error(function () {
@@ -86,13 +85,14 @@ describe('Comments API test', function () {
         });
     });
 
-    xit("delete comment by comment id", function (done) {
+    it("delete comment by comment id", function (done) {
         var option = {
             commentId: templateCommentId
             };
 
         ReadmooAPI.api.comments(option)
         .deleteCommentByCommentId().success(function (data) {
+            expect(data.status).toBe(200);
             done();
         }).error(function () {
             expect(false).toBe(true);
