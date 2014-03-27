@@ -31,7 +31,7 @@ do (hello) ->
         p.data = p.data or {}
         p.data.client_id = hello.readmoo.client_id
 
-        if /^(?:post|put)$/i.test p.method
+        if /^(?:post|put|delete)$/i.test p.method
           p.data = p.data or {}
           p.data['access_token'] = hello.readmoo.access_token
 
