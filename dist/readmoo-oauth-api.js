@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.6.0 - 2014-03-25
+/*! readmoo-oauth-api - v1.6.0 - 2014-03-27
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2608,7 +2608,7 @@ _util = {
     for (_i = 0, _len = includes.length; _i < _len; _i++) {
       n = includes[_i];
       if (options.hasOwnProperty(n)) {
-        data[n] = options[n];
+        data[n] = encodeURIComponent(options[n]);
       }
     }
     return data;
@@ -2640,6 +2640,53 @@ _util = {
   };
   hello.utils.extend(ReadmooAPI.prototype.api, {
     books: books
+  });
+})();
+
+(function() {
+  var CONST, comments;
+  CONST = {};
+  /*
+  #
+  # @class Comments
+  */
+
+  comments = function(options) {
+    var _this = this;
+    return {
+      getCommentByCommentId: function() {
+        if (!options.commentId) {
+          throw new TypeError("A comment id must be provided");
+        }
+        return _this._sp.__a__("comments/" + options.commentId, "GET");
+      },
+      deleteCommentByCommentId: function() {
+        if (!options.commentId) {
+          throw new TypeError("A comment id must be provided");
+        }
+        return _this._sp.__a__("comments/" + options.commentId, "DELETE");
+      },
+      getCommentsByHighlightId: function() {
+        var data;
+        if (!options.highlightId) {
+          throw new TypeError("A highlight id must be provided");
+        }
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
+        return _this._sp.__a__("highlights/" + options.highlightId + "/comments", "GET", data);
+      },
+      createCommentByHighlightId: function() {
+        var data;
+        if (!options.highlightId) {
+          throw new TypeError("A highlight id must be provided");
+        }
+        data = _util.paramFilter(options, ['comment[content]', 'comment[posted_at]']);
+        return _this._sp.__a__("highlights/" + options.highlightId + "/comments", "POST", data);
+      }
+    };
+  };
+  hello.utils.extend(comments, CONST);
+  hello.utils.extend(ReadmooAPI.prototype.api, {
+    comments: comments
   });
 })();
 
