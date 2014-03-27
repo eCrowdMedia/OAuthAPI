@@ -6,7 +6,7 @@ _util =
 
     for n in includes
       if options.hasOwnProperty n
-        data[n] = options[n]
+        data[n] = encodeURIComponent options[n]
 
     return data
 
