@@ -156,13 +156,11 @@ do ->
       finishReadingByReadingId: ->
         options['reading[state]'] = CONST.STATE_FINISHED
         options['reading[finished_at]'] = (new Date()).toISOString()
-        options['reading[private]'] = 'true'
         return @updateReadingByReadingId()
 
       abandonedReadingByReadingId: ->
         options['reading[state]'] = CONST.STATE_ABANDONED
         options['reading[abandoned_at]'] = (new Date()).toISOString()
-        options['reading[private]'] = 'true'
         return @updateReadingByReadingId()
 
       getReadingsByBookId: =>
