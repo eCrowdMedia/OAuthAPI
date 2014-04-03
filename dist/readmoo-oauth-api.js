@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.7.0 - 2014-03-27
+/*! readmoo-oauth-api - v1.7.1 - 2014-04-03
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2974,13 +2974,11 @@ _util = {
       finishReadingByReadingId: function() {
         options['reading[state]'] = CONST.STATE_FINISHED;
         options['reading[finished_at]'] = (new Date()).toISOString();
-        options['reading[private]'] = 'true';
         return this.updateReadingByReadingId();
       },
       abandonedReadingByReadingId: function() {
         options['reading[state]'] = CONST.STATE_ABANDONED;
         options['reading[abandoned_at]'] = (new Date()).toISOString();
-        options['reading[private]'] = 'true';
         return this.updateReadingByReadingId();
       },
       getReadingsByBookId: function() {
