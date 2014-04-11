@@ -176,6 +176,17 @@ do ->
 
         return @_sp.__a__ "books/#{ options.bookId }/readings", "GET", data
 
+      ping: =>
+
+        if not options.readingId
+          throw new TypeError "A reading id must be provided"
+
+        data = _util.paramFilter options, [
+          'ping[identifier]', 'ping[progress]', 'ping[duration]',
+          'ping[occurred_at]', 'ping[lat]', 'ping[lng]'
+        ]
+
+        return @_sp.__a__ "readings/#{ options.readingId }/ping", "POST", data
     }
 
   # constant variables

@@ -1,3 +1,4 @@
+'use strict';
 /*jshint node:true*/
 
 var path = require('path');
@@ -9,7 +10,7 @@ var LIVERELOAD_PORT = 35729,
 var mountFolder;
 
 mountFolder = function (connect, dir) {
-  return connect.static(path.resolve(dir));
+    return connect.static(path.resolve(dir));
 };
 
 module.exports = function(grunt) {
@@ -86,32 +87,14 @@ module.exports = function(grunt) {
         },
         jshint: {
             options: {
-                curly: true,
-                eqeqeq: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: true,
-                unused: true,
-                boss: true,
-                eqnull: true,
-                devel: true,
-                browser: true,
-                globals: {
-                    hello: true,
-                    readmoo: true
-                }
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
             },
             gruntfile: {
                 src: 'Gruntfile.js'
             },
-            src_test: {
-                src: '.tmp/*.js'
-            },
             test_test: {
-                src: ['test/fixtures/*.js']
+                src: ['test/**/*.js']
             }
         },
         watch: {
@@ -120,7 +103,7 @@ module.exports = function(grunt) {
                     livereload: LIVERELOAD_PORT
                 },
                 files: [
-                    ".tmp"
+                    '.tmp'
                 ]
             },
             gruntfile: {
@@ -177,11 +160,11 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('server', function () {
-        grunt.task.run(['dev', 'connect:server', "concat:server", "watch"]);
+        grunt.task.run(['dev', 'connect:server', 'concat:server', 'watch']);
     });
 
     grunt.registerTask('test', function () {
-        grunt.task.run(['dev', "jasmine"]);
+        grunt.task.run(['dev', 'jasmine']);
     });
 
     grunt.registerTask('build', ['dev', 'uglify']);

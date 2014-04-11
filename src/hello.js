@@ -62,7 +62,8 @@ hello.utils.extend( hello, {
 		// OAuth 1 shim
 		// The path to the OAuth1 server for signing user requests
 		// Wanna recreate your own? checkout https://github.com/MrSwitch/node-oauth-shim
-		oauth_proxy   : 'https://auth-server.herokuapp.com/proxy',
+		// oauth_proxy   : 'https://auth-server.herokuapp.com/proxy',
+        oauth_proxy   : '',
 
 		//
 		// API Timeout, milliseconds
@@ -592,7 +593,7 @@ hello.utils.extend( hello.utils, {
 	store : function (name,value,days) {
 
 		// Local storage
-		var json = JSON.parse(localStorage.getItem('hello')) || {};
+		var json = JSON.parse(localStorage.getItem('__oa__')) || {};
 
 		if(name && typeof(value) === 'undefined'){
 			return json[name];
@@ -612,7 +613,7 @@ hello.utils.extend( hello.utils, {
 			return json;
 		}
 
-		localStorage.setItem('hello', JSON.stringify(json));
+		localStorage.setItem('__oa__', JSON.stringify(json));
 
 		return json;
 	},
