@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.7.1 - 2014-04-03
+/*! readmoo-oauth-api - v1.7.1 - 2014-04-11
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -65,7 +65,8 @@ hello.utils.extend( hello, {
 		// OAuth 1 shim
 		// The path to the OAuth1 server for signing user requests
 		// Wanna recreate your own? checkout https://github.com/MrSwitch/node-oauth-shim
-		oauth_proxy   : 'https://auth-server.herokuapp.com/proxy',
+		// oauth_proxy   : 'https://auth-server.herokuapp.com/proxy',
+        oauth_proxy   : '',
 
 		//
 		// API Timeout, milliseconds
@@ -595,7 +596,7 @@ hello.utils.extend( hello.utils, {
 	store : function (name,value,days) {
 
 		// Local storage
-		var json = JSON.parse(localStorage.getItem('hello')) || {};
+		var json = JSON.parse(localStorage.getItem('__oa__')) || {};
 
 		if(name && typeof(value) === 'undefined'){
 			return json[name];
@@ -615,7 +616,7 @@ hello.utils.extend( hello.utils, {
 			return json;
 		}
 
-		localStorage.setItem('hello', JSON.stringify(json));
+		localStorage.setItem('__oa__', JSON.stringify(json));
 
 		return json;
 	},
@@ -2988,6 +2989,14 @@ _util = {
         }
         data = _util.paramFilter(options, ['count', 'from', 'to', 'order', 'filter', 'highlights_count[from]', 'highlights_count[to]', 'states']);
         return _this._sp.__a__("books/" + options.bookId + "/readings", "GET", data);
+      },
+      ping: function() {
+        var data;
+        if (!options.readingId) {
+          throw new TypeError("A reading id must be provided");
+        }
+        data = _util.paramFilter(options, ['ping[identifier]', 'ping[progress]', 'ping[duration]', 'ping[occurred_at]', 'ping[lat]', 'ping[lng]']);
+        return _this._sp.__a__("readings/" + options.readingId + "/ping", "POST", data);
       }
     };
   };

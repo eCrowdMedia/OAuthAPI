@@ -1,3 +1,4 @@
+'use strict';
 /* global readmoo: true */
 
 describe('Users API test', function () {
