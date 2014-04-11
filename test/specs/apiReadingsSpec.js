@@ -1,4 +1,4 @@
-
+'use strict';
 describe('Readings API test', function () {
 
     var ReadmooAPI = new readmoo.OAuthAPI('efe60b2afc3447dded5e6df6fd2bd920', 'http://korprulu.ohread.com/test/oauth2/test/'),
@@ -29,7 +29,7 @@ describe('Readings API test', function () {
 
     });
 
-    it("retrieve readings", function (done) {
+    it('retrieve readings', function (done) {
         ReadmooAPI.api.readings({count: 1}).get().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
@@ -42,7 +42,7 @@ describe('Readings API test', function () {
         });
     });
 
-    it("retrieve readings by user id", function (done) {
+    it('retrieve readings by user id', function (done) {
         ReadmooAPI.api.readings({userId: userId, count: 5}).getReadingsByUserId().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
@@ -55,7 +55,7 @@ describe('Readings API test', function () {
         });
     });
 
-    it("retrieve readings by user id and book id", function (done) {
+    it('retrieve readings by user id and book id', function (done) {
         ReadmooAPI.api.readings({userId: userId, book_id: '210000012000101'}).getReadingsByUserIdWithMatch().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
@@ -120,7 +120,7 @@ describe('Readings API test', function () {
         });
     });
 
-    it("get readings by book id", function (done) {
+    it('get readings by book id', function (done) {
         ReadmooAPI.api.readings({bookId: bookId, count: 2}).getReadingsByBookId()
         .success(function (data) {
             expect(data).toBeDefined();
@@ -135,12 +135,29 @@ describe('Readings API test', function () {
         });
     });
 
-    it("get reading by reading id", function (done) {
+    it('get reading by reading id', function (done) {
         ReadmooAPI.api.readings({readingId: readingId}).getReadingByReadingId().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
             expect(typeof data.reading).toEqual('object');
             expect(data.reading.id).toEqual(readingId);
+            done();
+        }).error(function () {
+            expect(false).toBe(true);
+            done();
+        });
+    });
+    
+    it('post a ping with reading id', function (done) {
+        ReadmooAPI.api.readings({
+            readingId: readingId,
+            'ping[identifier]': (new Date()).valueOf(),
+            'ping[progress]': 0.5,
+            'ping[duration]': 300,
+            'ping[occurred_at]': (new Date()).toISOString()
+        }).ping().success(function (data) {
+            expect(data).toBeDefined();
+            expect(data.status).toEqual(201);
             done();
         }).error(function () {
             expect(false).toBe(true);

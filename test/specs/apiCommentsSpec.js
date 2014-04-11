@@ -1,4 +1,4 @@
-
+'use strict';
 describe('Comments API test', function () {
 
     var ReadmooAPI = new readmoo.OAuthAPI(
@@ -35,7 +35,7 @@ describe('Comments API test', function () {
 
     });
 
-    it("get comments by highlight id", function (done) {
+    it('get comments by highlight id', function (done) {
         ReadmooAPI.api.comments({highlightId: highlightId})
         .getCommentsByHighlightId().success(function (data) {
 
@@ -51,7 +51,7 @@ describe('Comments API test', function () {
         });
     });
 
-    it("get comments by comment id", function (done) {
+    it('get comments by comment id', function (done) {
         ReadmooAPI.api.comments({commentId: commentId})
         .getCommentByCommentId().success(function (data) {
 
@@ -64,11 +64,11 @@ describe('Comments API test', function () {
         });
     });
 
-    it("create comments by highlight id", function (done) {
+    it('create comments by highlight id', function (done) {
         var option = {
             highlightId: highlightId
-            },
-            content = "create comments by highlight id test 123455";
+        },
+            content = 'create comments by highlight id test 123455';
 
         option['comment[content]'] = content;
 
@@ -85,10 +85,10 @@ describe('Comments API test', function () {
         });
     });
 
-    it("delete comment by comment id", function (done) {
+    it('delete comment by comment id', function (done) {
         var option = {
             commentId: templateCommentId
-            };
+        };
 
         ReadmooAPI.api.comments(option)
         .deleteCommentByCommentId().success(function (data) {
