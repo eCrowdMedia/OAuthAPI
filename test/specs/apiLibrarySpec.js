@@ -1,4 +1,4 @@
-
+'use strict';
 describe('Library API test', function () {
 
     var ReadmooAPI = new readmoo.OAuthAPI('efe60b2afc3447dded5e6df6fd2bd920', 'http://korprulu.ohread.com/test/oauth2/test/'),
@@ -41,7 +41,7 @@ describe('Library API test', function () {
         });
     });
 
-    it("retrieve library by id", function (done) {
+    it('retrieve library by id', function (done) {
         ReadmooAPI.api.library(libraryId).get().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(200);
