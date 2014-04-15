@@ -183,7 +183,7 @@ do ->
 
         data = _util.paramFilter options, [
           'ping[identifier]', 'ping[progress]', 'ping[duration]',
-          'ping[occurred_at]', 'ping[lat]', 'ping[lng]'
+          'ping[occurred_at]', 'ping[lat]', 'ping[lng]', 'ping[cfi]'
         ]
 
         return @_sp.__a__ "readings/#{ options.readingId }/ping", "POST", data
