@@ -154,7 +154,8 @@ describe('Readings API test', function () {
             'ping[identifier]': (new Date()).valueOf(),
             'ping[progress]': 0.5,
             'ping[duration]': 300,
-            'ping[occurred_at]': (new Date()).toISOString()
+            'ping[occurred_at]': (new Date()).toISOString(),
+            'ping[cfi]': '/6/4!/8/2'
         }).ping().success(function (data) {
             expect(data).toBeDefined();
             expect(data.status).toEqual(201);
