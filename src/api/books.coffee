@@ -11,7 +11,7 @@ do ->
     return {
       ###
       # @method getBookById
-      # @param {String} book_id Book ID
+      # @param {String} options.book_id Book ID
       ###
       getBookByBookId: =>
         if not options.book_id

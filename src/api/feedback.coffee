@@ -2,16 +2,15 @@
 
 do ->
 
-  ###
+  ###*
   #
   # @class Books
   ###
   feedback = (options) ->
 
     return {
-      ###
-      # @method getBookById
-      # @param {String} book_id Book ID
+      ###*
+      # @method send
       ###
       send: =>
 
