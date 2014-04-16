@@ -2,16 +2,16 @@
 
 do ->
 
-  ###
+  ###*
   #
   # @class Books
   ###
   books = (options) ->
 
     return {
-      ###
+      ###*
       # @method getBookById
-      # @param {String} options.book_id Book ID
+      #  @param {String} options.book_id Book ID
       ###
       getBookByBookId: =>
         if not options.book_id
