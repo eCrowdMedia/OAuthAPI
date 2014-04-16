@@ -8,7 +8,7 @@ do ->
     return {
       ###*
       #
-      #@method get
+      # @method get
       ###
       get: =>
         return @_sp.__a__ 'me'

@@ -1,7 +1,10 @@
 ### global ReadmooAPI: true ###
 
 do ->
-
+  ###*
+  #
+  # @class Highlights
+  ###
   highlights = (options) ->
 
     return {

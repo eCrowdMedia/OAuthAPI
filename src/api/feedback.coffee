@@ -4,7 +4,7 @@ do ->
 
   ###*
   #
-  # @class Books
+  # @class Feedback
   ###
   feedback = (options) ->
 

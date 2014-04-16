@@ -1,15 +1,19 @@
 ### global ReadmooAPI: true ###
 
 do ->
-
+  ###*
+  #
+  # @class Library
+  ###
   library = (libraryId) ->
 
     data = {}
 
     return {
       ###*
-      #   @param {String} libraryId
-      #     The numerical id of the desired resource.
+      # @method get
+      # @param {String} libraryId
+      #   The numerical id of the desired resource.
       ###
       get: =>
         if not libraryId
@@ -18,7 +22,7 @@ do ->
         return @_sp.__a__ "me/library/#{ libraryId }"
 
       ###*
-      #
+      #  @method compare
       #   @param {String} local_ids
       #     A comma separate list of library item id's that the client has locally.
       ###
