@@ -10,7 +10,7 @@ do ->
 
     return {
       ###*
-      # @method getBookById
+      # @method getBookByBookId
       #  @param {String} options.book_id Book ID
       ###
       getBookByBookId: =>

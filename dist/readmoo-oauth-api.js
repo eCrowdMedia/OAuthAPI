@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.7.1 - 2014-04-11
+/*! readmoo-oauth-api - v1.8.0 - 2014-04-15
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2995,7 +2995,7 @@ _util = {
         if (!options.readingId) {
           throw new TypeError("A reading id must be provided");
         }
-        data = _util.paramFilter(options, ['ping[identifier]', 'ping[progress]', 'ping[duration]', 'ping[occurred_at]', 'ping[lat]', 'ping[lng]']);
+        data = _util.paramFilter(options, ['ping[identifier]', 'ping[progress]', 'ping[duration]', 'ping[occurred_at]', 'ping[lat]', 'ping[lng]', 'ping[cfi]']);
         return _this._sp.__a__("readings/" + options.readingId + "/ping", "POST", data);
       }
     };
