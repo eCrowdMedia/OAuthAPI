@@ -1,0 +1,1053 @@
+{
+    "project": {
+        "name": "OAuth API",
+        "description": "OAuthJs API document",
+        "version": "1.8.1"
+    },
+    "files": {
+        "src/api/books.coffee": {
+            "name": "src/api/books.coffee",
+            "modules": {},
+            "classes": {
+                "Books": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/api/comments.coffee": {
+            "name": "src/api/comments.coffee",
+            "modules": {},
+            "classes": {
+                "Comments": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/api/feedback.coffee": {
+            "name": "src/api/feedback.coffee",
+            "modules": {},
+            "classes": {
+                "Feedback": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/api/highlight.coffee": {
+            "name": "src/api/highlight.coffee",
+            "modules": {},
+            "classes": {
+                "Highlights": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/api/library.coffee": {
+            "name": "src/api/library.coffee",
+            "modules": {},
+            "classes": {
+                "Library": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/api/readings.coffee": {
+            "name": "src/api/readings.coffee",
+            "modules": {},
+            "classes": {
+                "Readings": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/api/users.coffee": {
+            "name": "src/api/users.coffee",
+            "modules": {},
+            "classes": {
+                "me": 1,
+                "users": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Books": {
+            "name": "Books",
+            "shortname": "Books",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/api/books.coffee",
+            "line": 5
+        },
+        "Comments": {
+            "name": "Comments",
+            "shortname": "Comments",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/api/comments.coffee",
+            "line": 8
+        },
+        "Feedback": {
+            "name": "Feedback",
+            "shortname": "Feedback",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/api/feedback.coffee",
+            "line": 5
+        },
+        "Highlights": {
+            "name": "Highlights",
+            "shortname": "Highlights",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/api/highlight.coffee",
+            "line": 4
+        },
+        "Library": {
+            "name": "Library",
+            "shortname": "Library",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/api/library.coffee",
+            "line": 4
+        },
+        "Readings": {
+            "name": "Readings",
+            "shortname": "Readings",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/api/readings.coffee",
+            "line": 19
+        },
+        "me": {
+            "name": "me",
+            "shortname": "me",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/api/users.coffee",
+            "line": 3
+        },
+        "users": {
+            "name": "users",
+            "shortname": "users",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/api/users.coffee",
+            "line": 17
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/api/books.coffee",
+            "line": 12,
+            "itemtype": "method",
+            "name": "getBookByBookId",
+            "params": [
+                {
+                    "name": "options.book_id",
+                    "description": "Book ID",
+                    "type": "String"
+                }
+            ],
+            "class": "Books"
+        },
+        {
+            "file": "src/api/comments.coffee",
+            "line": 15,
+            "itemtype": "method",
+            "name": "getCommentByCommentId",
+            "params": [
+                {
+                    "name": "options.commentId",
+                    "description": "The\n    numberical id of the desired resource.",
+                    "type": "String"
+                }
+            ],
+            "class": "Comments"
+        },
+        {
+            "file": "src/api/comments.coffee",
+            "line": 27,
+            "itemtype": "method",
+            "name": "deleteCommentByCommentId",
+            "params": [
+                {
+                    "name": "options.commentId",
+                    "description": "The\n    numberical id of the desired resource.",
+                    "type": "String"
+                }
+            ],
+            "class": "Comments"
+        },
+        {
+            "file": "src/api/comments.coffee",
+            "line": 39,
+            "itemtype": "method",
+            "name": "getCommentsByHighlightId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "highlightId",
+                            "description": "The\n    numerical id of the desire resource.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "count",
+                            "description": "The\n    number of results to return",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "Return\n    results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "Return\n    results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "Return\n    results sorted on this field.Result are returned in descending order when to is given,\n    and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Comments"
+        },
+        {
+            "file": "src/api/comments.coffee",
+            "line": 65,
+            "itemtype": "method",
+            "name": "createCommentsByHighlightId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "highlightId",
+                            "description": "The\n    numerical id of the desire resource.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "comment[content",
+                            "description": "The\n    comment text",
+                            "type": "Sting",
+                            "optional": true
+                        },
+                        {
+                            "name": "comment[posted_at",
+                            "description": "The\n    time the comment was created. This is used to create comments after they were posted.\n    Recommended date format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Comments"
+        },
+        {
+            "file": "src/api/feedback.coffee",
+            "line": 12,
+            "description": "Send feedback data to the BackEnd Server",
+            "itemtype": "method",
+            "name": "send",
+            "class": "Feedback"
+        },
+        {
+            "file": "src/api/highlight.coffee",
+            "line": 11,
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "count",
+                            "description": "The\n    number of results to return. Default is 20, max 100.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "Return\n    results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "Return\n    results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "Return\n    results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Highlights"
+        },
+        {
+            "file": "src/api/highlight.coffee",
+            "line": 31,
+            "itemtype": "method",
+            "name": "getHighlightsByUserId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "userId",
+                            "description": "The\n    numerical id of the desire resource.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "count",
+                            "description": "The\n    number of results to return. Default is 20, max 100.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "Return\n    results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "Return\n    results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "Return\n    results sorted on this field. Result are returned in descending order when to is given, and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Highlights"
+        },
+        {
+            "file": "src/api/highlight.coffee",
+            "line": 56,
+            "itemtype": "method",
+            "name": "getHighlightsByReadingId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "readingId",
+                            "description": "The\n    numerical id of the desire resource.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "count",
+                            "description": "The\n    number of results to return. Default is 20, max 100.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "Return\n    results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "Return\n    results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "Return\n    results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Highlights"
+        },
+        {
+            "file": "src/api/highlight.coffee",
+            "line": 81,
+            "itemtype": "method",
+            "name": "createHighlightByReadingId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "readingId",
+                            "description": "The\n    numerical id of the desire resource.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "highlight[contet",
+                            "description": "The\n    content of the highlight.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlight[locators",
+                            "description": "Locators\n    are used to determine the exact location of the highlight in a larger\n    piece of text. This is a custom JSON structure that contains a few different data points.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlight[position",
+                            "description": "The\n    position in the book where this highlight was made as a value 0.0 - 1.0.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlight[highlighted_at",
+                            "description": "The\n    time the highlight was created. This is used to create highlights after they were posted.\n    Recommended date format is ISO 8601.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlight[post_to[",
+                            "description": "This\n    parameter is used for sharing to other networks.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "comment[content",
+                            "description": "The\n    comment text.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Highlights"
+        },
+        {
+            "file": "src/api/highlight.coffee",
+            "line": 113,
+            "itemtype": "method",
+            "name": "deleteHighlightByHighlightId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "highlightId",
+                            "description": "The\n    numerical id of the desire resource.",
+                            "type": "String"
+                        }
+                    ]
+                }
+            ],
+            "class": "Highlights"
+        },
+        {
+            "file": "src/api/library.coffee",
+            "line": 13,
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "The\n  numberical id of the desired resource.",
+                    "type": "String"
+                }
+            ],
+            "class": "Library"
+        },
+        {
+            "file": "src/api/library.coffee",
+            "line": 26,
+            "itemtype": "method",
+            "name": "compare",
+            "params": [
+                {
+                    "name": "local_ids",
+                    "description": "A\n comma separate list of library item id's that the client has locally.",
+                    "type": "String"
+                }
+            ],
+            "class": "Library"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 26,
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "count",
+                            "description": "The\n    number of results to return. Default is 20, max 100.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "Return\n    results whose order field is larger or equal to\n    this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "Return\n    results whose order field is smaller or equal to\n    this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "Return\n    results sorted on this field. Defaults to created_at.\n    Results are returned in descending order when to is given,\n    and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "filter",
+                            "description": "Filter\n    a set of readings in different ways.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlights_count[from",
+                            "description": "Only\n    include readings which have equal or more highlights.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlights_count[to",
+                            "description": "Only\n    include readings which have less or equal highlights.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "states",
+                            "description": "Only\n    return readings that are in certain states. Accepts a\n    comma separated list.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 59,
+            "itemtype": "method",
+            "name": "getReadingsByUserIdWithMatch",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "userId",
+                            "description": "user id",
+                            "type": "String"
+                        },
+                        {
+                            "name": "author",
+                            "description": "The\n    name of the author",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "title",
+                            "description": "The\n    title of the book",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "identifier",
+                            "description": "A\n    unique identifier of the book.It is currently validated as an ISBN, though were are\n    looking into opening up to more generic identifiers like URLs or any arbitrary string",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "book_id",
+                            "description": "The\n    id of the book",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 84,
+            "itemtype": "method",
+            "name": "getReadingByReadingId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "readingId",
+                            "description": "reading id",
+                            "type": "String"
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 96,
+            "itemtype": "method",
+            "name": "getReadingsByUserId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "userId",
+                            "description": "user id",
+                            "type": "String"
+                        },
+                        {
+                            "name": "count",
+                            "description": "The\n    number of results to return. Default is 20, max 100.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "Return\n    results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "Return\n    results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "Return\n    results sorted on this field. Defaults to created_at.Results are returned in descending order\n    when to is given, and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "filter",
+                            "description": "Filter\n    a set of readings in different ways.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlights_count[from",
+                            "description": "Only\n    include readings which have equal or more highlights.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlights_count[to",
+                            "description": "Only\n    include readings which have less or equal highlights.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "states",
+                            "description": "Only\n    return readings that are in certain states. Accepts a\n    comma separated list.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 131,
+            "itemtype": "method",
+            "name": "createReadingByBookId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "bookId",
+                            "description": "book id.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "reading[state］",
+                            "description": "The\n    state of the reading.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "reading[private",
+                            "description": "readinfFlag\n    to indicate if the reading is private or public.",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[started_at",
+                            "description": "Date\n    which says when this reading was started. Mainly for use\n    when readings are added after they happened. This parameter can only\n    be used if the state of the reading is reading.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[finished_at",
+                            "description": "Date\n    which says when this reading was started. Mainly for use\n    when readings are added after they happened. This parameter can only\n    be used if the state of the reading is finished.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[abandoned_at",
+                            "description": "Date\n    which says when this reading was abandoned. Mainly for use\n    when readings are added after they happened. This parameter can only\n    be used if the state of the reading is abandoned.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[vid_id",
+                            "description": "If\n    the reading was recommended by another user you can credit them by\n    including their user id.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[recommended",
+                            "description": "Flag\n    to indicate if the reader recommands the book.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[closing_remark",
+                            "description": "A\n    closing remark of the book. Only visible if book is finished or abandoned.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[post_to[",
+                            "description": "This\n    paraeter is used for sharing to other networks.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 183,
+            "itemtype": "method",
+            "name": "updateReadingByReadingId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "reading_id",
+                            "description": "reading id",
+                            "type": "String"
+                        },
+                        {
+                            "name": "reading[state",
+                            "description": "The\n    state of the reading",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[private",
+                            "description": "Flag\n    to indicate if the reading is private or public",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[started_at",
+                            "description": "Date\n    which says when this reading was started. Mainly for use when readings are added after they happened.\n    This parameter can only be used if the state of the reading is reading.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[finished_at",
+                            "description": "Date\n    which says when this reading was finished. Mainly for use when readings are added after they happened.\n    This parameter can only be used if the state of the reading is finished.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[abandoned_at",
+                            "description": "Date\n    which says when this reading was abandoned. Mainly for use when readings are added after they happened.\n    This date can only be used if the state of the reading is abandoned.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[via_id",
+                            "description": "If\n    the reading was recommended by another user you can credit them by including their user id.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[recommended",
+                            "description": "Flag\n    to indicate if the reader recommends the book",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading[closing_remark",
+                            "description": "A\n    closing remark of the book. Only visible if book is finished or abandoned",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "reading_post_to()(id)",
+                            "description": "This\n    parameter is used for sharing to other networks",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 227,
+            "itemtype": "method",
+            "name": "finishReadingByReadingId",
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 235,
+            "itemtype": "method",
+            "name": "abandonedReadingByReadingId",
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 243,
+            "itemtype": "method",
+            "name": "getReadingByBookId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "bookId",
+                            "description": "book id",
+                            "type": "String"
+                        },
+                        {
+                            "name": "count",
+                            "description": "count\n    The number of results to return. Default is 20, max 100.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "from\n    Return results whose order field is larger or equal to\n    this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "to\n    Return results whose order field is smaller or equal to\n    this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "order\n    Return results sorted on this field. Defaults to created_at.\n    Results are returned in descending order when to is given,\n    and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "filter",
+                            "description": "filter\n    Filter a set of readings in different ways.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlights_count[from",
+                            "description": "highlights_count[from]\n    Only include readings which have equal or more highlights.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "highlights_count[to",
+                            "description": "highlights_count[to]\n    Only include readings which have less or equal highlights.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "states",
+                            "description": "states\n    Only return readings that are in certain states. Accepts a\n    comma separated list.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/readings.coffee",
+            "line": 283,
+            "itemtype": "method",
+            "name": "ping",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "readingId",
+                            "description": "reading id.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "ping[identifier］",
+                            "description": "A\n    unique identifier that is used to group pings together to the same period when processed.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "ping[progress］",
+                            "description": "The\n    progress of the reading session. In percent, between 0.0 and 1.0.",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "ping[cfi］",
+                            "description": "The\n    cfi info of the reading.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "ping[duration］",
+                            "description": "The\n    duration of the reading session. In seconds.",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "ping[occurred_at",
+                            "description": "When\n    the session occured. Recommended date format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "ping[lat",
+                            "description": "The\n    latitute coordinates of the position when reading.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "ping[lng",
+                            "description": "The\n    longitude coordinates of the position when reading.",
+                            "type": "Number",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/users.coffee",
+            "line": 9,
+            "description": "Return the authenticated user.",
+            "itemtype": "method",
+            "name": "get",
+            "class": "me"
+        },
+        {
+            "file": "src/api/users.coffee",
+            "line": 23,
+            "description": "Return an user with specified id.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "user id.",
+                    "type": "String"
+                }
+            ],
+            "class": "users"
+        }
+    ],
+    "warnings": []
+}
