@@ -7,7 +7,7 @@ do ->
   me = ->
     return {
       ###*
-      #
+      # Return the authenticated user.
       # @method get
       ###
       get: =>
@@ -21,7 +21,7 @@ do ->
   users = (userId) ->
     return {
       ###*
-      #
+      # Return an user with specified id.
       # @method get
       # @param {String} userId user id.
       ###

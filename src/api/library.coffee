@@ -11,10 +11,12 @@ do ->
 
     return {
       ###*
+      #
       # @method get
-      # @param {String} libraryId
-      #   The numerical id of the desired resource.
+      # @param {String} userId The
+      #  numberical id of the desired resource.
       ###
+
       get: =>
         if not libraryId
           throw new TypeError('A library id need provided')
@@ -22,9 +24,10 @@ do ->
         return @_sp.__a__ "me/library/#{ libraryId }"
 
       ###*
-      #  @method compare
-      #   @param {String} local_ids
-      #     A comma separate list of library item id's that the client has locally.
+      #
+      # @method compare
+      # @param {String} local_ids A
+      # comma separate list of library item id's that the client has locally.
       ###
       compare: (local_ids) =>
 
