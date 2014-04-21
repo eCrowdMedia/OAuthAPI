@@ -11,14 +11,14 @@ do ->
       ###*
       # @method get
       # @param {Object} [options]
-      #   @param {Number} [options.count] count
-      #     The number of results to return. Default is 20, max 100.
-      #   @param {Date} [options.from] from
-      #     Return results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
-      #   @param {Date} [options.to] to
-      #     Return results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
-      #   @param {String} [options.order] order
-      #     Return results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
       ###
       get: =>
 
@@ -33,15 +33,14 @@ do ->
       # @param {Object} [options]
       #   @param {String} options.userId The
       #     numerical id of the desire resource.
-      #   @param {Number} [options.count] count
-      #     The number of results to return. Default is 20, max 100.
-      #   @param {Date} [options.from] from
-      #     Return results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
-      #   @param {Date} [options.to] to
-      #     Return results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
-      #   @param {String} [options.order] order
-      #     Return results sorted on this field. Result are returned in descending order when to is given, and in
-      #     ascending order when from is given.
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field. Result are returned in descending order when to is given, and in ascending order when from is given.
       ###
       getHighlightsByUserId: =>
 
@@ -59,14 +58,14 @@ do ->
       # @param {Object} [options]
       #   @param {String} options.readingId The
       #     numerical id of the desire resource.
-      #   @param {Number} [options.count] count
-      #     The number of results to return. Default is 20, max 100.
-      #   @param {Date} [options.from] from
-      #     Return results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
-      #   @param {Date} [options.to] to
-      #     Return results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
-      #   @param {String} [options.order] order
-      #     Return results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
       ###
       getHighlightsByReadingId: =>
 
@@ -84,20 +83,20 @@ do ->
       # @param {Object} [options]
       #   @param {String} options.readingId The
       #     numerical id of the desire resource.
-      #   @param {Number} [options.highlight[contet]] highlight[content]
-      #     The content of the highlight.
-      #   @param {String} [options.highlight[locators]] highlight[locators]
-      #     Locators are used to determine the exact location of the highlight in a larger
+      #   @param {Number} [options.highlight[contet]] The
+      #     content of the highlight.
+      #   @param {String} [options.highlight[locators]] Locators
+      #     are used to determine the exact location of the highlight in a larger
       #     piece of text. This is a custom JSON structure that contains a few different data points.
-      #   @param {String} [options.highlight[position]] highlight[position]
-      #     The position in the book where this highlight was made as a value 0.0 - 1.0.
-      #   @param {String} [options.highlight[highlighted_at]] highlight[highlighted_at]
-      #     The time the highlight was created. This is used to create highlights after they were posted.
+      #   @param {String} [options.highlight[position]] The
+      #     position in the book where this highlight was made as a value 0.0 - 1.0.
+      #   @param {String} [options.highlight[highlighted_at]] The
+      #     time the highlight was created. This is used to create highlights after they were posted.
       #     Recommended date format is ISO 8601.
-      #   @param {String} [options.highlight[post_to[][id]] highlight[post_to[][id]]
-      #     This parameter is used for sharing to other networks.
-      #   @param {String} [options.comment[content] comment[content]
-      #     The comment text.
+      #   @param {String} [options.highlight[post_to[][id]] This
+      #     parameter is used for sharing to other networks.
+      #   @param {String} [options.comment[content] The
+      #     comment text.
       ###
       createHighlightByReadingId: =>
 
