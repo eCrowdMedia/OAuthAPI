@@ -10,6 +10,7 @@ do ->
 
     return {
       ###*
+      # Send feedback data to the BackEnd Server
       # @method send
       ###
       send: =>
