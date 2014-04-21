@@ -1,0 +1,11 @@
+{
+    "name": "OAuth API",
+    "description": "OAuthJs API document",
+    "version": "1.8.1",
+    "options": {
+        "paths": "./src/api",
+        "outdir": "./docs",
+        "linkNatives": "true",
+        "exclude": "out"
+    }
+}
