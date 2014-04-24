@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.8.0 - 2014-04-15
+/*! readmoo-oauth-api - v1.8.1 - 2014-04-24
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2405,10 +2405,12 @@ utils.extend(utils, {
         'me': 'me'
       },
       xhr: function(p) {
-        if (!localStorage.hello) {
+        var oa;
+        oa = localStorage.getItem('__oa__');
+        if (!oa) {
           return false;
         }
-        hello = JSON.parse(localStorage.hello);
+        hello = JSON.parse(oa);
         if (!hello.readmoo || !hello.readmoo.client_id) {
           return false;
         }
