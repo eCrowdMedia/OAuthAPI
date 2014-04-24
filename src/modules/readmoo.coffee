@@ -20,10 +20,11 @@ do (hello) ->
 
       xhr: (p) ->
 
-        if not localStorage.hello
+        oa = localStorage.getItem('__oa__')
+        if not oa
           return false
 
-        hello = JSON.parse localStorage.hello
+        hello = JSON.parse oa
 
         if not hello.readmoo or not hello.readmoo.client_id
           return false
