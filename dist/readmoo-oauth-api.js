@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.8.1 - 2014-04-24
+/*! readmoo-oauth-api - v1.8.1 - 2014-04-29
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2626,7 +2626,138 @@ _util = {
 };
 
 (function() {
-  /*
+  /**
+  #
+  # @class Readings
+  */
+
+  var bookmarks;
+  bookmarks = function(options) {
+    var _this = this;
+    return {
+      /**
+      # Get popular bookmarks.
+      #
+      # @method get
+      # @param {Object} [options] Options
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field. Defaults to created_at.Results are returned in descending order
+      #     when to is given, and in ascending order when from is given.
+      */
+
+      get: function() {
+        var data;
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
+        return _this._sp.__a__("/bookmarks", "GET", data);
+      },
+      /**
+      # Get bookmarks by reading id.
+      #
+      # @method getBookmarksByReadingId
+      # @param {Object} options Options
+      #   @param {String} options.readingId Reading id.
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field. Defaults to created_at.Results are returned in descending order
+      #     when to is given, and in ascending order when from is given.
+      */
+
+      getBookmarksByReadingId: function() {
+        var data;
+        if (!options.readingId) {
+          throw new TypeError("A reading id must be provided");
+        }
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
+        return _this._sp.__a__("readings/" + options.readingId + "/bookmarks", "GET", data);
+      },
+      /**
+      # Get bookmarks by user id.
+      #
+      # @method getBookmarksByUserId
+      # @param {Object} options Options
+      #   @param {String} options.userId User id
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field. Defaults to created_at.Results are returned in descending order
+      #     when to is given, and in ascending order when from is given.
+      */
+
+      getBookmarksByUserId: function() {
+        var data;
+        if (!options.userId) {
+          throw new TypeError("An user id must be provided");
+        }
+        data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
+        return _this._sp.__a__("users/" + options.userId + "/bookmarks", "GET", data);
+      },
+      /**
+      # Create bookmark by reading id.
+      #
+      # @method createBookmarkByReadingId
+      # @param {Object} options Options
+      #   @param {String} options.readingId Reading id
+      #   @param {String} options.bookmark[content〕 Bookmark
+      #     content.
+      #   @param {Object} options.bookmark[locators〕 Bookmark
+      #     locators
+      #     @param {String} options.bookmark[locators〕.cfi Bookmark
+      #       CFI position.
+      #     @param {Number} options.bookmark[locators〕.position Bookmark
+      #       position percent number.
+      #     @param {String} options.bookmark[locators〕.title Bookmark
+      #       title.
+      #   @param {Number} options.bookmark[position〕 Bookmark
+      #     position percent number.
+      */
+
+      createBookmarkByReadingId: function() {
+        var data;
+        if (!options.readingId) {
+          throw new TypeError("A reading id must be provided.");
+        }
+        data = _util.paramFilter(options, ['bookmark[content]', 'bookmark[locators]', 'bookmark[position]', 'bookmark[bookmarked_at]']);
+        return _this._sp.__a__("readings/" + options.readingId + "/bookmarks", "POST", data);
+      },
+      /**
+      # Delete bookmark by bookmark id.
+      #
+      # @method deleteBookmarkByBookmarkId
+      # @param {Object} [options]
+      #   @param {String} options.highlightId The
+      #     numerical id of the desire resource.
+      */
+
+      deleteBookmarkByBookmarkId: function() {
+        if (!options.bookmarkId) {
+          throw new TypeError("A bookmark id must be provided");
+        }
+        return _this._sp.__a__("bookmarks/" + options.bookmarkId, "DELETE");
+      }
+    };
+  };
+  hello.utils.extend(ReadmooAPI.prototype.api, {
+    bookmarks: bookmarks
+  });
+})();
+
+(function() {
+  /**
   #
   # @class Books
   */
@@ -2635,9 +2766,9 @@ _util = {
   books = function(options) {
     var _this = this;
     return {
-      /*
-      # @method getBookById
-      # @param {String} book_id Book ID
+      /**
+      # @method getBookByBookId
+      #  @param {String} options.book_id Book ID
       */
 
       getBookByBookId: function() {
@@ -2656,7 +2787,7 @@ _util = {
 (function() {
   var CONST, comments;
   CONST = {};
-  /*
+  /**
   #
   # @class Comments
   */
@@ -2664,18 +2795,46 @@ _util = {
   comments = function(options) {
     var _this = this;
     return {
+      /**
+      # @method getCommentByCommentId
+      #   @param {String} options.commentId The
+      #     numberical id of the desired resource.
+      */
+
       getCommentByCommentId: function() {
         if (!options.commentId) {
           throw new TypeError("A comment id must be provided");
         }
         return _this._sp.__a__("comments/" + options.commentId, "GET");
       },
+      /**
+      # @method deleteCommentByCommentId
+      #   @param {String} options.commentId The
+      #     numberical id of the desired resource.
+      */
+
       deleteCommentByCommentId: function() {
         if (!options.commentId) {
           throw new TypeError("A comment id must be provided");
         }
         return _this._sp.__a__("comments/" + options.commentId, "DELETE");
       },
+      /**
+      # @method getCommentsByHighlightId
+      # @param {Object} [options]
+      #   @param {String} options.highlightId The
+      #     numerical id of the desire resource.
+      #   @param {Number} [options.count] The
+      #     number of results to return
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field.Result are returned in descending order when to is given,
+      #     and in ascending order when from is given.
+      */
+
       getCommentsByHighlightId: function() {
         var data;
         if (!options.highlightId) {
@@ -2684,6 +2843,18 @@ _util = {
         data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
         return _this._sp.__a__("highlights/" + options.highlightId + "/comments", "GET", data);
       },
+      /**
+      # @method createCommentsByHighlightId
+      # @param {Object} [options]
+      #   @param {String} options.highlightId The
+      #     numerical id of the desire resource.
+      #   @param {Sting} [options.comment[content]] The
+      #     comment text
+      #   @param {Date} [options.comment[posted_at]] The
+      #     time the comment was created. This is used to create comments after they were posted.
+      #     Recommended date format is ISO 8601.
+      */
+
       createCommentByHighlightId: function() {
         var data;
         if (!options.highlightId) {
@@ -2701,24 +2872,51 @@ _util = {
 })();
 
 (function() {
-  /*
+  /**
   #
-  # @class Books
+  # @class Feedback
   */
 
   var feedback;
   feedback = function(options) {
     var _this = this;
     return {
-      /*
-      # @method getBookById
-      # @param {String} book_id Book ID
+      /**
+      # Send feedback data to the BackEnd License Server
+      # @method send
       */
 
       send: function() {
         var data;
         data = options.data;
         return _this._sp.__a__("feedback", "POST", data);
+      },
+      /**
+      # Send Error Words data to the BackEnd License Server
+      # @method postWordsError
+      # @params {Object} options
+      #   @params {String} email User's
+      #     email address
+      #   @params {String} subject The
+      #     reason for this feedback
+      #   @params {String} original The
+      #     words need to be fixed
+      #   @params {String} report The
+      #     correct words
+      #   @params {String} url The
+      #     url belong to location of error words in the epub book
+      #
+      */
+
+      postWordsError: function() {
+        var bug;
+        bug = "原文：" + options.data.original + "<br />\n回報：" + options.data.report;
+        options.data.bug = bug;
+        if (options.data.email !== null && options.data.subject !== null && options.data.url !== null) {
+          _this.send();
+        } else {
+          console.error("have missing items in params");
+        }
       }
     };
   };
@@ -2728,16 +2926,26 @@ _util = {
 })();
 
 (function() {
+  /**
+  #
+  # @class Highlights
+  */
+
   var highlights;
   highlights = function(options) {
     var _this = this;
     return {
-      /*
+      /**
+      # @method get
       # @param {Object} [options]
-      #   @param {Number} [options.count] The number of results to return
-      #   @param {String} [options.from] Return results whose order field is larger or equal to this parameter
-      #   @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
-      #   @param {String} [options.order] Return results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
       */
 
       get: function() {
@@ -2745,13 +2953,19 @@ _util = {
         data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
         return _this._sp.__a__("highlights", "GET", data);
       },
-      /*
-      #  @param {Object} [options]
-      #    @param {Number} options.id The numerical id of the desired resource
-      #    @param {Number} [options.count] The number of results to return. Default is 20, max 100
-      #    @param {String} [options.from] Return results whose order field is larger or equal to this parameter
-      #    @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
-      #    @param {String} [options.order] Return results sorted on this field
+      /**
+      # @method getHighlightsByUserId
+      # @param {Object} [options]
+      #   @param {String} options.userId The
+      #     numerical id of the desire resource.
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field. Result are returned in descending order when to is given, and in ascending order when from is given.
       */
 
       getHighlightsByUserId: function() {
@@ -2762,13 +2976,19 @@ _util = {
         data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
         return _this._sp.__a__("users/" + options.userId + "/highlights", "GET", data);
       },
-      /*
-      #  @param {Object} [options]
-      #    @param {Number} options.id The numerical id of the desired resource
-      #    @param {Number} [options.count] The number of results to return. Default is 20, max 100
-      #    @param {String} [options.from] Return results whose order field is larger or equal to this parameter
-      #    @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
-      #    @param {String} [options.order] Return results sorted on this field
+      /**
+      # @method getHighlightsByReadingId
+      # @param {Object} [options]
+      #   @param {String} options.readingId The
+      #     numerical id of the desire resource.
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field.Result are returned in descending order when to is given, and in ascending order when from is given.
       */
 
       getHighlightsByReadingId: function() {
@@ -2779,6 +2999,27 @@ _util = {
         data = _util.paramFilter(options, ['count', 'from', 'to', 'order']);
         return _this._sp.__a__("readings/" + options.readingId + "/highlights", "GET", data);
       },
+      /**
+      # @method createHighlightByReadingId
+      # @param {Object} [options]
+      #   @param {String} options.readingId The
+      #     numerical id of the desire resource.
+      #   @param {Number} [options.highlight[contet]] The
+      #     content of the highlight.
+      #   @param {String} [options.highlight[locators]] Locators
+      #     are used to determine the exact location of the highlight in a larger
+      #     piece of text. This is a custom JSON structure that contains a few different data points.
+      #   @param {String} [options.highlight[position]] The
+      #     position in the book where this highlight was made as a value 0.0 - 1.0.
+      #   @param {String} [options.highlight[highlighted_at]] The
+      #     time the highlight was created. This is used to create highlights after they were posted.
+      #     Recommended date format is ISO 8601.
+      #   @param {String} [options.highlight[post_to[][id]] This
+      #     parameter is used for sharing to other networks.
+      #   @param {String} [options.comment[content] The
+      #     comment text.
+      */
+
       createHighlightByReadingId: function() {
         var data;
         if (!options.readingId) {
@@ -2787,6 +3028,13 @@ _util = {
         data = _util.paramFilter(options, ['highlight[content]', 'highlight[locators]', 'highlight[position]', 'highlight[highlight_at]', 'highlight[post_to[][id]]', 'comment[content]']);
         return _this._sp.__a__("readings/" + options.readingId + "/highlights", "POST", data);
       },
+      /**
+      # @method deleteHighlightByHighlightId
+      # @param {Object} [options]
+      #   @param {String} options.highlightId The
+      #     numerical id of the desire resource.
+      */
+
       deleteHighlightByHighlightId: function() {
         if (!options.highlightId) {
           throw new TypeError("A highlight id must be provided");
@@ -2801,19 +3049,22 @@ _util = {
 })();
 
 (function() {
+  /**
+  #
+  # @class Library
+  */
+
   var library;
   library = function(libraryId) {
     var data,
       _this = this;
     data = {};
     return {
-      /*
-      # @param {Object} [options] Options
-      #   @param {Number} [options.count] The number of result to return Default is 20, max 100
-      #   @param {Number} [options.from] Return results whose order field is larger or equal to this parameter 
-      #   @param {String} [options.to] Return results whose order field is smaller or equal to this parameter
-      #   @param {String} [options.order] Return results sorted on this field
-      #   @param {String} [option.price_segments] Filter books by price segments
+      /**
+      #
+      # @method get
+      # @param {String} userId The
+      #  numberical id of the desired resource.
       */
 
       get: function() {
@@ -2822,11 +3073,11 @@ _util = {
         }
         return _this._sp.__a__("me/library/" + libraryId);
       },
-      /*
-      # @param {Object} [options] Options
-      #   @param {String} [options.author] The name of the author
-      #   @param {String} [options.title] The title of the book
-      #   @param {String} [options.identifier] A unique identifier of the book
+      /**
+      #
+      # @method compare
+      # @param {String} local_ids A
+      # comma separate list of library item id's that the client has locally.
       */
 
       compare: function(local_ids) {
@@ -2859,7 +3110,7 @@ _util = {
     STATE_FINISHED: 'finished',
     STATE_ABANDONED: 'abandoned'
   };
-  /*
+  /**
   #
   # @class Readings
   */
@@ -2867,29 +3118,29 @@ _util = {
   readings = function(options) {
     var _this = this;
     return {
-      /*
+      /**
       # @method get
       # @param {Object} [options] Options
-      #   @param {Number} [options.count] count
-      #     The number of results to return. Default is 20, max 100.
-      #   @param {Date} [options.from] from
-      #     Return results whose order field is larger or equal to
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to
       #     this parameter. For dates, the format is ISO 8601.
-      #   @param {Date} [options.to] to
-      #     Return results whose order field is smaller or equal to
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to
       #     this parameter. For dates, the format is ISO 8601.
-      #   @param {String} [options.order] order
-      #     Return results sorted on this field. Defaults to created_at.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field. Defaults to created_at.
       #     Results are returned in descending order when to is given,
       #     and in ascending order when from is given.
-      #   @param {String} [options.filter] filter
-      #     Filter a set of readings in different ways.
-      #   @param {Number} [options.highlights_count[from]] highlights_count[from]
-      #     Only include readings which have equal or more highlights.
-      #   @param {Number} [options.highlights_count[to]] highlights_count[to]
-      #     Only include readings which have less or equal highlights.
-      #   @param {String} [options.states] states
-      #     Only return readings that are in certain states. Accepts a
+      #   @param {String} [options.filter] Filter
+      #     a set of readings in different ways.
+      #   @param {Number} [options.highlights_count[from]] Only
+      #     include readings which have equal or more highlights.
+      #   @param {Number} [options.highlights_count[to]] Only
+      #     include readings which have less or equal highlights.
+      #   @param {String} [options.states] Only
+      #     return readings that are in certain states. Accepts a
       #     comma separated list.
       */
 
@@ -2898,32 +3149,19 @@ _util = {
         data = _util.paramFilter(options, ['count', 'from', 'to', 'order', 'filter', 'highlights_count[from]', 'highlights_count[to]', 'states']);
         return _this._sp.__a__("readings", "GET", data);
       },
-      /*
-      #
-      # @method getReadingsByUserId
+      /**
+      # @method getReadingsByUserIdWithMatch
       # @param {Object} [options] Options
       #   @param {String} options.userId user id
-      #   @param {Number} [options.count] count
-      #     The number of results to return. Default is 20, max 100.
-      #   @param {Date} [options.from] from
-      #     Return results whose order field is larger or equal to
-      #     this parameter. For dates, the format is ISO 8601.
-      #   @param {Date} [options.to] to
-      #     Return results whose order field is smaller or equal to
-      #     this parameter. For dates, the format is ISO 8601.
-      #   @param {String} [options.order] order
-      #     Return results sorted on this field. Defaults to created_at.
-      #     Results are returned in descending order when to is given,
-      #     and in ascending order when from is given.
-      #   @param {String} [options.filter] filter
-      #     Filter a set of readings in different ways.
-      #   @param {Number} [options.highlights_count_from] highlights_count[from]
-      #     Only include readings which have equal or more highlights.
-      #   @param {Number} [options.highlights_count_to] highlights_count[to]
-      #     Only include readings which have less or equal highlights.
-      #   @param {String} [options.states] states
-      #     Only return readings that are in certain states. Accepts a
-      #     comma separated list.
+      #   @param {Number} [options.author] The
+      #     name of the author
+      #   @param {Date} [options.title] The
+      #     title of the book
+      #   @param {Date} [options.identifier] A
+      #     unique identifier of the book.It is currently validated as an ISBN, though were are
+      #     looking into opening up to more generic identifiers like URLs or any arbitrary string
+      #   @param {String} [options.book_id] The
+      #     id of the book
       */
 
       getReadingsByUserIdWithMatch: function() {
@@ -2934,12 +3172,42 @@ _util = {
         data = _util.paramFilter(options, ['author', 'title', 'identifier', 'book_id']);
         return _this._sp.__a__("users/" + options.userId + "/readings/match", "GET", data);
       },
+      /**
+      # @method getReadingByReadingId
+      # @param {Object} options Options
+      #   @param {String} options.readingId reading id
+      */
+
       getReadingByReadingId: function() {
         if (!options.readingId) {
           throw new TypeError("An user id must be provided");
         }
         return _this._sp.__a__("readings/" + options.readingId);
       },
+      /**
+      # @method getReadingsByUserId
+      # @param {Object} options Options
+      #   @param {String} options.userId user id
+      #   @param {Number} [options.count] The
+      #     number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] Return
+      #     results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] Return
+      #     results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] Return
+      #     results sorted on this field. Defaults to created_at.Results are returned in descending order
+      #     when to is given, and in ascending order when from is given.
+      #   @param {String} [options.filter] Filter
+      #     a set of readings in different ways.
+      #   @param {Number} [options.highlights_count[from]] Only
+      #     include readings which have equal or more highlights.
+      #   @param {Number} [options.highlights_count[to]] Only
+      #     include readings which have less or equal highlights.
+      #   @param {String} [options.states] Only
+      #     return readings that are in certain states. Accepts a
+      #     comma separated list.
+      */
+
       getReadingsByUserId: function() {
         var data;
         if (!options.userId) {
@@ -2948,6 +3216,37 @@ _util = {
         data = _util.paramFilter(options, ['count', 'from', 'to', 'order', 'filter', 'highlights_count[from]', 'highlights_count[to]', 'states']);
         return _this._sp.__a__("users/" + options.userId + "/readings", "GET", data);
       },
+      /**
+      # @method createReadingByBookId
+      # @param {Object} options Options
+      #   @param {String} options.bookId book id.
+      #   @param {String} options.reading[state］ The
+      #     state of the reading.
+      #   @param {Boolean} [options.reading[private]] readinfFlag
+      #     to indicate if the reading is private or public.
+      #   @param {Date} [options.reading[started_at]] Date
+      #     which says when this reading was started. Mainly for use
+      #     when readings are added after they happened. This parameter can only
+      #     be used if the state of the reading is reading.
+      #   @param {Date} [options.reading[finished_at]] Date
+      #     which says when this reading was started. Mainly for use
+      #     when readings are added after they happened. This parameter can only
+      #     be used if the state of the reading is finished.
+      #   @param {String} [options.reading[abandoned_at]] Date
+      #     which says when this reading was abandoned. Mainly for use
+      #     when readings are added after they happened. This parameter can only
+      #     be used if the state of the reading is abandoned.
+      #   @param {Number} [options.reading[vid_id]] If
+      #     the reading was recommended by another user you can credit them by
+      #     including their user id.
+      #   @param {Number} [options.reading[recommended]] Flag
+      #     to indicate if the reader recommands the book.
+      #   @param {String} [options.reading[closing_remark]] A
+      #     closing remark of the book. Only visible if book is finished or abandoned.
+      #   @param {String} [options.reading[post_to[][id]] This
+      #     paraeter is used for sharing to other networks.
+      */
+
       createReadingByBookId: function() {
         var bookId, data, state;
         state = options['reading[state]'];
@@ -2961,6 +3260,33 @@ _util = {
         data = _util.paramFilter(options, ['reading[state]', 'reading[private]', 'reading[started_at]', 'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]', 'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]']);
         return _this._sp.__a__("books/" + bookId + "/readings", "POST", data);
       },
+      /**
+      # @method updateReadingByReadingId
+      # @param {Object} options Options
+      #   @param {String} options.reading_id reading id
+      #   @param {String} [options.reading[state]] The
+      #     state of the reading
+      #   @param {Boolean} [options.reading[private]] Flag
+      #     to indicate if the reading is private or public
+      #   @param {Date} [options.reading[started_at]] Date
+      #     which says when this reading was started. Mainly for use when readings are added after they happened.
+      #     This parameter can only be used if the state of the reading is reading.
+      #   @param {Date} [options.reading[finished_at]] Date
+      #     which says when this reading was finished. Mainly for use when readings are added after they happened.
+      #     This parameter can only be used if the state of the reading is finished.
+      #   @param {Date} [options.reading[abandoned_at]] Date
+      #     which says when this reading was abandoned. Mainly for use when readings are added after they happened.
+      #     This date can only be used if the state of the reading is abandoned.
+      #   @param {String} [options.reading[via_id]] If
+      #     the reading was recommended by another user you can credit them by including their user id.
+      #   @param {Boolean} [options.reading[recommended]] Flag
+      #     to indicate if the reader recommends the book
+      #   @param {String} [options.reading[closing_remark]] A
+      #     closing remark of the book. Only visible if book is finished or abandoned
+      #   @param {String} [options.reading_post_to()(id)] This
+      #     parameter is used for sharing to other networks
+      */
+
       updateReadingByReadingId: function() {
         var data, readingId, state;
         state = options['reading[state]'];
@@ -2974,16 +3300,51 @@ _util = {
         data = _util.paramFilter(options, ['reading[state]', 'reading[private]', 'reading[started_at]', 'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]', 'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]']);
         return _this._sp.__a__("readings/" + readingId, "PUT", data);
       },
+      /**
+      # @method finishReadingByReadingId
+      */
+
       finishReadingByReadingId: function() {
         options['reading[state]'] = CONST.STATE_FINISHED;
         options['reading[finished_at]'] = (new Date()).toISOString();
         return this.updateReadingByReadingId();
       },
+      /**
+      # @method abandonedReadingByReadingId
+      */
+
       abandonedReadingByReadingId: function() {
         options['reading[state]'] = CONST.STATE_ABANDONED;
         options['reading[abandoned_at]'] = (new Date()).toISOString();
         return this.updateReadingByReadingId();
       },
+      /**
+      # @method getReadingByBookId
+      # @param {Object} options Options
+      #   @param {String} options.bookId book id
+      #   @param {Number} [options.count] count
+      #     The number of results to return. Default is 20, max 100.
+      #   @param {Date} [options.from] from
+      #     Return results whose order field is larger or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {Date} [options.to] to
+      #     Return results whose order field is smaller or equal to
+      #     this parameter. For dates, the format is ISO 8601.
+      #   @param {String} [options.order] order
+      #     Return results sorted on this field. Defaults to created_at.
+      #     Results are returned in descending order when to is given,
+      #     and in ascending order when from is given.
+      #   @param {String} [options.filter] filter
+      #     Filter a set of readings in different ways.
+      #   @param {Number} [options.highlights_count[from] highlights_count[from]
+      #     Only include readings which have equal or more highlights.
+      #   @param {Number} [options.highlights_count[to]] highlights_count[to]
+      #     Only include readings which have less or equal highlights.
+      #   @param {String} [options.states] states
+      #     Only return readings that are in certain states. Accepts a
+      #     comma separated list.
+      */
+
       getReadingsByBookId: function() {
         var data;
         if (!options.bookId) {
@@ -2992,6 +3353,26 @@ _util = {
         data = _util.paramFilter(options, ['count', 'from', 'to', 'order', 'filter', 'highlights_count[from]', 'highlights_count[to]', 'states']);
         return _this._sp.__a__("books/" + options.bookId + "/readings", "GET", data);
       },
+      /**
+      # @method ping
+      # @param {Object} options Options
+      #   @param {String} options.readingId reading id.
+      #   @param {String} options.ping[identifier］ A
+      #     unique identifier that is used to group pings together to the same period when processed.
+      #   @param {Number} options.ping[progress］ The
+      #     progress of the reading session. In percent, between 0.0 and 1.0.
+      #   @param {String} options.ping[cfi］ The
+      #     cfi info of the reading.
+      #   @param {Number} options.ping[duration］ The
+      #     duration of the reading session. In seconds.
+      #   @param {Date} [options.ping[occurred_at]] When
+      #     the session occured. Recommended date format is ISO 8601.
+      #   @param {Number} [options.ping[lat]] The
+      #     latitute coordinates of the position when reading.
+      #   @param {Number} [options.ping[lng]] The
+      #     longitude coordinates of the position when reading.
+      */
+
       ping: function() {
         var data;
         if (!options.readingId) {
@@ -3009,18 +3390,39 @@ _util = {
 })();
 
 (function() {
+  /**
+  #
+  # @class me
+  */
+
   var me, users;
   me = function() {
     var _this = this;
     return {
+      /**
+      # Return the authenticated user.
+      # @method get
+      */
+
       get: function() {
         return _this._sp.__a__('me');
       }
     };
   };
+  /**
+  #
+  # @class users
+  */
+
   users = function(userId) {
     var _this = this;
     return {
+      /**
+      # Return an user with specified id.
+      # @method get
+      # @param {String} userId user id.
+      */
+
       get: function() {
         if (!userId) {
           throw new TypeError("An user id need provided");
