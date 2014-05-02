@@ -112,7 +112,8 @@ do ->
 
         data = _util.paramFilter options, [
           'bookmark[content]', 'bookmark[locators]',
-          'bookmark[position]', 'bookmark[bookmarked_at]'
+          'bookmark[position]', 'bookmark[bookmarked_at]',
+          'bookmark[device]'
         ]
 
         return @_sp.__a__ "readings/#{ options.readingId }/bookmarks", "POST", data

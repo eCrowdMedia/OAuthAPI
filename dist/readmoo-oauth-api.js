@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.9.0 - 2014-05-02
+/*! readmoo-oauth-api - v1.9.1 - 2014-05-02
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2731,7 +2731,7 @@ _util = {
         if (!options.readingId) {
           throw new TypeError("A reading id must be provided.");
         }
-        data = _util.paramFilter(options, ['bookmark[content]', 'bookmark[locators]', 'bookmark[position]', 'bookmark[bookmarked_at]']);
+        data = _util.paramFilter(options, ['bookmark[content]', 'bookmark[locators]', 'bookmark[position]', 'bookmark[bookmarked_at]', 'bookmark[device]']);
         return _this._sp.__a__("readings/" + options.readingId + "/bookmarks", "POST", data);
       },
       /**
