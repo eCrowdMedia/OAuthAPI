@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+yuidoc -C -c yuidoc.json -e .coffee --syntaxtype coffee
