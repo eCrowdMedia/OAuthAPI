@@ -4,7 +4,7 @@
     "version": "1.8.1",
     "options": {
         "paths": "./src/api",
-        "outdir": "./docs",
+        "outdir": ".",
         "linkNatives": "true",
         "exclude": "out"
     }
