@@ -5,6 +5,13 @@
         "version": "1.8.1"
     },
     "files": {
+        "src/api/bookmarks.coffee": {
+            "name": "src/api/bookmarks.coffee",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/api/books.coffee": {
             "name": "src/api/books.coffee",
             "modules": {},
@@ -72,6 +79,17 @@
     },
     "modules": {},
     "classes": {
+        "Readings": {
+            "name": "Readings",
+            "shortname": "Readings",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/api/readings.coffee",
+            "line": 19
+        },
         "Books": {
             "name": "Books",
             "shortname": "Books",
@@ -127,17 +145,6 @@
             "file": "src/api/library.coffee",
             "line": 4
         },
-        "Readings": {
-            "name": "Readings",
-            "shortname": "Readings",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "file": "src/api/readings.coffee",
-            "line": 19
-        },
         "me": {
             "name": "me",
             "shortname": "me",
@@ -162,6 +169,217 @@
         }
     },
     "classitems": [
+        {
+            "file": "src/api/bookmarks.coffee",
+            "line": 12,
+            "description": "Get popular bookmarks.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "count",
+                            "description": "The\n    number of results to return. Default is 20, max 100.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "Return\n    results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "Return\n    results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "Return\n    results sorted on this field. Defaults to created_at.Results are returned in descending order\n    when to is given, and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/bookmarks.coffee",
+            "line": 35,
+            "description": "Get bookmarks by reading id.",
+            "itemtype": "method",
+            "name": "getBookmarksByReadingId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "readingId",
+                            "description": "Reading id.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "count",
+                            "description": "The\n    number of results to return. Default is 20, max 100.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "Return\n    results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "Return\n    results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "Return\n    results sorted on this field. Defaults to created_at.Results are returned in descending order\n    when to is given, and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/bookmarks.coffee",
+            "line": 62,
+            "description": "Get bookmarks by user id.",
+            "itemtype": "method",
+            "name": "getBookmarksByUserId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "userId",
+                            "description": "User id",
+                            "type": "String"
+                        },
+                        {
+                            "name": "count",
+                            "description": "The\n    number of results to return. Default is 20, max 100.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "from",
+                            "description": "Return\n    results whose order field is larger or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "to",
+                            "description": "Return\n    results whose order field is smaller or equal to this parameter. For dates, the format is ISO 8601.",
+                            "type": "Date",
+                            "optional": true
+                        },
+                        {
+                            "name": "order",
+                            "description": "Return\n    results sorted on this field. Defaults to created_at.Results are returned in descending order\n    when to is given, and in ascending order when from is given.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/bookmarks.coffee",
+            "line": 89,
+            "description": "Create bookmark by reading id.",
+            "itemtype": "method",
+            "name": "createBookmarkByReadingId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Options",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "readingId",
+                            "description": "Reading id",
+                            "type": "String"
+                        },
+                        {
+                            "name": "bookmark[content〕",
+                            "description": "Bookmark\n    content.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "bookmark[locators〕",
+                            "description": "Bookmark\n    locators",
+                            "type": "Object",
+                            "props": [
+                                {
+                                    "name": "cfi",
+                                    "description": "Bookmark\n      CFI position.",
+                                    "type": "String"
+                                },
+                                {
+                                    "name": "position",
+                                    "description": "Bookmark\n      position percent number.",
+                                    "type": "Number"
+                                },
+                                {
+                                    "name": "title",
+                                    "description": "Bookmark\n      title.",
+                                    "type": "String"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "bookmark[position〕",
+                            "description": "Bookmark\n    position percent number.",
+                            "type": "Number"
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
+        {
+            "file": "src/api/bookmarks.coffee",
+            "line": 121,
+            "description": "Delete bookmark by bookmark id.",
+            "itemtype": "method",
+            "name": "deleteBookmarkByBookmarkId",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "highlightId",
+                            "description": "The\n    numerical id of the desire resource.",
+                            "type": "String"
+                        }
+                    ]
+                }
+            ],
+            "class": "Readings"
+        },
         {
             "file": "src/api/books.coffee",
             "line": 12,
@@ -287,9 +505,49 @@
         {
             "file": "src/api/feedback.coffee",
             "line": 12,
-            "description": "Send feedback data to the BackEnd Server",
+            "description": "Send feedback data to the BackEnd License Server",
             "itemtype": "method",
             "name": "send",
+            "class": "Feedback"
+        },
+        {
+            "file": "src/api/feedback.coffee",
+            "line": 22,
+            "description": "Send Error Words data to the BackEnd License Server",
+            "itemtype": "method",
+            "name": "postWordsError",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "email",
+                    "description": "User's\n    email address",
+                    "type": "String"
+                },
+                {
+                    "name": "subject",
+                    "description": "The\n    reason for this feedback",
+                    "type": "String"
+                },
+                {
+                    "name": "original",
+                    "description": "The\n    words need to be fixed",
+                    "type": "String"
+                },
+                {
+                    "name": "report",
+                    "description": "The\n    correct words",
+                    "type": "String"
+                },
+                {
+                    "name": "url",
+                    "description": "The\n    url belong to location of error words in the epub book",
+                    "type": "String"
+                }
+            ],
             "class": "Feedback"
         },
         {
@@ -1049,5 +1307,30 @@
             "class": "users"
         }
     ],
-    "warnings": []
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/api/feedback.coffee:22"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/api/feedback.coffee:22"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/api/feedback.coffee:22"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/api/feedback.coffee:22"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/api/feedback.coffee:22"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/api/feedback.coffee:22"
+        }
+    ]
 }
