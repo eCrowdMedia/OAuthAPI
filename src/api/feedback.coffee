@@ -14,10 +14,7 @@ do ->
       # @method send
       ###
       send: =>
-
-        data = options.data
-
-        return @_sp.__a__ "feedback", "POST", data
+        return @_sp.__a__ "feedback", "POST", options
 
       ###*
       # Send Error Words data to the BackEnd License Server
@@ -36,15 +33,12 @@ do ->
       #
       ###
       postWordsError: =>
-        # console.log('which is this: ' + JSON.stringify(this.api));
-        bug = "原文：" + options.data.original + "<br />\n回報：" + options.data.report
-        options.data.bug = bug
+        options.bug = "原文：" + options.original + "<br />\n回報：" + options.report
 
-        # console.log(params.data);
-        if options.data.email isnt null and options.data.subject isnt null and options.data.url isnt null
-          @send()
+        if options.email and options.subject and options.url
+          return @send()
         else
-          console.error "have missing items in params"
+          throw new Error "Have missing items in options"
         return
     }
 
