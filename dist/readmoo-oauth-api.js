@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.9.1 - 2014-05-02
+/*! readmoo-oauth-api - v1.9.2 - 2014-05-07
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2887,9 +2887,7 @@ _util = {
       */
 
       send: function() {
-        var data;
-        data = options.data;
-        return _this._sp.__a__("feedback", "POST", data);
+        return _this._sp.__a__("feedback", "POST", options);
       },
       /**
       # Send Error Words data to the BackEnd License Server
@@ -2909,13 +2907,11 @@ _util = {
       */
 
       postWordsError: function() {
-        var bug;
-        bug = "原文：" + options.data.original + "<br />\n回報：" + options.data.report;
-        options.data.bug = bug;
-        if (options.data.email !== null && options.data.subject !== null && options.data.url !== null) {
-          _this.send();
+        options.bug = "原文：" + options.original + "<br />\n回報：" + options.report;
+        if (options.email && options.subject && options.url) {
+          return _this.send();
         } else {
-          console.error("have missing items in params");
+          throw new Error("Have missing items in options");
         }
       }
     };
