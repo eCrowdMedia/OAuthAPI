@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.9.3 - 2014-05-07
+/*! readmoo-oauth-api - v1.9.4 - 2014-05-07
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2907,7 +2907,7 @@ _util = {
       */
 
       postWordsError: function() {
-        options.bug = "原文：" + options.original + "<br />\n回報：" + options.report;
+        options.bug = "原文：" + options.original + "  回報：" + options.report;
         if (options.email && options.subject && options.url) {
           return this.send();
         } else {
