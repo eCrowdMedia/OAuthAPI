@@ -32,7 +32,7 @@ do ->
       #     url belong to location of error words in the epub book
       #
       ###
-      postWordsError: =>
+      postWordsError: ->
         options.bug = "原文：" + options.original + "<br />\n回報：" + options.report
 
         if options.email and options.subject and options.url
