@@ -33,7 +33,7 @@ do ->
       #
       ###
       postWordsError: ->
-        options.bug = "原文：" + options.original + "<br />\n回報：" + options.report
+        options.bug = "原文:" + options.original + "  回報:" + options.report
 
         if options.email and options.subject and options.url
           return @send()
