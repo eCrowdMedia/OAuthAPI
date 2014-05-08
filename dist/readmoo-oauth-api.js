@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.9.4 - 2014-05-07
+/*! readmoo-oauth-api - v1.9.6 - 2014-05-08
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2410,15 +2410,15 @@ utils.extend(utils, {
         if (!oa) {
           return false;
         }
-        hello = JSON.parse(oa);
-        if (!hello.readmoo || !hello.readmoo.client_id) {
+        oa = JSON.parse(oa);
+        if (!oa.readmoo || !oa.readmoo.client_id) {
           return false;
         }
         p.data = p.data || {};
-        p.data.client_id = hello.readmoo.client_id;
+        p.data.client_id = oa.readmoo.client_id;
         if (/^(?:post|put|delete)$/i.test(p.method)) {
           p.data = p.data || {};
-          p.data['access_token'] = hello.readmoo.access_token;
+          p.data['access_token'] = oa.readmoo.access_token;
         }
         return true;
       },
@@ -2907,7 +2907,7 @@ _util = {
       */
 
       postWordsError: function() {
-        options.bug = "原文：" + options.original + "  回報：" + options.report;
+        options.bug = "原文:" + options.original + "  回報:" + options.report;
         if (options.email && options.subject && options.url) {
           return this.send();
         } else {
