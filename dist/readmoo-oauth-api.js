@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.9.6 - 2014-05-08
+/*! readmoo-oauth-api - v1.9.7 - 2014-06-17
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2615,7 +2615,7 @@ _util = {
       n = includes[_i];
       if (options.hasOwnProperty(n)) {
         v = options[n];
-        if (v instanceof Object || v instanceof Array) {
+        if (typeof v === 'object') {
           v = JSON.stringify(v);
         }
         data[n] = v;
