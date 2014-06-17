@@ -7,7 +7,7 @@ _util =
     for n in includes
       if options.hasOwnProperty n
         v = options[n]
-        if v instanceof Object or v instanceof Array
+        if typeof v is 'object'
           v = JSON.stringify v
 
         data[n] = v
