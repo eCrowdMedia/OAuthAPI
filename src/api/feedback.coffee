@@ -14,7 +14,11 @@ do ->
       # @method send
       ###
       send: =>
-        return @_sp.__a__ "feedback", "POST", options
+        data = _util.paramFilter options, [
+          'type', 'url', 'subject', 'email', 'bug'
+        ]
+
+        return @_sp.__a__ "feedback", "POST", data
 
       ###*
       # Send Error Words data to the BackEnd License Server
