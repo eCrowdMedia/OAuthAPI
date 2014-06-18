@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.9.7 - 2014-06-17
+/*! readmoo-oauth-api - v1.9.8 - 2014-06-18
 * Copyright (c) 2014 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2887,7 +2887,9 @@ _util = {
       */
 
       send: function() {
-        return _this._sp.__a__("feedback", "POST", options);
+        var data;
+        data = _util.paramFilter(options, ['type', 'url', 'subject', 'email', 'bug']);
+        return _this._sp.__a__("feedback", "POST", data);
       },
       /**
       # Send Error Words data to the BackEnd License Server
