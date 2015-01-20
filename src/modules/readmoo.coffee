@@ -5,8 +5,8 @@ do (hello) ->
       base: 'https://api.readmoo.com/'
       oauth:
         version: 2
-        auth: 'https://readmoo.com/member/oauth'
-        logout: 'https://readmoo.com/member/oauth/sign_out'
+        auth: 'https://member.readmoo.com/oauth'
+        logout: 'https://member.readmoo.com/oauth/sign_out'
       scope:
         me: 'me'
         reading: 'reading'
