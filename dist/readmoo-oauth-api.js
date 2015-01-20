@@ -1,5 +1,5 @@
-/*! readmoo-oauth-api - v1.9.8 - 2014-06-18
-* Copyright (c) 2014 ; Licensed  */
+/*! readmoo-oauth-api - v1.9.8 - 2015-01-20
+* Copyright (c) 2015 ; Licensed  */
 (function() {
     var hash = location.hash;
 
@@ -2390,8 +2390,8 @@ utils.extend(utils, {
       base: 'https://api.readmoo.com/',
       oauth: {
         version: 2,
-        auth: 'https://readmoo.com/member/oauth',
-        logout: 'https://readmoo.com/member/oauth/sign_out'
+        auth: 'https://member.readmoo.com/oauth',
+        logout: 'https://member.readmoo.com/oauth/sign_out'
       },
       scope: {
         me: 'me',
