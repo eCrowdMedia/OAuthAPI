@@ -11,7 +11,7 @@ do ->
 
   if href
     localStorage.removeItem _ORIGINAL_HREF
-    window.location.href = href
+    # window.location.href = href
 
   return
 
