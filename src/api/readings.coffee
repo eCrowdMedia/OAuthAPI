@@ -219,7 +219,8 @@ do ->
         data = _util.paramFilter options, [
           'reading[state]', 'reading[private]', 'reading[started_at]',
           'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]',
-          'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]'
+          'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]',
+          'reading[rating]'
         ]
 
         return @_sp.__a__ "readings/#{ readingId }", "PUT", data
