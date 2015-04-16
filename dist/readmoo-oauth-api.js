@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.9.10 - 2015-02-06
+/*! readmoo-oauth-api - v1.9.10 - 2015-04-17
 * Copyright (c) 2015 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -3295,7 +3295,7 @@ _util = {
         if (!state) {
           throw new TypeError("A state need to be provided");
         }
-        data = _util.paramFilter(options, ['reading[state]', 'reading[private]', 'reading[started_at]', 'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]', 'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]']);
+        data = _util.paramFilter(options, ['reading[state]', 'reading[private]', 'reading[started_at]', 'reading[finished_at]', 'reading[abandoned_at]', 'reading[via_id]', 'reading[recommended]', 'reading[closing_remark]', 'reading[post_to[][id]]', 'reading[rating]']);
         return _this._sp.__a__("readings/" + readingId, "PUT", data);
       },
       /**
