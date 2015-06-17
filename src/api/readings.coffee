@@ -299,6 +299,10 @@ do ->
       #     latitute coordinates of the position when reading.
       #   @param {Number} [options.ping[lng]] The
       #     longitude coordinates of the position when reading.
+      #   @param {Number} [options.ping[event]] The
+      #     event id of the forever set which this book belongs to.
+      #   @param {String} [options.ping[UA]] The
+      #     USER AGENT information of this browser.
       ###
       ping: =>
 
@@ -307,7 +311,8 @@ do ->
 
         data = _util.paramFilter options, [
           'ping[identifier]', 'ping[progress]', 'ping[duration]',
-          'ping[occurred_at]', 'ping[lat]', 'ping[lng]', 'ping[cfi]'
+          'ping[occurred_at]', 'ping[lat]', 'ping[lng]', 'ping[cfi]',
+          'ping[event]', 'ping[UA]'
         ]
 
         return @_sp.__a__ "readings/#{ options.readingId }/ping", "POST", data
