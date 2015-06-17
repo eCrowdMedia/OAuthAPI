@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.10.1 - 2015-04-17
+/*! readmoo-oauth-api - v1.11.0 - 2015-06-17
 * Copyright (c) 2015 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -3369,6 +3369,10 @@ _util = {
       #     latitute coordinates of the position when reading.
       #   @param {Number} [options.ping[lng]] The
       #     longitude coordinates of the position when reading.
+      #   @param {Number} [options.ping[event]] The
+      #     event id of the forever set which this book belongs to.
+      #   @param {String} [options.ping[UA]] The
+      #     USER AGENT information of this browser.
       */
 
       ping: function() {
@@ -3376,7 +3380,7 @@ _util = {
         if (!options.readingId) {
           throw new TypeError("A reading id must be provided");
         }
-        data = _util.paramFilter(options, ['ping[identifier]', 'ping[progress]', 'ping[duration]', 'ping[occurred_at]', 'ping[lat]', 'ping[lng]', 'ping[cfi]']);
+        data = _util.paramFilter(options, ['ping[identifier]', 'ping[progress]', 'ping[duration]', 'ping[occurred_at]', 'ping[lat]', 'ping[lng]', 'ping[cfi]', 'ping[event]', 'ping[UA]']);
         return _this._sp.__a__("readings/" + options.readingId + "/ping", "POST", data);
       }
     };
