@@ -37,7 +37,14 @@ do ->
       #
       ###
       postWordsError: ->
+
         options.bug = "原文:" + options.original + "  回報:" + options.report
+
+        if global
+            platform = global.process.platform
+            arch = if global.process.arch == 'ia32' then '32' else '64'
+            platform = if /^win/.test(platform) then 'win' else 'mac'
+            options.bug += '<br><br><br><br>[UA] ' + navigator.userAgent + '<br><br>[Platform] ' + platform + arch + '<br><br>[AppVersion] ' + global.window.App.pkg.version
 
         if options.email and options.subject and options.url
           return @send()
