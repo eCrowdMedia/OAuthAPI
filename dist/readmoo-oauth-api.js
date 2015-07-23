@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.10.1 - 2015-04-17
+/*! readmoo-oauth-api - v1.11.1 - 2015-07-23
 * Copyright (c) 2015 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2909,7 +2909,14 @@ _util = {
       */
 
       postWordsError: function() {
+        var arch, platform;
         options.bug = "原文:" + options.original + "  回報:" + options.report;
+        if (global) {
+          platform = global.process.platform;
+          arch = global.process.arch === 'ia32' ? '32' : '64';
+          platform = /^win/.test(platform) ? 'win' : 'mac';
+          options.bug += '<br><br><br><br>[UA] ' + navigator.userAgent + '<br><br>[Platform] ' + platform + arch + '<br><br>[AppVersion] ' + global.window.App.pkg.version;
+        }
         if (options.email && options.subject && options.url) {
           return this.send();
         } else {
@@ -3369,6 +3376,10 @@ _util = {
       #     latitute coordinates of the position when reading.
       #   @param {Number} [options.ping[lng]] The
       #     longitude coordinates of the position when reading.
+      #   @param {Number} [options.ping[event]] The
+      #     event id of the forever set which this book belongs to.
+      #   @param {String} [options.ping[UA]] The
+      #     USER AGENT information of this browser.
       */
 
       ping: function() {
@@ -3376,7 +3387,7 @@ _util = {
         if (!options.readingId) {
           throw new TypeError("A reading id must be provided");
         }
-        data = _util.paramFilter(options, ['ping[identifier]', 'ping[progress]', 'ping[duration]', 'ping[occurred_at]', 'ping[lat]', 'ping[lng]', 'ping[cfi]']);
+        data = _util.paramFilter(options, ['ping[identifier]', 'ping[progress]', 'ping[duration]', 'ping[occurred_at]', 'ping[lat]', 'ping[lng]', 'ping[cfi]', 'ping[event]', 'ping[UA]']);
         return _this._sp.__a__("readings/" + options.readingId + "/ping", "POST", data);
       }
     };
