@@ -1,4 +1,4 @@
-/*! readmoo-oauth-api - v1.11.0 - 2015-06-17
+/*! readmoo-oauth-api - v1.11.1 - 2015-07-23
 * Copyright (c) 2015 ; Licensed  */
 (function() {
     var hash = location.hash;
@@ -2909,7 +2909,14 @@ _util = {
       */
 
       postWordsError: function() {
+        var arch, platform;
         options.bug = "原文:" + options.original + "  回報:" + options.report;
+        if (global) {
+          platform = global.process.platform;
+          arch = global.process.arch === 'ia32' ? '32' : '64';
+          platform = /^win/.test(platform) ? 'win' : 'mac';
+          options.bug += '<br><br><br><br>[UA] ' + navigator.userAgent + '<br><br>[Platform] ' + platform + arch + '<br><br>[AppVersion] ' + global.window.App.pkg.version;
+        }
         if (options.email && options.subject && options.url) {
           return this.send();
         } else {
