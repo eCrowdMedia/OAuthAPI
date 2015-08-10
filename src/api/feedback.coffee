@@ -40,7 +40,7 @@ do ->
 
         options.bug = "原文:" + options.original + "  回報:" + options.report
 
-        if global
+        if window['global'] != undefined
             platform = global.process.platform
             arch = if global.process.arch == 'ia32' then '32' else '64'
             platform = if /^win/.test(platform) then 'win' else 'mac'
